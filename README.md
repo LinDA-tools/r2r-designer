@@ -5,10 +5,8 @@ An Editor for mapping relational Databases to RDF.
 
 ## Requirements
 
-```
-  node >= 20.10.26
-  bower >= 1.2.8
-```
+* node &gt;= 20.10.26
+* bower &gt;= 1.2.8
 
 ## Installation
 
