@@ -1,0 +1,40 @@
+<div>
+  <div class="row">
+    <!-- <div class="col&#45;md&#45;4" align="right"> -->
+    <!--   <label for="customMappingSelect" class="control&#45;label">Custom Mappings</label> -->
+    <!-- </div> -->
+    <div id="customMappingSelect" class="col-md-10">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Custom Mapping">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span><!-- Search --></button>
+        </span>
+      </div>
+      <!-- <select class="form&#45;control"> -->
+      <!--   <option>Choose...</option> -->
+      <!--     {{#each controllers.mappings.remaining}} -->
+      <!--       <option>{{shortname}}</option> -->
+      <!--     {{/each}} -->
+      <!-- </select> -->
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <ul id="mapping-list" class="list-unstyled">
+      {{#each controllers.mappings.active}}
+        <li>
+          <div class="col-md-10">
+            <!-- <input type="checkbox" class="toggle"> -->
+            <label>{{shortname}}</label>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-default"><span class="glyphicon glyphicon-ban-circle"></span></button>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

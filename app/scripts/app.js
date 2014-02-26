@@ -1,4 +1,6 @@
-var R2rDesigner = window.R2rDesigner = Ember.Application.create();
+var R2rDesigner = window.R2rDesigner = Ember.Application.create({
+  LOG_TRANSITIONS: true
+});
 
 /* Order and include as you please. */
 require('scripts/controllers/*');
