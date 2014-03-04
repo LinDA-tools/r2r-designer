@@ -1,0 +1,158 @@
+{
+   "models" : {
+      "VocabMetadata" : {
+         "required" : [
+            "Identifier",
+            "Titel"
+         ],
+         "properties" : {
+           "Title":	"string",
+           "Creator":	"string",
+           "Identifier": "string",
+           "Date Issued":	"date",
+           "Latest Version":"string",
+           "Replaces":"string",
+           "Translations":	"string",
+           "Document Status":	"string",
+           "Description":	"string"
+         }
+      },
+      "SearchHit" : 
+      {
+        "required" : [
+          "vocab",
+          "score"
+        ],
+        "properties" : {
+          "vocab" : "VocabMetadata",
+          "score" : "integer"
+        }
+      },
+      "VocabSearchResponse" : {
+         "required" : [
+            "hits"
+         ],
+         "properties" : {
+           "hits" : {
+              "type": "array",
+              "items": {
+                  "type": "SearchHit"
+              }
+           }
+         }
+      }
+   },
+   "produces" : [
+      "application/json",
+      "application/xml",
+      "text/plain",
+      "text/html"
+   ],
+   "resourcePath" : "/vocab",
+   "apiVersion" : "1.0.0",
+   "swaggerVersion" : "1.2",
+   "apis" : [
+      {
+         "path" : "/vocab",
+         "operations" : [
+            {
+               "parameters" : [
+                  {
+                     "format" : "string",
+                     "required" : false,
+                     "paramType" : "query",
+                     "name" : "uri",
+                     "type" : "string",
+                     "description" : "URI of vocabulary to be fetched"
+                  },
+                  {
+                     "required" : true,
+                     "paramType" : "query",
+                     "name" : "all",
+                     "type" : "boolean",
+                     "description" : "get all available vocabularies"
+                  }
+               ],
+               "nickname" : "getVocabByUri",
+               "summary" : "Finds a vocabulary by URI.",
+               "type" : "VocabMetadata",
+               "method" : "GET",
+               "responseMessages" : [
+                  {
+                     "message" : "Invalid URI supplied",
+                     "code" : 400
+                  },
+                  {
+                     "message" : "vocabulary not found",
+                     "code" : 404
+                  }
+               ]
+            },
+            {
+               "parameters" : [
+                  {
+                     "required" : true,
+                     "paramType" : "query",
+                     "name" : "uri",
+                     "type" : "string",
+                     "description" : "Vocab URI to delete"
+                  }
+               ],
+               "nickname" : "deleteVocab",
+               "summary" : "Deletes a vocabulary.",
+               "notes" : "",
+               "type" : "void",
+               "method" : "DELETE",
+               "responseMessages" : [
+                  {
+                     "message" : "Invalid vocab value",
+                     "code" : 400
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "path" : "/vocab/search",
+         "operations" : [
+            {
+               "parameters" : [
+                  {
+                     "required" : false,
+                     "paramType" : "query",
+                     "name" : "query",
+                     "type" : "string",
+                     "description" : "query string in natural language"
+                  },
+                  {
+                     "required" : false,
+                     "paramType" : "query",
+                     "name" : "keywords",
+                     "type" : "string",
+                     "description" : "Keywords to look for in the vocabulary"
+                  },
+                  {
+                     "required" : false,
+                     "paramType" : "query",
+                     "name" : "types",
+                     "type" : "string",
+                     "description" : "RDF Types to look for in the vocabulary"
+                  }
+               ],
+               "nickname" : "searchVocab",
+               "summary" : "search for a vocabulary within the repository",
+               "notes" : "",
+               "type" : "VocabSearchResponse",
+               "method" : "POST",
+               "responseMessages" : [
+                  {
+                     "message" : "Invalid input",
+                     "code" : 405
+                  }
+               ]
+            }
+         ]
+      }
+   ],
+   "basePath" : "http://linda-project.eu/repository/api/"
+}
