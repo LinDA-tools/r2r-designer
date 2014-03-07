@@ -3,13 +3,18 @@
     <label for="dataSourceSelect" class="col-md-2 control-label">Data Source</label>
     <div id="dataSourceSelect" class="col-md-3">
       <select class="form-control">
-        <option>{{controllers.config.datasource}}</option>
+        {{#each datasources}}
+          <option>{{name}}</option>
+        {{/each}}
       </select>
+
     </div>
     <div class="col-md-2">
       <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span><!-- New --></button>
-      <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-wrench"></span><!-- Configure --></button>
-      {{view R2rDesigner.DataSourceView}}
+      <button class="btn btn-default" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench"></span><!-- Configure --></button>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        {{view R2rDesigner.DataSourceView}}
+      </div>
     </div>
   </div>
 
