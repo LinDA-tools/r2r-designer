@@ -5,28 +5,26 @@
       {{view Ember.Select
           prompt = "Choose..."
           classNames = 'form-control'
-          contentBinding = "datasources"
-          optionValuePath = "content.id"
+          contentBinding = "controllers.datasources"
+          optionValuePath = "content.name"
           optionLabelPath = "content.name"
-          valueBinding = "current_ds.id"
+          selectionBinding = "current_ds"
       }}
-      {{controllers.config.base_uri}}
-      {{controllers.config.currentDatasource.id}}
-      {{controllers.config.currentDatasource.name}}
+      {{new_ds.name}}
+      {{current_ds.name}}
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span><!-- New --></button>
-      <button class="btn btn-default" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench"></span><!-- Configure --></button>
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        {{view R2rDesigner.DataSourceView}}
-      </div>
+      <button class="btn btn-primary" {{action newDatasource}} data-toggle="modal" data-target="#newDatasource"><span class="glyphicon glyphicon-plus"></span><!-- New --></button>
+      <button class="btn btn-default" data-toggle="modal" data-target="#editDatasource"><span class="glyphicon glyphicon-wrench"></span><!-- Configure --></button>
+      <div class="modal fade" id="newDatasource" tabindex="-1" role="dialog" aria-labelledby="newDatasourceLabel" aria-hidden="true">{{view R2rDesigner.NewDatasourceView}}</div>
+      <div class="modal fade" id="editDatasource" tabindex="-1" role="dialog" aria-labelledby="editDatasourceLabel" aria-hidden="true">{{view R2rDesigner.EditDatasourceView}}</div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="baseUriInput" class="col-md-2 control-label">Base URI</label>
     <div id="baseUriInput" class="col-md-4">
-      <input type="text" class="form-control" {{bind-attr placeholder=controllers.config.base_uri}} />
+      <input type="text" class="form-control" {{bind-attr placeholder=base_uri}} />
     </div>
   </div>
 </form>

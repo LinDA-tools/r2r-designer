@@ -3,47 +3,47 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title" id="myModalLabel">Data Source Configuration</h4>
+      <h4 class="modal-title" id="newDatasourceLabel">Configure Data Source ...</h4>
     </div>
     <div class="modal-body">
 
       <div class="form-group">
         <label for="classnameInput" class="col-md-4 control-label">Data Source Name</label>
         <div id="classnameInput" class="col-md-8">
-          <input type="text" class="form-control" {{bind-attr value=name}} />
+          {{input type="text" classNames="form-control" value=current_ds.name}}
         </div>
         <hr />
 
         <label for="classnameInput" class="col-md-4 control-label">Driver Class Name</label>
         <div id="classnameInput" class="col-md-8">
-          <input type="text" class="form-control" {{bind-attr value=classname}} />
+          <input type="text" class="form-control" {{bind-attr value=current_ds.classname}} />
         </div>
 
         <label for="subprotocolInput" class="col-md-4 control-label">Protocol</label>
         <div id="subprotocolInput" class="col-md-8">
-          <input type="text" class="form-control" {{bind-attr value=subprotocol}} />
+          <input type="text" class="form-control" {{bind-attr value=current_ds.subprotocol}} />
         </div>
 
         <label for="subnameInput" class="col-md-4 control-label">Subname</label>
         <div id="subnameInput" class="col-md-8">
-          <input type="text" class="form-control" {{bind-attr value=subname}} />
+          <input type="text" class="form-control" {{bind-attr value=current_ds.subname}} />
         </div>
 
         <label for="userInput" class="col-md-4 control-label">Username</label>
         <div id="userInput" class="col-md-8">
-          <input type="text" class="form-control" {{bind-attr value=username}} />
+          <input type="text" class="form-control" {{bind-attr value=current_ds.username}} />
         </div>
 
         <label for="passwordInput" class="col-md-4 control-label">Password</label>
         <div id="passwordInput" class="col-md-8">
-          <input type="password" class="form-control" {{bind-attr value=password}} />
+          <input type="password" class="form-control" {{bind-attr value=current_ds.password}} />
         </div>
       </div>
 
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      <button type="button" class="btn btn-primary">Save</button>
+      <button type="button" class="btn btn-primary" data-dismiss="modal" {{action 'save_ds' current_ds}}>Save</button>
     </div>
   </div>
 </div>

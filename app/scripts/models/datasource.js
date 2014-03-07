@@ -11,7 +11,7 @@ R2rDesigner.Datasource = DS.Model.extend({
 });
 
 R2rDesigner.Datasource.FIXTURES = [{
-  id : 1,
+  id : 0,
   name : 'Example MySQL Database',
 
   connection_uri : "",
@@ -22,7 +22,7 @@ R2rDesigner.Datasource.FIXTURES = [{
   password : "secret"
 },
 {
-  id : 2,
+  id : 1,
   name : 'Example PostgreSQL Database',
 
   connection_uri : "",
@@ -32,5 +32,3 @@ R2rDesigner.Datasource.FIXTURES = [{
   username : "myaccount",
   password : "secret"
 }];
-
-
