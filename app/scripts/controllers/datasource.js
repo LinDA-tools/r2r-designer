@@ -1,11 +1,4 @@
 R2rDesigner.DatasourceController = Ember.ObjectController.extend({
-  // name : "",
-  // connection_uri : "",
-  // classname : "",
-  // subprotocol : "",
-  // subname : "",
-  // user : "",
-  // password : "",
 
   actions : {
     createDatasource : function () {

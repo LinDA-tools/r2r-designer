@@ -2,12 +2,17 @@
   <div class="form-group">
     <label for="dataSourceSelect" class="col-md-2 control-label">Data Source</label>
     <div id="dataSourceSelect" class="col-md-3">
-      <select class="form-control">
-        {{#each datasources}}
-          <option>{{name}}</option>
-        {{/each}}
-      </select>
-
+      {{view Ember.Select
+          prompt = "Choose..."
+          classNames = 'form-control'
+          contentBinding = "datasources"
+          optionValuePath = "content.id"
+          optionLabelPath = "content.name"
+          valueBinding = "current_ds.id"
+      }}
+      {{controllers.config.base_uri}}
+      {{controllers.config.currentDatasource.id}}
+      {{controllers.config.currentDatasource.name}}
     </div>
     <div class="col-md-2">
       <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span><!-- New --></button>

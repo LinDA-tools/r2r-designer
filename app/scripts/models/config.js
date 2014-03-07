@@ -1,16 +1,24 @@
 R2rDesigner.Config = DS.Model.extend({
-  current_ds : DS.attr('integer'),
-  base_uri    : DS.attr('string'),
-
+  base_uri : DS.attr('string'),
+  // currentDatasource : DS.attr('datasource'),
   datasources : DS.hasMany('datasource')
   // vocabs      : DS.attr()
 });
 
 R2rDesigner.Config.FIXTURES = [{
   id : 0,
-  base_uri : 'http://linda-project.eu/r2r-designer/example/#',
+  base_uri : 'http://linda-project.eu/r2r-designer/example/#'
 
-  // mappings    : ['Mapping #1', 'Mapping #2', 'Mapping #3'],
-  // vocabs      : ['Vocabulary #1', 'Vocabulary #2', 'Vocabulary #3']
+  // currentDatasource : {
+  //   id : 2,
+  //   name : 'Example PostgreSQL Database',
+
+  //   connection_uri : "",
+  //   classname : "??",
+  //   subprotocol : "psql",
+  //   subname : "//127.0.0.1:3307/mydb",
+  //   username : "myaccount",
+  //   password : "secret"
+  // }
 }];
 
