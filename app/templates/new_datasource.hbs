@@ -9,40 +9,40 @@
       <div class="form-group">
         <label for="classnameInput" class="col-md-4 control-label">Data Source Name</label>
         <div id="classnameInput" class="col-md-8">
-          {{input type="text" classNames="form-control" value=new_ds.name}}
+          {{input type="text" classNames="form-control" value=controllers.config.new_name}}
         </div>
         <hr />
 
         <label for="classnameInput" class="col-md-4 control-label">Driver Class Name</label>
         <div id="classnameInput" class="col-md-8">
-          {{input type="text" classNames="form-control" value=new_ds.classname}}
+          {{input type="text" classNames="form-control" value=controllers.config.new_classname}}
         </div>
 
         <label for="subprotocolInput" class="col-md-4 control-label">Protocol</label>
         <div id="subprotocolInput" class="col-md-8">
-          {{input type="text" classNames="form-control" value=new_ds.protocol}}
+          {{input type="text" classNames="form-control" value=controllers.config.new_subprotocol}}
         </div>
 
         <label for="subnameInput" class="col-md-4 control-label">Subname</label>
         <div id="subnameInput" class="col-md-8">
-          {{input type="text" classNames="form-control" value=new_ds.subname}}
+          {{input type="text" classNames="form-control" value=controllers.config.new_subname}}
         </div>
 
         <label for="userInput" class="col-md-4 control-label">Username</label>
         <div id="userInput" class="col-md-8">
-          {{input type="text" classNames="form-control" value=new_ds.username}}
+          {{input type="text" classNames="form-control" value=controllers.config.new_username}}
         </div>
 
         <label for="passwordInput" class="col-md-4 control-label">Password</label>
         <div id="passwordInput" class="col-md-8">
-          {{input type="text" classNames="form-control" value=new_ds.password}}
+          {{input type="password" classNames="form-control" value=controllers.config.new_password}}
         </div>
       </div>
 
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal" {{action cancelNewDatasource new_ds}}>Cancel</button>
-      <button type="button" class="btn btn-primary" data-dismiss="modal" {{action saveDatasource new_ds}}>Save</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal" {{action cancelDatasource current_ds target='controllers.config'}}>Cancel</button>
+      <button type="button" class="btn btn-primary" data-dismiss="modal" {{action saveNewDatasource target='controllers.config'}}>Save</button>
     </div>
   </div>
 </div>

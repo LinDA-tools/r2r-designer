@@ -9,10 +9,11 @@
           optionValuePath = "content.name"
           optionLabelPath = "content.name"
           selectionBinding = "current_ds"
+          valueBinding = "current_ds"
       }}
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" {{action newDatasource}} data-toggle="modal" data-target="#newDatasource"><span class="glyphicon glyphicon-plus"></span><!-- New --></button>
+      <button class="btn btn-primary" {{action newDatasource target='controllers.config'}} data-toggle="modal" data-target="#newDatasource"><span class="glyphicon glyphicon-plus"></span><!-- New --></button>
       <button class="btn btn-default" data-toggle="modal" data-target="#editDatasource"><span class="glyphicon glyphicon-wrench"></span><!-- Configure --></button>
       <div class="modal fade" id="newDatasource" tabindex="-1" role="dialog" aria-labelledby="newDatasourceLabel" aria-hidden="true">{{view R2rDesigner.NewDatasourceView}}</div>
       <div class="modal fade" id="editDatasource" tabindex="-1" role="dialog" aria-labelledby="editDatasourceLabel" aria-hidden="true">{{view R2rDesigner.EditDatasourceView}}</div>
