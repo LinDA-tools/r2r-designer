@@ -6,7 +6,6 @@
       <h4 class="modal-title" id="newDatasourceLabel">New Data Source ...</h4>
     </div>
     <div class="modal-body">
-
       <div class="form-group">
         <label for="classnameInput" class="col-md-4 control-label">Data Source Name</label>
         <div id="classnameInput" class="col-md-8">
@@ -42,8 +41,8 @@
 
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      <button type="button" class="btn btn-primary" data-dismiss="modal" {{action 'saveDatasource' new_ds}}>Save</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal" {{action cancelNewDatasource new_ds}}>Cancel</button>
+      <button type="button" class="btn btn-primary" data-dismiss="modal" {{action saveDatasource new_ds}}>Save</button>
     </div>
   </div>
 </div>
