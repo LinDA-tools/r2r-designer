@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 node_modules
 temp
 dist
@@ -7,7 +6,6 @@ dist
 app/bower_components
 test/bower_components
 **/.*.swp
-=======
 /target
 /lib
 /classes
@@ -20,4 +18,4 @@ pom.xml.asc
 .lein-failures
 .lein-plugins
 .lein-repl-history
->>>>>>> init
+.nrepl-port
