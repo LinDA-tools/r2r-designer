@@ -5,8 +5,15 @@ An Editor for mapping relational Databases to RDF.
 
 ## Requirements
 
-* node &gt;= 20.10.26
-* bower &gt;= 1.2.8
+You will need:
+
+  * [node.js][1] 20.10.26 or above,
+  * [Bower][2] 1.2.8 or above,
+  * [Leiningen][3] 1.7.0 or above.
+
+[1]: http://nodejs.org 
+[2]: https://github.com/bower/bower  
+[3]: https://github.com/technomancy/leiningen
 
 ## Installation
 
@@ -17,16 +24,25 @@ An Editor for mapping relational Databases to RDF.
 
 ## Documentation
 
+Coming soon.
+
 ## Community
 
 * [LinDA Project](http://linda-project.eu/)
 
 ## Usage
 
-  grunt serve
+To start the web application for the R2R designer, run:
+
+    grunt serve
+
+To start a web server for the application, run:
+
+    lein ring server
 
 ## License
 
 Copyright &copy; 2014 Robert Danitz
 
 Distributed under the MIT License.
+
