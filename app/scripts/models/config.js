@@ -2,7 +2,6 @@ R2rDesigner.Config = DS.Model.extend({
   base_uri : DS.attr('string'),
   current_ds : DS.attr('datasource'),
   datasources : DS.hasMany('datasource')
-  // vocabs      : DS.attr()
 });
 
 R2rDesigner.Config.FIXTURES = [{

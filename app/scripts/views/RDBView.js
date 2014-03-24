@@ -1,3 +1,3 @@
-R2rDesigner.RDBView = Ember.View.extend({
-  templateName: 'rdbview'
+R2rDesigner.RdbView = Ember.View.extend({
+  templateName: 'rdb'
 });

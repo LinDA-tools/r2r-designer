@@ -1,5 +1,5 @@
 R2rDesigner.ConfigController = Ember.ObjectController.extend({
-  needs: ['config', 'datasources', 'mappings', 'vocabs'],
+  needs: ['config', 'datasources', 'mappings', 'vocabs', 'rdb'],
 
   new_name: "",
   new_connection_uri: "",

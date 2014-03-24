@@ -1,9 +1,10 @@
 (ns user
   "Tools for interactive development with the REPL. This file should
-  not be included in a production build of the application."
+   not be included in a production build of the application."
   (:require
     [clojure.java.io :as io]
     [clojure.java.javadoc :refer (javadoc)]
+    [clojure.java.jdbc :as jdbc]
     [clojure.pprint :refer (pprint)]
     [clojure.reflect :refer (reflect)]
     [clojure.repl :refer (apropos dir doc find-doc pst source)]
@@ -11,34 +12,70 @@
     [clojure.string :as str]
     [clojure.test :as test]
     [clojure.tools.namespace.repl :refer (refresh refresh-all)]
-    [server.core]
-    [server.handler]
+    [clojure.tools.logging :refer (info error debug)]
+    [ring.server.standalone :refer :all]
+    [ring.middleware.file-info :refer :all]
+    [ring.middleware.file :refer :all]
+    [server.core :refer :all]
+    [server.system :as system]
+    [server.handler :as handler]
     )
   )
 
-(def system
-  "A Var containing an object representing the application under
-  development."
-  nil)
+;; A Var containing an object representing the application under
+;; development."
+(def system nil) 
 
 (defn init
   "Creates and initializes the system under development in the Var
   #'system."
-  []
-  ;; TODO
+  []  
+  (alter-var-root #'system
+    (constantly (system/system)))
+  (let [db-fname "northwind.sql"]
+    (jdbc/db-do-commands (:db system) "DROP SCHEMA PUBLIC CASCADE")
+    (doseq [i (sql-commands (sql-script db-fname))] 
+      (debug i)
+      (jdbc/db-do-commands (:db system) true i)
+      )
+    )
+  )
+
+(defn start-server
+  "used for starting the server in development mode from REPL"
+  [& [server port]]
+  (let [port (if port (Integer/parseInt port) 8080)]
+    (reset!
+      server (serve 
+               #'handler/app
+               {:port port
+                :init handler/init
+                :auto-reload? true
+                :destroy handler/destroy
+                :join true
+                :open-browser? false}
+               )
+      )
+    )
   )
 
 (defn start
   "Starts the system running, updates the Var #'system."
   []
-  ;; TODO
+  (start-server (:server system) "3000")
   )
+
+(defn stop-server [server]
+  (.stop @server)
+  (reset! server nil))
 
 (defn stop
   "Stops the system if it is currently running, updates the Var
   #'system."
   []
-  ;; TODO
+  (if (:server system)
+    (stop-server (:server system))
+    )
   )
 
 (defn go

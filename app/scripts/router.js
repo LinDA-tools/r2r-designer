@@ -4,8 +4,8 @@ R2rDesigner.Router.map(function () {
     this.route('datasource');
   });
   this.resource('datasource', { path: '/datasource/:id' });
-  this.resource('rdbview');
-  this.resource('rdfview');
+  this.resource('rdb');
+  this.resource('rdf');
 });
 
 R2rDesigner.IndexRoute = Ember.Route.extend({
@@ -15,13 +15,13 @@ R2rDesigner.IndexRoute = Ember.Route.extend({
     this.controllerFor('datasources').set('content', this.store.find('datasource'));
     this.controllerFor('mappings').set('content', this.store.find('mapping'));
     this.controllerFor('vocabs').set('content', this.store.find('vocabulary'));
+    this.controllerFor('rdb').set('content', this.store.find('rdb', 0));
   }
 });
 
 R2rDesigner.ConfigRoute = Ember.Route.extend({
   setupController: function(controller, model) {
     controller.set('content', this.store.find('config', 0));
-    // controller.set('datasources', this.store.find('datasource'));
     this.controllerFor('datasources').set('content', this.store.find('datasource'));
     this.controllerFor('mappings').set('content', this.store.find('mapping'));
     this.controllerFor('vocabs').set('content', this.store.find('vocabulary'));
@@ -49,5 +49,11 @@ R2rDesigner.MappingsRoute = Ember.Route.extend({
 R2rDesigner.VocabsRoute = Ember.Route.extend({
   model : function() {
     return this.store.find('vocabulary');
+  }
+});
+
+R2rDesigner.RdbRoute = Ember.Route.extend({
+  model : function() {
+    return this.store.find('rdb');
   }
 });

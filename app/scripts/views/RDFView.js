@@ -1,4 +1,4 @@
-R2rDesigner.RDFView = Ember.View.extend({
-  templateName: 'rdfview'
+R2rDesigner.RdfView = Ember.View.extend({
+  templateName: 'rdf'
 });
 

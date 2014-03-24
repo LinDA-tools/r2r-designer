@@ -1,7 +1,7 @@
-(ns r2r-ws.test.handler
+(ns server.test.handler
   (:use clojure.test
         ring.mock.request  
-        r2r-ws.handler))
+        server.handler))
 
 (deftest test-app
   (testing "main route"

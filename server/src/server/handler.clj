@@ -1,12 +1,29 @@
 (ns server.handler
-  (:use compojure.core)
-  (:require [compojure.handler :as handler]
-            [compojure.route :as route]))
+  (:require 
+    [ring.middleware.cors :as cors]
+    [compojure.core :refer :all]
+    [compojure.handler :as handler]
+    [compojure.route :as route]
+    [server.routes.db :refer :all]
+    )
+  )
+
+(defn init []
+  (println "server is starting"))
+
+(defn destroy []
+  (println "server is shutting down"))
 
 (defroutes app-routes
-  (GET "/" [] "Hello World")
   (route/resources "/")
-  (route/not-found "Not Found"))
+  (route/not-found "Not Found!")
+  )
 
 (def app
-  (handler/site app-routes))
+  (-> (routes db-routes app-routes)
+    handler/site
+    (cors/wrap-cors
+      :access-control-allow-origin #"http://localhost:9000") 
+    ;; wrap-base-url
+    )
+  )
