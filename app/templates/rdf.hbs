@@ -5,7 +5,11 @@
     <div class="form-group">
       <label for="subjectTemplateInput" class="col-md-2 control-label">Subject Template</label>
       <div id="subejectTemplateInput" class="col-md-9">
-        <input type="text" class="form-control" placeholder="Ex. {CustomerId}/{Address}#_"/>
+        {{view Ember.TextField
+            classNames = "form-control"
+            placeholder = "Ex. {CustomerId}/{Address}#_"
+            valueBinding = "controllers.rdf.subjectTemplate"
+        }} 
       </div>
     </div>
 
@@ -25,17 +29,15 @@
 
     <div class="form-group">
       <label for="propertyInput" class="col-md-2 control-label">Map</label>
-      <div id="propertyInput" class="col-md-4">
+      <div id="propertyInput" class="col-md-9">
         <select class="form-control">
           <option>&lt;rdf:property&gt;</option>
         </select>
       </div>
 
-      <label for="mapsToInput" class="col-md-1 control-label">to</label>
-      <div id="mapsToInput" class="col-md-4">
-        <select class="form-control">
-          <option>Address</option>
-        </select>
+      <label for="mapsToInput" class="col-md-2 control-label">to</label>
+      <div id="mapsToInput" class="col-md-9">
+        <input type="text" class="form-control" placeholder="Ex. {Address}"/>
       </div>
       <div class="col-md-1">
         <button type="button" class="btn btn-primary">

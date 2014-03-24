@@ -16,7 +16,7 @@ R2rDesigner.TableSelectView = Ember.Select.extend({
       data: 'name=' + table,
       success: function(data) {
         var mydata = jsedn.parse(data);
-        columns = mydata.val[0].keys.map(function (i) { return i.val });
+        columns = mydata.val[0].keys.map(function (i) { return i.val.substr(1).toUpperCase() });
         dataset = mydata.val.map(function (i) { return i.vals });
       }
     });

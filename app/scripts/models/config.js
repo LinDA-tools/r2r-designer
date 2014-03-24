@@ -6,7 +6,7 @@ R2rDesigner.Config = DS.Model.extend({
 
 R2rDesigner.Config.FIXTURES = [{
   id : 0,
-  base_uri : 'http://linda-project.eu/r2r-designer/example/#',
+  base_uri : '',
 
   current_ds : {
     id : 1,
