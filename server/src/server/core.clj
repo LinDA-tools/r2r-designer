@@ -11,6 +11,13 @@
 (defn sql-script [fname] (slurp (io/resource fname)))
 (defn sql-commands [f] (str/split f #";"))
 
+(defn drop-bytes [m]
+  (let [byte-class (class (byte-array 0))
+        keys-to-drop (filter #(instance? byte-class (get m %)) (keys m))]
+    (apply dissoc m keys-to-drop)
+    )
+  )
+
 (defn get-tables [db]
   (debug db)
   (if db 
@@ -37,9 +44,10 @@
 (defn query-table [db table]
   (debug db table)
   (if db 
-    (let [result (take 20 (jdbc/query db (str "SELECT * FROM " table)))]
-      (debug result)
-      result 
+    (let [result (take 20 (jdbc/query db (str "SELECT * FROM " table)))
+          filtered (map drop-bytes result)]
+      (debug filtered)
+      filtered 
       )
     )
   )
