@@ -6,7 +6,7 @@
     :url "http://opensource.org/licenses/MIT"
     }
   :dependencies [
-    [org.clojure/clojure "1.5.1"]
+    [org.clojure/clojure "1.6.0"]
     [compojure "1.1.6"]
     [org.clojure/java.jdbc "0.3.3"]
     [log4j/log4j "1.2.17"]
@@ -25,6 +25,7 @@
         [org.clojure/tools.namespace "0.2.4"]
         [javax.servlet/servlet-api "2.5"]
         [org.hsqldb/hsqldb "1.8.0.10"]
+        [org.postgresql/postgresql "9.2-1004-jdbc41"]
         [ring-mock "0.1.5"]
         [ring/ring-devel "1.2.1"]
         ]

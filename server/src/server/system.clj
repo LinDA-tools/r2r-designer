@@ -1,9 +1,9 @@
 (ns server.system)
 
 (def db-spec {
-    :subprotocol "hsqldb" 
-    :subname "jdbc:mem:sample-db" 
-    :user "SA" 
+    :subprotocol "postgresql" 
+    :subname "mydb" 
+    :user "postgres" 
     :password ""
     }
   )

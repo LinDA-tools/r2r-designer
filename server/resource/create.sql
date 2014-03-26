@@ -1,3 +1,6 @@
+-- CREATE SCHEMA TEST;
+-- SET SCHEMA 'test';
+
 CREATE TABLE "Addresses" (
 	"ID" INT,
 	"city" VARCHAR(10),

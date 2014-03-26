@@ -17,6 +17,7 @@
     [ring.middleware.file-info :refer :all]
     [ring.middleware.file :refer :all]
     [server.core :refer :all]
+    [server.core.sparqlmap :refer :all]
     [server.system :as system]
     [server.handler :as handler]
     )
@@ -25,6 +26,7 @@
 ;; A Var containing an object representing the application under
 ;; development."
 (def system nil) 
+(defn db [] (:db system))
 
 (defn init
   "Creates and initializes the system under development in the Var
@@ -32,12 +34,13 @@
   []  
   (alter-var-root #'system
     (constantly (system/system)))
-  (let [db-fname "northwind.sql"]
-    (jdbc/db-do-commands (:db system) "DROP SCHEMA PUBLIC CASCADE")
-    (doseq [i (sql-commands (sql-script db-fname))] 
-      (debug i)
-      (jdbc/db-do-commands (:db system) true i)
-      )
+  (let [db-fname "northwind.postgres.sql"]
+    ;; (jdbc/db-do-commands (:db system) "DROP SCHEMA PUBLIC CASCADE;")
+    ;; (jdbc/db-do-commands (:db system) "CREATE SCHEMA PUBLIC;")
+    ;; (doseq [i (sql-commands (sql-script db-fname))] 
+    ;;   (debug i)
+    ;;   (jdbc/db-do-commands (:db system) true i)
+    ;;   )
     )
   )
 
@@ -66,8 +69,11 @@
   )
 
 (defn stop-server [server]
-  (.stop @server)
-  (reset! server nil))
+  (if @server
+    (.stop @server)
+    (reset! server nil)
+    )
+  )
 
 (defn stop
   "Stops the system if it is currently running, updates the Var

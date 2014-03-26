@@ -9,7 +9,18 @@
   )
 
 (defn sql-script [fname] (slurp (io/resource fname)))
-(defn sql-commands [f] (str/split f #";"))
+(defn sql-commands [f] 
+  (let [lines (str/split f #"\n")
+        no-comments (filter #(not (re-matches #"--.*" %)) lines)
+        no-comments-joined
+            (->> no-comments
+              (filter seq)
+              (str/join))]
+    (-> no-comments-joined 
+      (str/split #";")
+      )
+    )
+  )
 
 (defn drop-bytes [m]
   (let [byte-class (class (byte-array 0))
@@ -21,11 +32,10 @@
 (defn get-tables [db]
   (debug db)
   (if db 
-    (let [result (jdbc/query db "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES")
-          tables (map :table_name result)
-          filtered (filter #(not (.startsWith % "SYSTEM_")) tables)]
-      (debug filtered)
-      filtered 
+    (let [result (jdbc/query db "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'public'")
+          tables (map str/upper-case (map :table_name result))]
+      (debug tables)
+      tables 
       )
     )
   )
