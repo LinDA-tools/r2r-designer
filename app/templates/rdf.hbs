@@ -28,6 +28,7 @@
     </div>
 
     <div class="form-group">
+
       <label for="propertyInput" class="col-md-2 control-label">map</label>
       <div id="propertyInput" class="col-md-9">
         <select class="form-control">
@@ -40,8 +41,8 @@
         <div class="col-md-1 col-md-offset-2">
           <input type="radio" name="objectMapRadios" value="option1" checked>
         </div>
-        <div id="subjectTemplateInput" class="col-md-8">
-          <input type="text" class="form-control" placeholder="Ex. {Name}/{Address}"/>
+        <div id="columnSelect" class="col-md-8">
+          {{view App.ColumnSelectView}}
         </div>
         <div class="col-md-1">
           <button type="button" class="btn btn-primary">
@@ -52,8 +53,8 @@
         <div class="col-md-1 col-md-offset-2">
           <input type="radio" name="objectMapRadios" value="option1" checked>
         </div>
-        <div id="columnSelect" class="col-md-8">
-          {{view R2rDesigner.ColumnSelectView}}
+        <div id="subjectTemplateInput" class="col-md-8">
+          <input type="text" class="form-control" placeholder="Ex. {Name}/{Address}"/>
         </div>
         <div class="col-md-1">
           <button type="button" class="btn btn-primary">
@@ -62,7 +63,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </form>
 
   <div class="table-scrollable">
     <table class="table">

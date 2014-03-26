@@ -1,4 +1,4 @@
-R2rDesigner.Router.map(function () {
+App.Router.map(function () {
   this.resource('index', { path: '/' });
   this.resource('config', function () {
     this.route('datasource');
@@ -8,7 +8,7 @@ R2rDesigner.Router.map(function () {
   this.resource('rdf');
 });
 
-R2rDesigner.IndexRoute = Ember.Route.extend({
+App.IndexRoute = Ember.Route.extend({
   setupController: function(controller, model) {
     controller.set('content', model);
     this.controllerFor('config').set('content', this.store.find('config', 0));
@@ -19,7 +19,7 @@ R2rDesigner.IndexRoute = Ember.Route.extend({
   }
 });
 
-R2rDesigner.ConfigRoute = Ember.Route.extend({
+App.ConfigRoute = Ember.Route.extend({
   setupController: function(controller, model) {
     controller.set('content', this.store.find('config', 0));
     this.controllerFor('datasources').set('content', this.store.find('datasource'));
@@ -28,31 +28,31 @@ R2rDesigner.ConfigRoute = Ember.Route.extend({
   }
 });
 
-R2rDesigner.DatasourceRoute = Ember.Route.extend({
+App.DatasourceRoute = Ember.Route.extend({
   model: function(params) {
     return this.store.find('datasource', params.id);
   }
 });
 
-R2rDesigner.DatasourcesRoute = Ember.Route.extend({
+App.DatasourcesRoute = Ember.Route.extend({
   model : function() {
     return this.store.find('datasource');
   }
 });
 
-R2rDesigner.MappingsRoute = Ember.Route.extend({
+App.MappingsRoute = Ember.Route.extend({
   model : function() {
     return this.store.find('mapping');
   }
 });
 
-R2rDesigner.VocabsRoute = Ember.Route.extend({
+App.VocabsRoute = Ember.Route.extend({
   model : function() {
     return this.store.find('vocabulary');
   }
 });
 
-R2rDesigner.RdbRoute = Ember.Route.extend({
+App.RdbRoute = Ember.Route.extend({
   model : function() {
     return this.store.find('rdb');
   }

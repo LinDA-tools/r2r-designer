@@ -1,10 +1,10 @@
-R2rDesigner.Vocabulary = DS.Model.extend({
+App.Vocabulary = DS.Model.extend({
   active:     DS.attr('boolean'),
   shortname:  DS.attr('string'),
   uri:        DS.attr('string'),
 });
 
-R2rDesigner.Vocabulary.FIXTURES = [
+App.Vocabulary.FIXTURES = [
  {
    id: 1,
    active: false,

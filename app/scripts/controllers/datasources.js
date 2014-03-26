@@ -1,2 +1,2 @@
-R2rDesigner.DatasourcesController = Ember.ArrayController.extend({
+App.DatasourcesController = Ember.ArrayController.extend({
 });

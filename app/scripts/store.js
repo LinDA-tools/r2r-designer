@@ -1,1 +1,1 @@
-R2rDesigner.ApplicationAdapter = DS.FixtureAdapter.extend();
+App.ApplicationAdapter = DS.FixtureAdapter.extend();

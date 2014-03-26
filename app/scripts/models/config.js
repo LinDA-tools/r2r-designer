@@ -1,10 +1,10 @@
-R2rDesigner.Config = DS.Model.extend({
+App.Config = DS.Model.extend({
   base_uri : DS.attr('string'),
   current_ds : DS.attr('datasource'),
   datasources : DS.hasMany('datasource')
 });
 
-R2rDesigner.Config.FIXTURES = [{
+App.Config.FIXTURES = [{
   id : 0,
   base_uri : '',
 

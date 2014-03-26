@@ -1,4 +1,4 @@
-R2rDesigner.TableSelectView = Ember.Select.extend({
+App.TableSelectView = Ember.Select.extend({
   contentBinding : 'controller.controllers.rdb.tableNames',
   selectionBinding : 'controller.controllers.rdb.currentTable',
   valueBinding : 'controller.controllers.rdb.currentTable',

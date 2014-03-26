@@ -1,4 +1,4 @@
-R2rDesigner.Datasource = DS.Model.extend({
+App.Datasource = DS.Model.extend({
   config : DS.belongsTo('config'),
   
   name : DS.attr('string'),
@@ -10,7 +10,7 @@ R2rDesigner.Datasource = DS.Model.extend({
   password : DS.attr('string')
 });
 
-R2rDesigner.Datasource.FIXTURES = [{
+App.Datasource.FIXTURES = [{
   id : 0,
   name : 'Example MySQL Database',
 

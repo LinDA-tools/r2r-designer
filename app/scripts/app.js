@@ -1,4 +1,4 @@
-var R2rDesigner = window.R2rDesigner = Ember.Application.create({
+var App = window.App = Ember.Application.create({
   LOG_TRANSITIONS: true
 });
 

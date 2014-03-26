@@ -1,10 +1,10 @@
-R2rDesigner.Mapping = DS.Model.extend({
+App.Mapping = DS.Model.extend({
   active:     DS.attr('boolean'),
   shortname:  DS.attr('string'),
   uri:        DS.attr('string'),
 });
 
-R2rDesigner.Mapping.FIXTURES = [
+App.Mapping.FIXTURES = [
  {
    id: 1,
    active: true,

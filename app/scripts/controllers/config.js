@@ -1,4 +1,4 @@
-R2rDesigner.ConfigController = Ember.ObjectController.extend({
+App.ConfigController = Ember.ObjectController.extend({
   needs: ['config', 'datasources', 'mappings', 'vocabs', 'rdb'],
 
   new_name: "",

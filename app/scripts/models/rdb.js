@@ -1,4 +1,4 @@
-R2rDesigner.Rdb = DS.Model.extend({
+App.Rdb = DS.Model.extend({
 });
 
-R2rDesigner.Rdb.FIXTURES = [{ id : 0 }];
+App.Rdb.FIXTURES = [{ id : 0 }];

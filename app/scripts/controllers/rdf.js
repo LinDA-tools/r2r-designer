@@ -1,4 +1,4 @@
-R2rDesigner.RdfController = Ember.ObjectController.extend({
+App.RdfController = Ember.ObjectController.extend({
   needs: ['index', 'rdf', 'rdb'],
 
   subjectTemplate : '',

@@ -1,4 +1,4 @@
-R2rDesigner.RdbController = Ember.ObjectController.extend({
+App.RdbController = Ember.ObjectController.extend({
   needs: ['index', 'config', 'datasources', 'rdb'],
 
   currentTable : '',
