@@ -7,5 +7,3 @@ App.ColumnSelectView = Ember.Select.extend({
   change : function(e) {
   }
 });
-
-

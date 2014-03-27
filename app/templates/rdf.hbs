@@ -5,11 +5,7 @@
     <div class="form-group">
       <label for="subjectTemplateInput" class="col-md-2 control-label">Subject Template</label>
       <div id="subejectTemplateInput" class="col-md-9">
-        {{view Ember.TextField
-            classNames = "form-control"
-            placeholder = "Ex. {CustomerId}/{Address}#_"
-            valueBinding = "controllers.rdf.subjectTemplate"
-        }} 
+        {{view App.SubjectTemplateInputView}} 
       </div>
     </div>
 
