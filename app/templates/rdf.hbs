@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
   <h2>RDF View</h2>
 
   <form class="form-horizontal" role="form">
@@ -27,9 +27,7 @@
 
       <label for="propertyInput" class="col-md-2 control-label">map</label>
       <div id="propertyInput" class="col-md-9">
-        <select class="form-control">
-          <option>&lt;rdf:property&gt;</option>
-        </select>
+        {{view App.PredicateSelectView}}
       </div>
       <label class="col-md-1 control-label">to</label>
 
@@ -60,7 +58,19 @@
       </div>
     </div>
   </form>
-
+  <div class="row">
+    <div class="col-md-8">
+      <h4>Preview of output</h4>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+       <input type="text" class="form-control" placeholder="Search">
+       <span class="input-group-btn">
+          <button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button>
+       </span>
+      </div><!-- /input-group -->
+    </div>
+  </div>
   <div class="table-scrollable">
     <table class="table">
       <tr>
@@ -69,56 +79,13 @@
         <th>Object</th>
       </tr>
 
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
+      {{#each r in controllers.rdf.subjects}}
+        <tr>
+          {{#each d in r}}
+            <td>{{d}}</td>
+          {{/each}}
+        </tr>
+      {{/each}}
     </table>
   </div>
 </div>

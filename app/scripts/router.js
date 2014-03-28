@@ -16,6 +16,11 @@ App.IndexRoute = Ember.Route.extend({
     this.controllerFor('mappings').set('content', this.store.find('mapping'));
     this.controllerFor('vocabs').set('content', this.store.find('vocabulary'));
     this.controllerFor('rdb').set('content', this.store.find('rdb', 0));
+  },
+  actions : {
+    submitSubjectTemplate : function(e) {
+      this.controllerFor('rdf').send('submitSubjectTemplate', e);
+    }
   }
 });
 
