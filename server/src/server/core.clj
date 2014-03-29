@@ -53,6 +53,17 @@
     )
   )
 
+(defn query-column-names-map [db table]
+  (debug db table)
+  (if db 
+    (let [columns (query-column-names db table)
+          result (apply merge (for [i columns] {(keyword (str/lower-case i)) i}))]
+      (debug result)
+      result 
+      )
+    )
+  )
+
 (defn query-columns [db table columns]
   (debug db table columns)
   (if db 
@@ -65,7 +76,7 @@
   )
 
 (defn query-column [db table column]
-  (debug db table)
+  (debug db table column)
   (if db 
     (let [result (jdbc/query db (str "SELECT \"" column "\" FROM " table))
           values (map second (map first result))]
@@ -122,5 +133,17 @@
         result (take 20 (for [row data] (match-template template row)))]
     (debug result)
     result
+    )
+  )
+
+(defn predicate->column [db table template-str predicate column]
+  (debug db table template-str predicate column)
+  (let [template (parse-template-str template-str)
+        columns (parse-columns template-str)
+        data (query-columns db table (conj columns column))
+        column-kw (column->kw column)
+        result (take 20 (for [row data] [(match-template template row) predicate (column-kw row)]))]
+    (debug result)
+    result 
     )
   )

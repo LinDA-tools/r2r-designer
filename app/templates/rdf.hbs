@@ -5,16 +5,19 @@
     <div class="form-group">
       <label for="subjectTemplateInput" class="col-md-2 control-label">Subject Template</label>
       <div id="subejectTemplateInput" class="col-md-9">
-        {{view App.SubjectTemplateInputView}} 
+        {{view Ember.TextField
+          placeholder = "Ex. {CustomerId}/{Address}#"
+          classNames = "form-control"
+          valueBinding = "controllers.rdf.subjectTemplate"
+          action = "submitSubjectTemplate"
+        }}
       </div>
     </div>
 
     <div class="form-group">
       <label for="typeInput" class="col-md-2 control-label">Type</label>
       <div id="typeInput" class="col-md-9">
-        <select class="form-control">
-          <option>&lt;rdfs:class&gt;</option>
-        </select>
+        {{view App.TypeSelectView}}
       </div>
       <div class="col-md-1">
         <button type="button" class="btn btn-primary">
@@ -25,8 +28,8 @@
 
     <div class="form-group">
 
-      <label for="propertyInput" class="col-md-2 control-label">map</label>
-      <div id="propertyInput" class="col-md-9">
+      <label for="predicateInput" class="col-md-2 control-label">map</label>
+      <div id="predicateInput" class="col-md-9">
         {{view App.PredicateSelectView}}
       </div>
       <label class="col-md-1 control-label">to</label>
@@ -39,15 +42,15 @@
           {{view App.ColumnSelectView}}
         </div>
         <div class="col-md-1">
-          <button type="button" class="btn btn-primary">
+          <button type="button" class="btn btn-primary" {{action mapPredicateToColumn target='controllers.rdf'}}>
             <span class="glyphicon glyphicon-plus"></span>
           </button>
         </div>
 
         <div class="col-md-1 col-md-offset-2">
-          <input type="radio" name="objectMapRadios" value="option1" checked>
+          <input type="radio" name="objectMapRadios" value="option1">
         </div>
-        <div id="subjectTemplateInput" class="col-md-8">
+        <div id="objectTemplateInput" class="col-md-8">
           <input type="text" class="form-control" placeholder="Ex. {Name}/{Address}"/>
         </div>
         <div class="col-md-1">
