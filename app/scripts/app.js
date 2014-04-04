@@ -1,7 +1,6 @@
 'use strict';
 
-angular
-  .module('r2rDesignerApp', [
+angular.module('app', [
     'ngCookies',
     'ngResource',
     'ngSanitize',

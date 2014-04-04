@@ -1,25 +1,12 @@
-App.RdbController = Ember.ObjectController.extend({
-  needs: ['index', 'config', 'datasources', 'rdb'],
+'use strict';
 
-  currentTable : '',
-  currentColumns : [],
-  currentDataset : [],
+angular.module('app')
+  .controller('RdbCtrl', function ($scope, $http) {
 
-  tableNames : function() {
-    var result = [];
-    $.ajax({
-      url: 'http://localhost:3000/tables',
-      type: 'GET',
-      async: false,
-      success: function(data) { 
-        result = jsedn.toJS(jsedn.parse(data))
-      }
+    var host = 'http://localhost:3000/';
+    $scope.tables = [];
+
+    $http.get(host + 'tables').success(function(data) {
+      $scope.tables = jsedn.toJS(jsedn.parse(data));
     });
-
-    return result
-  }(),
-
-  actions : {
-  }
-});
-
+  });
