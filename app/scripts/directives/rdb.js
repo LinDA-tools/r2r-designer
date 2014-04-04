@@ -3,7 +3,7 @@
 angular.module('app')
   .directive('rdb', function () {
     return {
-      template: '<div></div>',
+      templateUrl: 'partials/rdb.html',
       restrict: 'E'
     };
   });

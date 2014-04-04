@@ -10,30 +10,20 @@
   </div>
 
   <div class="row">
-    <config>
-    </config>
+    <config />
   </div>
 
-  <ul class="nav nav-tabs" id="myTab">
-    <li class="active"><a href="#rdbview" data-toggle="tab">Database View</a></li>
-    <li><a href="#rdfview" data-toggle="tab">RDF View</a></li>
-    <li><a href="#viz" data-toggle="tab">Visualization</a></li>
-  </ul>
+  <hr />
 
-  <div class="tab-content">
-    <div class="tab-pane active" id="rdbview">
-      <rdb>
-      </rdb>
-    </div>
-    <div class="tab-pane" id="rdfview">
-      <rdf>
-      </rdf>
-    </div>
-    <div class="tab-pane" id="viz">
-    </div>
-  </div>
+  <tabset>
+    <tab heading="Database View">
+      <rdb />
+    </tab>
 
-  <div class="footer">
-    <p>2014 <span class="glyphicon glyphicon-heart"></span> Robert Danitz</p>
-  </div>
+    <tab heading="RDF View">
+    </tab>
+
+    <tab heading="Visualization" disabled="true">
+    </tab>
+  </tabset>
 </div>

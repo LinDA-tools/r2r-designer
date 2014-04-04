@@ -22,8 +22,8 @@
 (def app
   (-> (routes db-routes app-routes)
     handler/site
-    (cors/wrap-cors
-      :access-control-allow-origin #"http://localhost:9000") 
+    (cors/wrap-cors :access-control-allow-origin #"http://localhost:9000") 
+    (cors/wrap-cors :access-control-allow-origin #"http://127.0.0.1:9000") 
     ;; wrap-base-url
     )
   )
