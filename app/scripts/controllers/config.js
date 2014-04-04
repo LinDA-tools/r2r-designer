@@ -1,50 +1,82 @@
-App.ConfigController = Ember.ObjectController.extend({
-  needs: ['config', 'datasources', 'mappings', 'vocabs', 'rdb'],
+'use strict';
 
-  new_name: "",
-  new_connection_uri: "",
-  new_classname: "",
-  new_subprotocol: "",
-  new_subname: "",
-  new_username: "",
-  new_password: "",
+var ModalInstanceCtrl = function ($scope, $modalInstance, item, title) {
+  $scope.title = title;
+  $scope.selected = item;
 
-  actions : {
+  $scope.save = function () {
+    $modalInstance.close($scope.selected);
+  };
 
-    newDatasource : function () {
-      this.set('controllers.config.new_name', ""),
-      this.set('controllers.config.new_connection_uri', ""),
-      this.set('controllers.config.new_classname', "", ""),
-      this.set('controllers.config.new_subprotocol', ""),
-      this.set('controllers.config.new_subname', ""),
-      this.set('controllers.config.new_username', ""),
-      this.set('controllers.config.new_password', "")
-    },
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+};
 
-    saveNewDatasource : function () {
-      var new_ds = this.store.createRecord("Datasource", {
-        name : this.get('controllers.config.new_name'),
-        connection_uri : this.get('controllers.config.new_connection_uri'),
-        classname : this.get('controllers.config.new_classname'),
-        subprotocol : this.get('controllers.config.new_subprotocol'),
-        subname : this.get('controllers.config.new_subname'),
-        username : this.get('controllers.config.new_username'),
-        password : this.get('controllers.config.new_password')
+angular.module('app')
+  .controller('ConfigCtrl', function ($scope, $modal) {
+    $scope.datasources = [
+      {
+        'name' : 'MySQL Sample Database',
+        'subprotocol' : 'mysql',
+        'subname' : 'mysql',
+        'username' : 'mysql',
+        'password' : 'mysql'
+      },
+      {
+        'name' : 'Northwind Postgres Database',
+        'subprotocol' : 'psql',
+        'subname' : 'psql',
+        'username' : 'postgres',
+        'password' : 'postgres'
+      }
+    ];
+  
+    $scope.currentDs = $scope.datasources[0];
+
+    $scope.newDatasource = function () {
+      var modalInstance = $modal.open({
+        templateUrl: 'partials/config_datasource.html',
+        controller: ModalInstanceCtrl,
+        resolve: {
+          item: function () {
+            return {
+              'name' : '',
+              'subprotocol' : '',
+              'subname' : '',
+              'username' : '',
+              'password' : ''
+            };
+          },
+          title: function () {
+            return 'Create new datasource ...';
+          }
+        }
       });
-      this.get('controllers.config.datasources').addObject(new_ds);
-      this.set('controllers.config.current_ds', new_ds);
-    },
 
-    saveDatasource : function (ds) {
-      if (ds) {
-        ds.save();
-      }
-    },
+      modalInstance.result.then(function (item) {
+        $scope.datasources.push(item);
+      });
+    };
 
-    cancelDatasource : function (ds) {
-      if (ds) {
-        ds.rollback();
-      }
-    }
-  }
-});
+    $scope.editDatasource = function () {
+      var index = $scope.datasources.indexOf($scope.currentDs);
+
+      var modalInstance = $modal.open({
+        templateUrl: 'partials/config_datasource.html',
+        controller: ModalInstanceCtrl,
+        resolve: {
+          item: function () {
+            return $scope.datasources[index];
+          },
+          title: function () {
+            return 'Configure datasource ...';
+          }
+        }
+      });
+
+      modalInstance.result.then(function (item) {
+        $scope.datasources[index] = item;
+      });
+    };
+  });

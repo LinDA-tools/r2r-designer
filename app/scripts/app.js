@@ -1,11 +1,20 @@
-var App = window.App = Ember.Application.create({
-  LOG_TRANSITIONS: true
-});
+'use strict';
 
-/* Order and include as you please. */
-require('scripts/controllers/*');
-require('scripts/store');
-require('scripts/models/*');
-require('scripts/routes/*');
-require('scripts/views/*');
-require('scripts/router');
+angular
+  .module('app', [
+    'ngCookies',
+    'ngResource',
+    'ngSanitize',
+    'ngRoute',
+    'ui.bootstrap'
+  ])
+  .config(function ($routeProvider) {
+    $routeProvider
+      .when('/', {
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+  });

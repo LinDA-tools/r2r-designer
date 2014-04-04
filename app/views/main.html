@@ -1,0 +1,39 @@
+<div class="container" ng-controller="MainCtrl">
+
+  <div class="header">
+    <ul class="nav nav-pills pull-right">
+      <li class="active"><a ng-href="#">Home</a></li>
+      <li><a ng-href="#">About</a></li>
+      <li><a ng-href="#">Contact</a></li>
+    </ul>
+    <h3 class="text-muted">{{title}}</h3>
+  </div>
+
+  <div class="row">
+    <config>
+    </config>
+  </div>
+
+  <ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#rdbview" data-toggle="tab">Database View</a></li>
+    <li><a href="#rdfview" data-toggle="tab">RDF View</a></li>
+    <li><a href="#viz" data-toggle="tab">Visualization</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="rdbview">
+      <rdb>
+      </rdb>
+    </div>
+    <div class="tab-pane" id="rdfview">
+      <rdf>
+      </rdf>
+    </div>
+    <div class="tab-pane" id="viz">
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>2014 <span class="glyphicon glyphicon-heart"></span> Robert Danitz</p>
+  </div>
+</div>
