@@ -32,8 +32,8 @@ END) ROLE FROM EMP
           {{column}}
         </th>
       </tr>
-      <tr ng-repeat="row in rdb.data" ng-animate="'animate'">
-        <td ng-repeat="item in row track by $index" ng-animate="'animate'">
+      <tr ng-repeat="row in rdb.data">
+        <td ng-repeat="item in row track by $index">
           {{item}}
         </td>
       </tr>

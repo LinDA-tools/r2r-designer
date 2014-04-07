@@ -6,15 +6,15 @@ angular.module('app')
     $scope.rdb = Rdb;
     $scope.jsedn = Jsedn;
 
-    var host = 'http://localhost:3000/';
+    $scope.host = 'http://localhost:3000/';
 
-    $http.get(host + 'tables').success(function(data) {
+    $http.get($scope.host + 'tables').success(function(data) {
       $scope.rdb.tables = $scope.jsedn.toJS($scope.jsedn.parse(data));
     });
 
     $scope.$watch('rdb.table', function () {
       if ($scope.rdb.table !== '') {
-        $http.get(host + 'columns?table=' + $scope.rdb.table).success(function(data) {
+        $http.get($scope.host + 'columns?table=' + $scope.rdb.table).success(function(data) {
           $scope.rdb.columnsMap = $scope.jsedn.toJS($scope.jsedn.parse(data));
         });
       }
@@ -22,7 +22,7 @@ angular.module('app')
 
     $scope.$watch('rdb.columnsMap', function () {
       if ($scope.rdb.table !== '') {
-        $http.get(host + 'table?name=' + $scope.rdb.table).success(function(data) {
+        $http.get($scope.host + 'table?name=' + $scope.rdb.table).success(function(data) {
           var mydata = $scope.jsedn.parse(data);
           var columnKeys = mydata.val[0].keys;
 

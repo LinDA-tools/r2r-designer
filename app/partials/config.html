@@ -3,7 +3,7 @@
     <div class="form-group">
       <label for="dataSourceSelect" class="col-md-2 control-label">Data Source</label>
       <div id="dataSourceSelect" class="col-md-8">
-        <select class="form-control" ng-model="currentDs" ng-options="datasource.name for datasource in datasources">
+        <select class="form-control" ng-model="config.datasource" ng-options="datasource.name for datasource in config.datasources">
           <option value="">Choose ...</option>
         </select>
       </div>
@@ -15,7 +15,7 @@
     <div class="form-group">
       <label for="baseUriInput" class="col-md-2 control-label">Base URI</label>
       <div id="baseUriInput" class="col-md-8">
-        <input class="form-control" placeholder="http://linda-project.eu/example/#" ng-model="baseUri" />
+        <input class="form-control" placeholder="http://linda-project.eu/example/#" ng-model="config.baseUri" />
       </div>
     </div>
   </form>
