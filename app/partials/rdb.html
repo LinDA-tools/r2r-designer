@@ -5,7 +5,7 @@
       <label>
         <input type="radio" name="logicalTableRadios" value="option1" checked>
         <div id="tableSelect">
-          <select class="form-control" ng-model="currentTable" ng-options="i for i in tables">
+          <select class="form-control" ng-model="table" ng-options="i for i in tables">
             <option value="">Select Table ...</option>
           </select>
         </div>
@@ -28,19 +28,18 @@ END) ROLE FROM EMP
   <div class="table-scrollable">
     <table class="table">
       <tr>
-        #each column in controllers.rdb.currentColumns
-          <th>{{column}}</th>
-        /each
+        <th ng-repeat="column in columns">
+          {{column}}
+        </th>
       </tr>
-      #each row in controllers.rdb.currentDataset
-        <tr>
-          #each item in row
-            <td>
-              item
-            </td>
-          /each
-        </tr>
-      /each
+      <tr ng-repeat="row in data">
+        <td ng-repeat="item in row track by $index">
+          {{item}}
+        </td>
+        <!-- <td ng&#45;repeat="item in row"> -->
+        <!--   {{item}} -->
+        <!-- </td> -->
+      </tr>
     </table>
   </div>
 </div>
