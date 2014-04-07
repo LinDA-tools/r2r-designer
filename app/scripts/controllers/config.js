@@ -1,6 +1,7 @@
 'use strict';
 
 var ModalInstanceCtrl = function ($scope, $modalInstance, item, title) {
+
   $scope.title = title;
   $scope.selected = item;
 
@@ -14,25 +15,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item, title) {
 };
 
 angular.module('app')
-  .controller('ConfigCtrl', function ($scope, $modal) {
-    $scope.datasources = [
-      {
-        'name' : 'MySQL Sample Database',
-        'subprotocol' : 'mysql',
-        'subname' : 'mysql',
-        'username' : 'mysql',
-        'password' : 'mysql'
-      },
-      {
-        'name' : 'Northwind Postgres Database',
-        'subprotocol' : 'psql',
-        'subname' : 'psql',
-        'username' : 'postgres',
-        'password' : 'postgres'
-      }
-    ];
+  .controller('ConfigCtrl', function ($scope, $modal, Config) {
   
-    $scope.currentDs = $scope.datasources[0];
+    $scope.config = Config;
+    $scope.datasource = $scope.config.datasources[0];
 
     $scope.newDatasource = function () {
       var modalInstance = $modal.open({
@@ -55,19 +41,19 @@ angular.module('app')
       });
 
       modalInstance.result.then(function (item) {
-        $scope.datasources.push(item);
+        $scope.config.datasources.push(item);
       });
     };
 
     $scope.editDatasource = function () {
-      var index = $scope.datasources.indexOf($scope.currentDs);
+      var index = $scope.config.datasources.indexOf($scope.config.datasource);
 
       var modalInstance = $modal.open({
         templateUrl: 'partials/config_datasource.html',
         controller: ModalInstanceCtrl,
         resolve: {
           item: function () {
-            return $scope.datasources[index];
+            return $scope.config.datasources[index];
           },
           title: function () {
             return 'Configure datasource ...';
@@ -76,7 +62,7 @@ angular.module('app')
       });
 
       modalInstance.result.then(function (item) {
-        $scope.datasources[index] = item;
+        $scope.config.datasources[index] = item;
       });
     };
   });

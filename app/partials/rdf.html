@@ -5,7 +5,7 @@
     <div class="form-group">
       <label for="subjectTemplateInput" class="col-md-2 control-label">Subject Template</label>
       <div id="subejectTemplateInput" class="col-md-9">
-        <input class="form-control" placeholder="Ex. {CustomerId}/{Address}#" ng-model="subjectTemplate" />
+        <input class="form-control" placeholder="Ex. {CustomerId}/{Address}#" ng-model="subjectTemplate" ng-blur="submitSubjectTemplate(subjectTemplate)" />
       </div>
     </div>
 
@@ -61,34 +61,26 @@
       </div>
     </div>
   </form>
-  <div class="row">
-    <div class="col-md-8">
-      <h4>Preview of output</h4>
+
+  <form class="form-search"> 
+    <div>
+      <input type="text" ng-model="search" placeholder="Search ..." class="form-control search-query">
     </div>
-    <div class="col-md-4">
-      <div class="input-group">
-       <input type="text" class="form-control" placeholder="Search">
-       <span class="input-group-btn">
-          <button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button>
-       </span>
-      </div><!-- /input-group -->
-    </div>
-  </div>
+  </form>
+
   <div class="table-scrollable">
     <table class="table">
       <tr>
         <th>Subject</th>
-        <th>Predicate</th>
+        <th>Property</th>
         <th>Object</th>
       </tr>
 
-      #each r in controllers.rdf.subjects
-        <tr>
-          #each d in r
-            <td>d</td>
-          /each
-        </tr>
-      /each
+      <tr ng-repeat="triple in triples | filter:search">
+        <td>{{triple[0]}}</td>
+        <td>{{triple[1]}}</td>
+        <td>{{triple[2]}}</td>
+      </tr>
     </table>
   </div>
 </div>
