@@ -1,32 +1,29 @@
 'use strict';
 
 angular.module('app')
-  .controller('RdbCtrl', function ($scope, $http) {
+  .controller('RdbCtrl', function ($scope, $http, Rdb, Jsedn) {
 
-    $scope.tables = [];
-    $scope.data = [];
-    $scope.table = '';
-    $scope.columns = [];
-    $scope.columnsMap = [];
+    $scope.rdb = Rdb;
+    $scope.jsedn = Jsedn;
 
     var host = 'http://localhost:3000/';
 
     $http.get(host + 'tables').success(function(data) {
-      $scope.tables = jsedn.toJS(jsedn.parse(data));
+      $scope.rdb.tables = $scope.jsedn.toJS($scope.jsedn.parse(data));
     });
 
-    $scope.$watch('table', function () {
-      if ($scope.table !== '') {
-        $http.get(host + 'columns?table=' + $scope.table).success(function(data) {
-          $scope.columnsMap = jsedn.toJS(jsedn.parse(data));
+    $scope.$watch('rdb.table', function () {
+      if ($scope.rdb.table !== '') {
+        $http.get(host + 'columns?table=' + $scope.rdb.table).success(function(data) {
+          $scope.rdb.columnsMap = $scope.jsedn.toJS($scope.jsedn.parse(data));
         });
       }
     });
 
-    $scope.$watch('columnsMap', function () {
-      if ($scope.table !== '') {
-        $http.get(host + 'table?name=' + $scope.table).success(function(data) {
-          var mydata = jsedn.parse(data);
+    $scope.$watch('rdb.columnsMap', function () {
+      if ($scope.rdb.table !== '') {
+        $http.get(host + 'table?name=' + $scope.rdb.table).success(function(data) {
+          var mydata = $scope.jsedn.parse(data);
           var columnKeys = mydata.val[0].keys;
 
           var filterColumns = function (cols, kw) {
@@ -37,8 +34,8 @@ angular.module('app')
             return result[0][1];
           };
 
-          $scope.columns = columnKeys.map(function (i) { return filterColumns($scope.columnsMap, i); });
-          $scope.data = mydata.val.map(function (i) { return i.vals; });
+          $scope.rdb.columns = columnKeys.map(function (i) { return filterColumns($scope.rdb.columnsMap, i); });
+          $scope.rdb.data = mydata.val.map(function (i) { return i.vals; });
         });
       }
     });
