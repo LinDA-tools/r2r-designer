@@ -1,0 +1,95 @@
+<div ng-controller="RdfCtrl">
+  <h2>RDF View</h2>
+
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label for="subjectTemplateInput" class="col-md-2 control-label">Subject Template</label>
+      <div id="subejectTemplateInput" class="col-md-9">
+        <input class="form-control" placeholder="Ex. {CustomerId}/{Address}#" ng-model="subjectTemplate" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="typeInput" class="col-md-2 control-label">Type</label>
+      <div id="typeInput" class="col-md-9">
+        <select class="form-control" ng-model="type" ng-options="i for i in types">
+          <option value="">Select type ... </option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="predicateInput" class="col-md-2 control-label">map</label>
+      <div id="predicateInput" class="col-md-9">
+        <select class="form-control" ng-model="property" ng-options="i for i in properties">
+            <option value="">Select property ... </option>
+        </select>
+      </div>
+      <label class="col-md-1 control-label">to</label>
+
+      <div class="radio">
+        <div class="col-md-1 col-md-offset-2">
+          <input type="radio" name="objectMapRadios" value="option1" checked>
+        </div>
+        <div id="columnSelect" class="col-md-8">
+          <select class="form-control" ng-model="column" ng-options="i for i in rdb.columns">
+            <option value="">Select column ... </option>
+          </select>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+        </div>
+
+        <div class="col-md-1 col-md-offset-2">
+          <input type="radio" name="objectMapRadios" value="option1">
+        </div>
+        <div id="objectTemplateInput" class="col-md-8">
+          <input type="text" class="form-control" placeholder="Ex. {Name}/{Address}"/>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-md-8">
+      <h4>Preview of output</h4>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+       <input type="text" class="form-control" placeholder="Search">
+       <span class="input-group-btn">
+          <button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button>
+       </span>
+      </div><!-- /input-group -->
+    </div>
+  </div>
+  <div class="table-scrollable">
+    <table class="table">
+      <tr>
+        <th>Subject</th>
+        <th>Predicate</th>
+        <th>Object</th>
+      </tr>
+
+      #each r in controllers.rdf.subjects
+        <tr>
+          #each d in r
+            <td>d</td>
+          /each
+        </tr>
+      /each
+    </table>
+  </div>
+</div>
+
