@@ -39,9 +39,6 @@ angular.module('app')
           }
         }
       });
-      this.get('controllers.config.datasources').addObject(new_ds);
-      this.set('controllers.config.current_ds', new_ds);
-    },
 
       modalInstance.result.then(function (item) {
         $scope.config.datasources.push(item);
