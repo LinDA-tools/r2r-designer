@@ -18,9 +18,8 @@
     [ring.middleware.file-info :refer :all]
     [ring.middleware.file :refer :all]
     [clj-http.client :as client]
-    [server.core :refer :all]
-    [server.core.sparqlmap :refer :all]
-    [server.core.lov :as lov]
+    [server.core.db :refer :all]
+    [server.core.lov :refer :all]
     [server.system :as system]
     [server.handler :as handler]
     )

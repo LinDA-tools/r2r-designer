@@ -1,4 +1,4 @@
-(ns server.core
+(ns server.core.db
   (:require
     [clojure.java.io :as io]
     [clojure.java.jdbc :as jdbc]

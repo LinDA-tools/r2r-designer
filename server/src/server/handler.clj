@@ -4,7 +4,8 @@
     [compojure.core :refer :all]
     [compojure.handler :as handler]
     [compojure.route :as route]
-    [server.routes.db :refer :all]
+    [server.routes.db :as db]
+    [server.routes.lov :as lov]
     )
   )
 
@@ -20,7 +21,10 @@
   )
 
 (def app
-  (-> (routes db-routes app-routes)
+  (-> (routes 
+        db/db-routes
+        lov/lov-routes
+        app-routes)
     handler/site
     (cors/wrap-cors :access-control-allow-origin #"http://localhost:9000") 
     (cors/wrap-cors :access-control-allow-origin #"http://127.0.0.1:9000") 
