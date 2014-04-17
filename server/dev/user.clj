@@ -16,8 +16,9 @@
     [ring.server.standalone :refer :all]
     [ring.middleware.file-info :refer :all]
     [ring.middleware.file :refer :all]
-    [server.core :refer :all]
+    [server.core.db :refer :all]
     [server.core.sparqlmap :refer :all]
+    [server.core.lov :refer :all]
     [server.system :as system]
     [server.handler :as handler]
     )
