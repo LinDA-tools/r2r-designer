@@ -13,6 +13,8 @@
     [org.clojure/tools.logging "0.2.6"]
     [ring-server "0.3.1"]
     [ring-cors "0.1.0"]
+    [org.clojure/core.async "0.1.278.0-76b25b-alpha"]
+    [clj-http "0.9.1"]
     ]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler server.handler/app}
