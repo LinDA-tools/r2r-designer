@@ -3,7 +3,7 @@
 describe('Service: Jsedn', function () {
 
   // load the service's module
-  beforeEach(module('r2rDesignerApp'));
+  beforeEach(module('app'));
 
   // instantiate service
   var Jsedn;

@@ -73,34 +73,33 @@ body {
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-    .container {
-        max-width: 730px;
-    }
+  .container {
+      max-width: 730px;
+  }
 
-    /* Remove the padding we set earlier */
-    .header,
-    .marketing,
-    .footer {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    /* Space out the masthead */
-    .header {
-        margin-bottom: 30px;
-    }
-    /* Remove the bottom border on the jumbotron for visual effect */
-    .jumbotron {
-        border-bottom: 0;
-    }
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+      padding-left: 0;
+      padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+      margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+      border-bottom: 0;
+  }
 }
 
-.table-scrollable{
+.table-scrollable {
     overflow: auto;
 }
 
 .animate-enter, 
-.animate-leave
-{ 
+.animate-leave { 
   -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
   -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
   -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
@@ -115,4 +114,18 @@ body {
   opacity: 1;
   top: 0;
   height: 30px;
+}
+
+.prefix {
+  color: lightGrey;
+}
+
+.localName {
+  margin-right: 2em;
+}
+
+.score {
+  float: right;
+  font-style: italic;
+  color: lightBlue;
 }

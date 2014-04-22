@@ -16,6 +16,7 @@ angular.module('app')
     $scope.column = '';
     $scope.property = '';
     $scope.triples = [];
+    $scope.prefixMap = {};
 
     $scope.properties = [
       'rdf:type',
@@ -35,6 +36,37 @@ angular.module('app')
       'rdfs:seeAlso',
       'rdfs:isDefinedBy'
     ];
+
+    $scope.getProperties = function (val) {
+      return $http.get('http://lov.okfn.org/dataset/lov/api/v2/autocomplete/terms', {
+        params: {
+          q: val,
+          type: 'property'
+        }
+      }).then(function (res) {
+        var properties = [];
+        angular.forEach(res.data.results, function(item) {
+          var prefix = item.prefixedName.slice(0, item.prefixedName.length - item.localName.length - 1);
+          if ($scope.prefixMap[prefix] === undefined) {
+            $http.get('http://lov.okfn.org/dataset/lov/api/v2/autocomplete/vocabularies', {
+              params: {
+                q: prefix
+              }
+            }).then(function (res) {
+              $scope.prefixMap[prefix] = res.data.results[0].uri;
+            });
+          }
+
+          properties.push({
+            uri: item.uri,
+            localName: item.localName,
+            prefix: prefix + ':',
+            score: item.score.toPrecision(3)
+          });
+        });
+        return properties;
+      });
+    };
 
     $scope.types = [
       'rdf:XMLLiteral',
