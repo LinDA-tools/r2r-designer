@@ -1,19 +1,47 @@
 (ns server.core.lov
   (:require
-    [clj-http.client :as client]
     [clojure.data.json :as json]
+    [clojure.core.async :as async :refer [go go-loop chan timeout <! >! <!! >!! alts! alts!! alt! alt!!]]
+    [clj-http.client :as client]
+    [server.system :as system]
     )
   )
 
 (def host "http://lov.okfn.org/dataset/lov")
-(def api "/api/v1/search")
+(def search-api "/api/v1/search")
+(def autocomplete-api "/api/v2/autocomplete/")
 
-(defn search [needle type]
-  (let [response (client/get (str host api) {:query-params {:q needle :type type}})
+(defn listen! [lov]
+  (go-loop []
+    (let [v (<! @(:mom-adapter lov))]
+      (if v (swap! (:recommender lov) 
+        (fn [m] 
+          (let [payload (dissoc v :topic)
+                _key (first (keys payload))
+                _val (get payload _key)]
+            (assoc m _key _val)
+            )
+          )
+        ))
+      )
+    (recur)
+    )
+  )
+
+(def search (memoize (fn [needle type]
+  (let [response (client/get (str host search-api) {:query-params {:q needle :type type}})
         json-data (json/read-str (:body response))
         results (get json-data "results")
         ]
     results
+    )))
+  )
+
+(defn update-recommender! [lov entity type]
+  (go
+    (let [result (search entity type)]
+      (>! @(:mom-adapter lov) result) 
+      )
     )
   )
 
@@ -32,4 +60,3 @@
 (defn search-class [needle]
   (search needle "http://www.w3.org/2000/01/rdf-schema#Class")
   )
-

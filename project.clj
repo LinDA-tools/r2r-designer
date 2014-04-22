@@ -15,6 +15,7 @@
     [ring-cors "0.1.0"]
     [clj-http "0.9.1"]
     [org.clojure/data.json "0.2.4"]
+    [org.clojure/core.async "0.1.278.0-76b25b-alpha"]
     ]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler server.handler/app}
