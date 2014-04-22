@@ -24,48 +24,49 @@
     </div>
 
     <div class="form-group">
-      <label for="predicateInput" class="col-md-2 control-label">map</label>
-      <div id="predicateInput" class="col-md-9">
-        <select class="form-control" ng-model="property" ng-options="i for i in properties">
-            <option value="">Select property ... </option>
+      <label for="columnInput" class="col-md-2 control-label">Map</label>
+      <div id="columnSelect" class="col-md-9">
+        <select class="form-control" ng-model="column" ng-options="i for i in rdb.columns">
+          <option value="">Column ... </option>
         </select>
       </div>
       <label class="col-md-1 control-label">to</label>
+    </div>
 
-      <input type="text" ng-model="asyncSelected" placeholder="Locations loaded via $http" 
-             typeahead="property.uri for property in getProperties($viewValue) | filter:$viewValue" 
-             typeahead-loading="loadingLocations" typeahead-template-url="partials/properties_ta.html"
-             class="form-control" />
+    <div class="form-group">
+      <div class="col-md-1 col-md-offset-2">
+        <input type="radio" name="objectMapRadios" value="option1" checked>
+      </div>
+      <div id="propertyInput" class="col-md-8">
+        <select class="form-control" ng-model="property" ng-options="i for i in properties">
+          <option value="">Select suggested properties ... </option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </div>
+    </div>
 
-      <div class="radio">
-        <div class="col-md-1 col-md-offset-2">
-          <input type="radio" name="objectMapRadios" value="option1" checked>
-        </div>
-        <div id="columnSelect" class="col-md-8">
-          <select class="form-control" ng-model="column" ng-options="i for i in rdb.columns">
-            <option value="">Select column ... </option>
-          </select>
-        </div>
-        <div class="col-md-1">
-          <button type="button" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>
-          </button>
-        </div>
-
-        <div class="col-md-1 col-md-offset-2">
-          <input type="radio" name="objectMapRadios" value="option1">
-        </div>
-        <div id="objectTemplateInput" class="col-md-8">
-          <input type="text" class="form-control" placeholder="Ex. {Name}/{Address}"/>
-        </div>
-        <div class="col-md-1">
-          <button type="button" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>
-          </button>
-        </div>
+    <div class="form-group">
+      <div class="col-md-1 col-md-offset-2">
+        <input type="radio" name="objectMapRadios" value="option2">
+      </div>
+      <div class="col-md-8">
+        <input class="form-control" type="text" ng-model="asyncSelected" placeholder="Search Linked Open Vocabulary (LOV) ..." 
+               typeahead="property.uri for property in getProperties($viewValue) | filter:$viewValue" 
+               typeahead-loading="loadingLocations" typeahead-template-url="partials/properties_ta.html" />
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
       </div>
     </div>
   </form>
+
+  <hr />
 
   <form class="form-search"> 
     <div>
@@ -77,7 +78,7 @@
     <table class="table">
       <tr>
         <th>Subject</th>
-        <th>Property</th>
+        <th>Predicate</th>
         <th>Object</th>
       </tr>
 

@@ -4,11 +4,11 @@
 angular.module('app')
   .controller('RdfCtrl', function ($scope, $http, Rdb, Config, Jsedn) {
 
+    $scope.icons = [{'value':'Gear','label':'<i class=\'fa fa-gear\'></i> Gear'},{'value':'Globe','label':'<i class=\'fa fa-globe\'></i> Globe'},{'value':'Heart','label':'<i class=\'fa fa-heart\'></i> Heart'},{'value':'Camera','label':'<i class=\'fa fa-camera\'></i> Camera'}];
+
     $scope.rdb = Rdb;
     $scope.config = Config;
     $scope.jsedn = Jsedn;
-
-    $scope.host = 'http://localhost:3000/';
 
     $scope.subjectTemplate = '';
     $scope.objectTemplate = '';
@@ -20,21 +20,9 @@ angular.module('app')
 
     $scope.properties = [
       'rdf:type',
-      'rdf:first',
-      'rdf:rest',
-      'rdf:value',
-      'rdf:subject',
-      'rdf:predicate',
-      'rdf:object',
-      'rdfs:subClassOf',
-      'rdfs:subPropertyOf',
-      'rdfs:domain',
-      'rdfs:range',
       'rdfs:label',
       'rdfs:comment',
-      'rdfs:member',
-      'rdfs:seeAlso',
-      'rdfs:isDefinedBy'
+      'rdfs:seeAlso'
     ];
 
     $scope.getProperties = function (val) {
@@ -89,7 +77,7 @@ angular.module('app')
       if (($scope.rdb.table !== '') && (template !== '')) {
         var triples = [];
         
-        $http.get($scope.host +
+        $http.get($scope.rdb.host +
                   'subjects' +
                   '?table=' + $scope.rdb.table +
                   '&template=' + escape($scope.config.baseUri + template)).success(function(data) {
