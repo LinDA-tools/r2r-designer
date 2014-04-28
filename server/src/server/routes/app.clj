@@ -1,33 +1,25 @@
-(ns server.handler
-  (:require 
+(ns server.routes.app
+  (:require
     [ring.middleware.cors :as cors]
     [compojure.core :refer :all]
     [compojure.handler :as handler]
     [compojure.route :as route]
-    [server.routes.db :as db]
-    [server.routes.lov :as lov]
+    [server.routes.db :refer [db-routes-fn]]
+    [server.routes.lov :refer [lov-routes-fn]]
     )
   )
-
-(defn init []
-  (println "server is starting"))
-
-(defn destroy []
-  (println "server is shutting down"))
 
 (defroutes app-routes
   (route/resources "/")
   (route/not-found "Not Found!")
   )
 
-(def app
-  (-> (routes 
-        db/db-routes
-        lov/lov-routes
-        app-routes)
+(defn app-fn [component]
+  (-> (routes (db-routes-fn component) 
+              app-routes)
     handler/site
     (cors/wrap-cors :access-control-allow-origin #"http://localhost:9000") 
     (cors/wrap-cors :access-control-allow-origin #"http://127.0.0.1:9000") 
-    ;; wrap-base-url
     )
   )
+

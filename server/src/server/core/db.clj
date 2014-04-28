@@ -4,7 +4,6 @@
     [clojure.java.jdbc :as jdbc]
     [clojure.string :as str]
     [clojure.tools.logging :refer [info debug error spy]]
-    [server.system :as system]
     )
   )
 

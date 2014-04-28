@@ -1,5 +1,7 @@
 (ns server.core.lov
   (:require
+    [clojure.tools.logging :refer (info warn error debug)]
+    [clojure.core.async :as async :refer [go go-loop chan timeout <! >! <!! >!! alts! alts!! alt! alt!!]]
     [clj-http.client :as client]
     [clojure.data.json :as json]
     )
