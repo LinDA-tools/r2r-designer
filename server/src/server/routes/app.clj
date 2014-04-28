@@ -16,6 +16,7 @@
 
 (defn app-fn [component]
   (-> (routes (db-routes-fn component) 
+              (lov-routes-fn component) 
               app-routes)
     handler/site
     (cors/wrap-cors :access-control-allow-origin #"http://localhost:9000") 

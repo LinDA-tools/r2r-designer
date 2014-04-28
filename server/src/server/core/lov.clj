@@ -7,11 +7,26 @@
     )
   )
 
-(def host "http://lov.okfn.org/dataset/lov")
-(def api "/api/v1/search")
+(defn listen! [lov]
+  (go-loop []
+    (let [v (<! @(:mom-adapter lov))]
+      (if v (swap! (:recommender lov)
+        (fn [m]
+          (let [payload (dissoc v :topic)
+                _key (first (keys payload))
+                _val (get payload _key)]
+            (assoc m _key _val)
+            )
+          )
+        ))
+      )
+    (recur)
+    )
+  )
 
-(defn search [needle type]
-  (let [response (client/get (str host api) {:query-params {:q needle :type type}})
+(defn search [lov needle type]
+  (let [api (:search-api lov)
+        response (client/get api {:query-params {:q needle :type type}})
         json-data (json/read-str (:body response))
         results (get json-data "results")
         ]
@@ -27,10 +42,10 @@
     )
   )
 
-(defn search-property [needle]
-  (search needle "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property")
+(defn search-property [lov needle]
+  (search lov needle "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property")
   )
 
-(defn search-class [needle]
-  (search needle "http://www.w3.org/2000/01/rdf-schema#Class")
+(defn search-class [lov needle]
+  (search lov needle "http://www.w3.org/2000/01/rdf-schema#Class")
   )

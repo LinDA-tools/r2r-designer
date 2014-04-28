@@ -7,7 +7,7 @@
     )
   )
 
-(defrecord Ring [server app-fn opts]
+(defrecord Ring [server app-fn opts db-api lov-api]
   c/Lifecycle
 
   (start [component] 
@@ -30,6 +30,7 @@
 (defn new-ring [app-fn opts]
   (map->Ring {:opts opts 
               :server (atom nil) 
-              :app (atom nil) 
-              :app-fn app-fn})
+              :app-fn app-fn
+              :db-api "/api/v1/db"
+              :lov-api "/api/v1/lov"})
   )

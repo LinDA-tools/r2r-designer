@@ -7,13 +7,12 @@
     )
   )
 
-(defrecord LOV [search-api autocomplete-api recommender mom-adapter]
+(defrecord LOV [recommender mom-adapter api search-api autocomplete-api]
   c/Lifecycle
 
   (start [component]
     (info "starting LOV adapter ...")
     (reset! mom-adapter (chan 10))
-    (info component)
     (let [mom (:mom component)
           publishers (:publishers mom)]
       (if-not (:lov @publishers)

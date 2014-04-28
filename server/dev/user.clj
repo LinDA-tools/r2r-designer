@@ -43,7 +43,7 @@
                  :subname "mydb" 
                  :user "postgres" 
                  :password ""}
-        ring-opts {:port 8080
+        ring-opts {:port 3000
                    :open-browser? false
                    :join true
                    :auto-reload? true}]
