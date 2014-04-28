@@ -9,16 +9,18 @@
 
 (defn listen! [lov]
   (go-loop []
-    (let [v (<! @(:mom-adapter lov))]
-      (if v (swap! (:recommender lov)
-        (fn [m]
-          (let [payload (dissoc v :topic)
-                _key (first (keys payload))
-                _val (get payload _key)]
-            (assoc m _key _val)
+    (if @(:mom-adapter lov)
+      (let [v (<! @(:mom-adapter lov))]
+        (if v (swap! (:recommender lov)
+          (fn [m]
+            (let [payload (dissoc v :topic)
+                  _key (first (keys payload))
+                  _val (get payload _key)]
+              (assoc m _key _val)
+              )
             )
-          )
-        ))
+          ))
+        )
       )
     (recur)
     )

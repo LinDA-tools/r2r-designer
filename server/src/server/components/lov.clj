@@ -27,8 +27,9 @@
   (stop [component]
     (info "stopping LOV adapter ...")
     (reset! (:recommender component) {})
-    (close! @mom-adapter)
-    (reset! mom-adapter nil)
+    (if @mom-adapter
+      (close! @mom-adapter)
+      (reset! mom-adapter nil))
     component
     )
   )
