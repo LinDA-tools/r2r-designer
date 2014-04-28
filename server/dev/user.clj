@@ -12,8 +12,9 @@
     [clojure.string :as str]
     [clojure.test :as test]
     [clojure.tools.namespace.repl :refer (refresh refresh-all)]
-    [clojure.tools.logging :refer (info error debug)]
+    [clojure.tools.logging :refer (info warn error debug)]
     [clojure.core.async :as async :refer [pub sub chan close! timeout <! >! <!! >!! alts! alts!! alt! alt!!]]
+    [com.stuartsierra.component :as c]
     [ring.server.standalone :refer :all]
     [ring.middleware.file-info :refer :all]
     [ring.middleware.file :refer :all]
@@ -21,92 +22,50 @@
     [server.core.sparqlmap :refer :all]
     [server.core.lov :refer :all]
     [clj-http.client :as client]
-    [server.core.sparqlmap :refer :all]
-    [server.core.lov :as lov]
-    [server.system :as system]
-    [server.handler :as handler]
+    [server.components.db :refer :all]
+    [server.components.mom :refer :all]
+    [server.components.lov :refer :all]
+    [server.components.ring :refer :all]
+    [server.core.db :refer :all]
+    [server.core.lov :refer :all]
+    [server.routes.app :refer [app-fn]]
+    [server.system :refer :all]
     )
   )
 
-;; A Var containing an object representing the application under
-;; development."
-(def system nil) 
-(defn db [] (:db system))
-(defn lov [] (:lov system))
-
-(defn init-lov [lov]
-  (reset! (:recommender lov) {})
-  (reset! (:mom-adapter lov) (chan 10))
-  (sub (:lov @(:publishers system)) :lov @(:mom-adapter lov))
-  (lov/listen! (:lov system))
-  )
+(def system
+  "A Var containing an object representing the application under
+  development."
+  nil)
 
 (defn init
   "Creates and initializes the system under development in the Var
   #'system."
-  []  
-  (alter-var-root #'system (constantly (system/system)))
-  (reset! (:mom system) (chan 10))
-  (reset! (:publishers system) {
-    :lov (pub @(:mom system) :topic)
-    })
-  ;; (let [db-fname "northwind.postgres.sql"]
-    ;; (jdbc/db-do-commands (:db system) "DROP SCHEMA PUBLIC CASCADE;")
-    ;; (jdbc/db-do-commands (:db system) "CREATE SCHEMA PUBLIC;")
-    ;; (doseq [i (sql-commands (sql-script db-fname))] 
-    ;;   (debug i)
-    ;;   (jdbc/db-do-commands (:db system) true i)
-    ;;   )
-    ;; )
-  (init-lov (:lov system))
-  )
-
-(defn start-server
-  "used for starting the server in development mode from REPL"
-  [& [server port]]
-  (let [port (if port (Integer/parseInt port) 8080)]
-    (reset!
-      server (serve 
-               #'handler/app
-               {:port port
-                :init handler/init
-                :auto-reload? true
-                :destroy handler/destroy
-                :join true
-                :open-browser? false}
-               )
-      )
+  []
+  (let [db-opts {:subprotocol "postgresql" 
+                 :subname "mydb" 
+                 :user "postgres" 
+                 :password ""}
+        ring-opts {:port 3000
+                   :open-browser? false
+                   :join true
+                   :auto-reload? true}]
+    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts)))
     )
   )
 
 (defn start
   "Starts the system running, updates the Var #'system."
   []
-  (start-server (:server system) "3000")
-  )
-
-(defn stop-server [server]
-  (if @server
-    (.stop @server)
-    (reset! server nil)
-    )
+  (alter-var-root #'system c/start)
   )
 
 (defn stop
   "Stops the system if it is currently running, updates the Var
   #'system."
   []
-  (if system
-    (do
-      (if @(:mom system) (close! @(:mom system)))
-      (if (:server system) (stop-server (:server system)))
-      (if (:publishers system) (reset! (:publishers system) nil))
-      (if (:lov system) 
-        (do
-          (reset! (:recommender (:lov system)) {})
-          (reset! (:mom-adapter (:lov system)) nil)))
-      )
-    )
+  (alter-var-root #'system
+    (fn [s] (when s (c/stop s))))
   )
 
 (defn go
