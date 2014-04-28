@@ -8,7 +8,7 @@
 
 (defn db-routes-fn [component]
   (let [api (:db-api component)
-        spec (:spec (:db component))]
+        spec (:spec (:database component))]
     (defroutes db-routes
       (GET (str api "/tables") [] (str (seq (get-tables spec))))
       (GET (str api "/table") [name :as r] (str (seq (query-table spec name))))

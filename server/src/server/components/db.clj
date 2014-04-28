@@ -5,7 +5,7 @@
     )
   )
 
-(defrecord Database [host port]
+(defrecord Database [spec]
   c/Lifecycle
 
   (start [component]
@@ -20,6 +20,6 @@
   )
   
 (defn new-database [opts]
-  (map->Database (select-keys opts [:subprotocol :subname :user :password]))
+  (map->Database {:spec (select-keys opts [:subprotocol :subname :user :password])})
   )
 
