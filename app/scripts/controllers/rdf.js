@@ -2,30 +2,14 @@
 'use strict';
 
 angular.module('app')
-  .controller('RdfCtrl', function ($scope, $http, Rdb, Config, Jsedn) {
+  .controller('RdfCtrl', function ($scope, $http, Config, Rdb, Rdf, Jsedn) {
 
-    $scope.icons = [{'value':'Gear','label':'<i class=\'fa fa-gear\'></i> Gear'},{'value':'Globe','label':'<i class=\'fa fa-globe\'></i> Globe'},{'value':'Heart','label':'<i class=\'fa fa-heart\'></i> Heart'},{'value':'Camera','label':'<i class=\'fa fa-camera\'></i> Camera'}];
-
-    $scope.rdb = Rdb;
     $scope.config = Config;
+    $scope.rdb = Rdb;
+    $scope.rdf = Rdf;
     $scope.jsedn = Jsedn;
 
-    $scope.subjectTemplate = '';
-    $scope.objectTemplate = '';
-    $scope.type = '';
-    $scope.column = '';
-    $scope.property = '';
-    $scope.triples = [];
-    $scope.prefixMap = {};
-
-    $scope.properties = [
-      'rdf:type',
-      'rdfs:label',
-      'rdfs:comment',
-      'rdfs:seeAlso'
-    ];
-
-    $scope.getProperties = function (val) {
+    $scope.getLOVProperties = function (val) {
       return $http.get('http://lov.okfn.org/dataset/lov/api/v2/autocomplete/terms', {
         params: {
           q: val,
@@ -35,13 +19,13 @@ angular.module('app')
         var properties = [];
         angular.forEach(res.data.results, function(item) {
           var prefix = item.prefixedName.slice(0, item.prefixedName.length - item.localName.length - 1);
-          if ($scope.prefixMap[prefix] === undefined) {
+          if ($scope.rdf.prefixMap[prefix] === undefined) {
             $http.get('http://lov.okfn.org/dataset/lov/api/v2/autocomplete/vocabularies', {
               params: {
                 q: prefix
               }
             }).then(function (res) {
-              $scope.prefixMap[prefix] = res.data.results[0].uri;
+              $scope.rdf.prefixMap[prefix] = res.data.results[0].uri;
             });
           }
 
@@ -56,24 +40,7 @@ angular.module('app')
       });
     };
 
-    $scope.types = [
-      'rdf:XMLLiteral',
-      'rdf:Property',
-      'rdf:Statement',
-      'rdf:Alt',
-      'rdf:Bag',
-      'rdf:Seq',
-      'rdf:List',
-      'rdf:nil',
-      'rdfs:Resource',
-      'rdfs:Literal',
-      'rdfs:Class',
-      'rdfs:Datatype',
-      'rdfs:Container',
-      'rdfs:ContainerMembershipProperty'
-    ];
-
-    $scope.submitSubjectTemplate = function (template) {
+    $scope.rdf.submitSubjectTemplate = function (template) {
       if (($scope.rdb.table !== '') && (template !== '')) {
         var triples = [];
         
@@ -87,7 +54,7 @@ angular.module('app')
           }
         });
 
-        $scope.triples = triples;
+        $scope.rdf.triples = triples;
       }
     };
 
