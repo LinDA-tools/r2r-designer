@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('app')
-  .controller('RdbCtrl', function ($scope, $http, Rdb, Jsedn) {
+  .controller('RdbCtrl', function ($scope, $http, Rdb, Rdf, Jsedn) {
 
     $scope.rdb = Rdb;
+    $scope.rdf = Rdf;
     $scope.jsedn = Jsedn;
 
     $http.get($scope.rdb.host + 'tables').success(function(data) {
