@@ -11,9 +11,12 @@
 
     <div class="form-group">
       <label for="typeInput" class="col-md-2 control-label">Type</label>
-      <div id="typeInput" class="col-md-9">
-        <select class="form-control" ng-model="type" ng-options="i for i in types">
-          <option value="">Select type ... </option>
+      <div class="col-md-1">
+        <input type="radio" name="typeRadios" value="option1" checked>
+      </div>
+      <div id="typeInput" class="col-md-8">
+        <select class="form-control" ng-model="type" ng-options="i.prefixedName group by i.group for i in rdf.types">
+          <option value="">Select suggested classes ... </option>
         </select>
       </div>
       <div class="col-md-1">
@@ -24,43 +27,65 @@
     </div>
 
     <div class="form-group">
-      <label for="predicateInput" class="col-md-2 control-label">map</label>
-      <div id="predicateInput" class="col-md-9">
-        <select class="form-control" ng-model="property" ng-options="i for i in properties">
-            <option value="">Select property ... </option>
+      <div class="col-md-1 col-md-offset-2">
+        <input type="radio" name="typeRadios" value="option2">
+      </div>
+      <div class="col-md-8">
+        <input class="form-control" type="text" ng-model="selectedClass" placeholder="Search Linked Open Vocabulary (LOV) ..." 
+               typeahead="property.uri for property in getLOVProperties($viewValue) | filter:$viewValue" 
+               typeahead-loading="loadingLocations" typeahead-template-url="partials/properties_ta.html" />
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="columnInput" class="col-md-2 control-label">Map</label>
+      <div id="columnSelect" class="col-md-9">
+        <select class="form-control" ng-model="column" ng-options="i for i in rdb.columns">
+          <option value="">Column ... </option>
         </select>
       </div>
       <label class="col-md-1 control-label">to</label>
+    </div>
 
-      <div class="radio">
-        <div class="col-md-1 col-md-offset-2">
-          <input type="radio" name="objectMapRadios" value="option1" checked>
-        </div>
-        <div id="columnSelect" class="col-md-8">
-          <select class="form-control" ng-model="column" ng-options="i for i in rdb.columns">
-            <option value="">Select column ... </option>
-          </select>
-        </div>
-        <div class="col-md-1">
-          <button type="button" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>
-          </button>
-        </div>
+    <div class="form-group">
+      <div class="col-md-1 col-md-offset-2">
+        <input type="radio" name="propertyRadios" value="option1" checked>
+      </div>
+      <div id="propertyInput" class="col-md-8">
+        <select class="form-control" ng-model="property" ng-options="i.prefixedName group by i.group for i in rdf.properties">
+          <option value="">Select suggested properties ... </option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </div>
+    </div>
 
-        <div class="col-md-1 col-md-offset-2">
-          <input type="radio" name="objectMapRadios" value="option1">
-        </div>
-        <div id="objectTemplateInput" class="col-md-8">
-          <input type="text" class="form-control" placeholder="Ex. {Name}/{Address}"/>
-        </div>
-        <div class="col-md-1">
-          <button type="button" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>
-          </button>
-        </div>
+    <div class="form-group">
+      <div class="col-md-1 col-md-offset-2">
+        <input type="radio" name="propertyRadios" value="option2">
+      </div>
+      <div class="col-md-8">
+        <input class="form-control" type="text" ng-model="selectedProperty" placeholder="Search Linked Open Vocabulary (LOV) ..." 
+               typeahead="property.uri for property in getProperties($viewValue) | filter:$viewValue" 
+               typeahead-loading="loadingLocations" typeahead-template-url="partials/properties_ta.html" />
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
       </div>
     </div>
   </form>
+
+  <hr />
 
   <form class="form-search"> 
     <div>
@@ -72,7 +97,7 @@
     <table class="table">
       <tr>
         <th>Subject</th>
-        <th>Property</th>
+        <th>Predicate</th>
         <th>Object</th>
       </tr>
 

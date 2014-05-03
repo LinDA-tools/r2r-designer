@@ -1,10 +1,9 @@
-(ns server.core
+(ns server.core.db
   (:require
     [clojure.java.io :as io]
     [clojure.java.jdbc :as jdbc]
     [clojure.string :as str]
     [clojure.tools.logging :refer [info debug error spy]]
-    [server.system :as system]
     )
   )
 

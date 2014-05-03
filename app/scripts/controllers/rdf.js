@@ -2,62 +2,49 @@
 'use strict';
 
 angular.module('app')
-  .controller('RdfCtrl', function ($scope, $http, Rdb, Config, Jsedn) {
+  .controller('RdfCtrl', function ($scope, $http, Config, Rdb, Rdf, Jsedn) {
 
-    $scope.rdb = Rdb;
     $scope.config = Config;
+    $scope.rdb = Rdb;
+    $scope.rdf = Rdf;
     $scope.jsedn = Jsedn;
 
-    $scope.host = 'http://localhost:3000/';
+    $scope.getLOVProperties = function (val) {
+      return $http.get('http://lov.okfn.org/dataset/lov/api/v2/autocomplete/terms', {
+        params: {
+          q: val,
+          type: 'property'
+        }
+      }).then(function (res) {
+        var properties = [];
+        angular.forEach(res.data.results, function(item) {
+          var prefix = item.prefixedName.slice(0, item.prefixedName.length - item.localName.length - 1);
+          if ($scope.rdf.prefixMap[prefix] === undefined) {
+            $http.get('http://lov.okfn.org/dataset/lov/api/v2/autocomplete/vocabularies', {
+              params: {
+                q: prefix
+              }
+            }).then(function (res) {
+              $scope.rdf.prefixMap[prefix] = res.data.results[0].uri;
+            });
+          }
 
-    $scope.subjectTemplate = '';
-    $scope.objectTemplate = '';
-    $scope.type = '';
-    $scope.column = '';
-    $scope.property = '';
-    $scope.triples = [];
+          properties.push({
+            uri: item.uri,
+            localName: item.localName,
+            prefix: prefix + ':',
+            score: item.score.toPrecision(3)
+          });
+        });
+        return properties;
+      });
+    };
 
-    $scope.properties = [
-      'rdf:type',
-      'rdf:first',
-      'rdf:rest',
-      'rdf:value',
-      'rdf:subject',
-      'rdf:predicate',
-      'rdf:object',
-      'rdfs:subClassOf',
-      'rdfs:subPropertyOf',
-      'rdfs:domain',
-      'rdfs:range',
-      'rdfs:label',
-      'rdfs:comment',
-      'rdfs:member',
-      'rdfs:seeAlso',
-      'rdfs:isDefinedBy'
-    ];
-
-    $scope.types = [
-      'rdf:XMLLiteral',
-      'rdf:Property',
-      'rdf:Statement',
-      'rdf:Alt',
-      'rdf:Bag',
-      'rdf:Seq',
-      'rdf:List',
-      'rdf:nil',
-      'rdfs:Resource',
-      'rdfs:Literal',
-      'rdfs:Class',
-      'rdfs:Datatype',
-      'rdfs:Container',
-      'rdfs:ContainerMembershipProperty'
-    ];
-
-    $scope.submitSubjectTemplate = function (template) {
+    $scope.rdf.submitSubjectTemplate = function (template) {
       if (($scope.rdb.table !== '') && (template !== '')) {
         var triples = [];
         
-        $http.get($scope.host +
+        $http.get($scope.rdb.host +
                   'subjects' +
                   '?table=' + $scope.rdb.table +
                   '&template=' + escape($scope.config.baseUri + template)).success(function(data) {
@@ -67,7 +54,7 @@ angular.module('app')
           }
         });
 
-        $scope.triples = triples;
+        $scope.rdf.triples = triples;
       }
     };
 
