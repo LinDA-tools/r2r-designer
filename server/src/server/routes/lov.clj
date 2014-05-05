@@ -8,14 +8,22 @@
 
 (defn lov-routes-fn [component]
   (let [api (:lov-api component)
-        lov (:lov component)]
+        recommender (:recommender (:lov component))]
     (defroutes lov-routes
-      (GET (str api "/property") [name :as r] 
-        (str (seq (filter-results (search-property lov name))))
-        )
-      (GET (str api "/class") [name :as r] 
-        (str (seq (filter-results (search-class lov name))))
-        )
+      (GET (str api "/properties") [column :as r] (do
+        (debug r)
+        (let [suggestions (get @recommender [column :property])]
+          (str (or (seq suggestions))
+                   [])
+          )
+        ))
+      (GET (str api "/classes") [column :as r] (do
+        (debug r)
+        (let [suggestions (get @recommender [column :class])]
+          (str (or (seq suggestions)
+                   []))
+          )
+        ))
       )
     )
   )

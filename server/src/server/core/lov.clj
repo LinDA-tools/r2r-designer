@@ -4,16 +4,13 @@
     [clojure.tools.logging :refer (info warn error debug)]
     [clojure.data.json :as json]
     [clj-http.client :as client]
+    [server.core.db :as db]
     )
   )
 
-(def host "http://lov.okfn.org/dataset/lov")
-(def search-api "/api/v1/search")
-(def autocomplete-api "/api/v2/autocomplete/")
-
 (defn listen! [lov]
-  (go-loop []
-    (if @(:mom-adapter lov)
+  (if @(:mom-adapter lov)
+    (go-loop []
       (let [v (<! @(:mom-adapter lov))]
         (if v (swap! (:recommender lov)
           (fn [m]
@@ -24,15 +21,21 @@
               )
             )
           ))
+        (if v (recur))
         )
       )
-    (recur)
     )
   )
 
-(defn search [lov needle type]
+(defn type->type-uri [type]
+  (case type
+    :property "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    :class "http://www.w3.org/2000/01/rdf-schema#Class")
+  )
+
+(defn search [lov needle type-uri]
   (let [api (:search-api lov)
-        response (client/get api {:query-params {:q needle :type type}})
+        response (client/get api {:query-params {:q needle :type type-uri}})
         json-data (json/read-str (:body response))
         results (get json-data "results")
         ]
@@ -40,18 +43,41 @@
     )
   )
 
+(defn search-property [lov needle]
+  (search lov needle (type->type-uri :property))
+  )
+
+(defn search-class [lov needle]
+  (search lov needle (type->type-uri :class))
+  )
+
 (defn filter-results [results]
-  (let [filter-fn #(select-keys % ["score" "uri" "uriPrefixed"]) ; "vocabulary" "types"
+  (let [filter-fn #(select-keys % ["score" "uri" "uriPrefixed" "vocabularyPrefix"]) ; "vocabulary" "types"
         filtered (map filter-fn results) 
         ]
     filtered
     )
   )
 
-(defn search-property [lov needle]
-  (search lov needle "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property")
+(defn update-entity! [lov entity type]
+  (go
+    (let [queue (get-in lov [:mom :queue])
+          type-uri (type->type-uri type)
+          results (search lov entity type-uri)
+          filtered (filter-results results)]
+      (if filtered
+        (>! @queue {:topic :lov [entity type] filtered })
+        )
+      )
+    )
   )
 
-(defn search-class [lov needle]
-  (search lov needle "http://www.w3.org/2000/01/rdf-schema#Class")
+(defn update-recommender! [lov table]
+  (let [spec (:spec (:database lov))
+        columns (db/query-column-names spec table)]
+    (doseq [i columns]
+      (update-entity! lov i :class) 
+      (update-entity! lov i :property) 
+      )
+    )
   )

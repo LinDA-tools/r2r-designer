@@ -1,4 +1,4 @@
-/* global escape:true */
+// /* global escape:true */
 'use strict';
 
 angular.module('app')
@@ -9,54 +9,53 @@ angular.module('app')
     $scope.rdf = Rdf;
     $scope.jsedn = Jsedn;
 
-    $scope.getLOVProperties = function (val) {
-      return $http.get('http://lov.okfn.org/dataset/lov/api/v2/autocomplete/terms', {
-        params: {
-          q: val,
-          type: 'property'
-        }
-      }).then(function (res) {
-        var properties = [];
-        angular.forEach(res.data.results, function(item) {
-          var prefix = item.prefixedName.slice(0, item.prefixedName.length - item.localName.length - 1);
-          if ($scope.rdf.prefixMap[prefix] === undefined) {
-            $http.get('http://lov.okfn.org/dataset/lov/api/v2/autocomplete/vocabularies', {
-              params: {
-                q: prefix
-              }
-            }).then(function (res) {
-              $scope.rdf.prefixMap[prefix] = res.data.results[0].uri;
-            });
-          }
+    $scope.subjectTemplate = '';
+    $scope.objectTemplate = '';
+    $scope.column = '';
+    $scope.property = '';
+    $scope.triples = [];
 
-          properties.push({
-            uri: item.uri,
-            localName: item.localName,
-            prefix: prefix + ':',
-            score: item.score.toPrecision(3)
-          });
+    $scope.$watch('column', function (value) {
+      if (value) {
+        $scope.rdf.getSuggestedProperties(value).then(function (promise) {
+          $scope.suggestedProperties = promise;
         });
-        return properties;
-      });
-    };
+      }
+    }, true);
 
-    $scope.rdf.submitSubjectTemplate = function (template) {
-      if (($scope.rdb.table !== '') && (template !== '')) {
-        var triples = [];
-        
-        $http.get($scope.rdb.host +
-                  'subjects' +
-                  '?table=' + $scope.rdb.table +
-                  '&template=' + escape($scope.config.baseUri + template)).success(function(data) {
-          var mydata = $scope.jsedn.toJS($scope.jsedn.parse(data));
-          for (var i = 0; i < mydata.length; i++) {
-            triples.push([mydata[i], 'rdf:type', 'rdfs:resource']);
-          }
-        });
-
-        $scope.rdf.triples = triples;
+    $scope.properties = function () {
+      if ($scope.suggestedProperties) {
+        return $scope.suggestedProperties.concat($scope.rdf.baseProperties);
+      } else {
+        return [].concat($scope.rdf.baseProperties);
       }
     };
+
+    $scope.typeaheadLOVClasses = function (value) {
+      return $scope.rdf.getLOVEntities(value, 'class');
+    };
+
+    $scope.typeaheadLOVProperties = function (value) {
+      return $scope.rdf.getLOVEntities(value, 'property');
+    };
+
+    // $scope.submitSubjectTemplate = function (template) {
+    //   if (($scope.rdb.table !== '') && (template !== '')) {
+    //     var triples = [];
+    //     
+    //     $http.get($scope.rdb.host +
+    //               'subjects' +
+    //               '?table=' + $scope.rdb.table +
+    //               '&template=' + escape($scope.config.baseUri + template)).success(function(data) {
+    //       var mydata = $scope.jsedn.toJS($scope.jsedn.parse(data));
+    //       for (var i = 0; i < mydata.length; i++) {
+    //         triples.push([mydata[i], 'rdf:type', 'rdfs:resource']);
+    //       }
+    //     });
+    //
+    //     $scope.rdf.triples = triples;
+    //   }
+    // };
 
     // mapPredicateToColumn : function() {
     //   // var table = 'products';

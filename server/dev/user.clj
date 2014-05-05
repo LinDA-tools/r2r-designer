@@ -13,6 +13,7 @@
     [clojure.test :as test]
     [clojure.tools.namespace.repl :refer (refresh refresh-all)]
     [clojure.tools.logging :refer (info warn error debug)]
+    [clojure.tools.reader.edn :as edn]
     [clojure.core.async :as async :refer [pub sub chan close! timeout <! >! <!! >!! alts! alts!! alt! alt!!]]
     [com.stuartsierra.component :as c]
     [ring.server.standalone :refer :all]
@@ -58,6 +59,10 @@
   "Starts the system running, updates the Var #'system."
   []
   (alter-var-root #'system c/start)
+  (let [mock-recommender (edn/read-string (slurp (io/resource "recommender.samples")))
+        recommender (get-in system [:lov :recommender])]
+    (reset! recommender mock-recommender)
+    )
   )
 
 (defn stop

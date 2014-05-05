@@ -2,50 +2,50 @@
   <h2>RDF View</h2>
 
   <form class="form-horizontal" role="form">
-    <div class="form-group">
-      <label for="subjectTemplateInput" class="col-md-2 control-label">Subject Template</label>
-      <div id="subejectTemplateInput" class="col-md-9">
-        <input class="form-control" placeholder="Ex. {CustomerId}/{Address}#" ng-model="subjectTemplate" ng-blur="submitSubjectTemplate(subjectTemplate)" />
-      </div>
-    </div>
+    <!-- <div class="form&#45;group"> -->
+    <!--   <label for="subjectTemplateInput" class="col&#45;md&#45;2 control&#45;label">Subject Template</label> -->
+    <!--   <div id="subejectTemplateInput" class="col&#45;md&#45;9"> -->
+    <!--     <input class="form&#45;control" placeholder="Ex. {CustomerId}/{Address}#" ng&#45;model="subjectTemplate" ng&#45;blur="submitSubjectTemplate(subjectTemplate)" /> -->
+    <!--   </div> -->
+    <!-- </div> -->
 
-    <div class="form-group">
-      <label for="typeInput" class="col-md-2 control-label">Type</label>
-      <div class="col-md-1">
-        <input type="radio" name="typeRadios" value="option1" checked>
-      </div>
-      <div id="typeInput" class="col-md-8">
-        <select class="form-control" ng-model="type" ng-options="i.prefixedName group by i.group for i in rdf.types">
-          <option value="">Select suggested classes ... </option>
-        </select>
-      </div>
-      <div class="col-md-1">
-        <button type="button" class="btn btn-primary">
-          <span class="glyphicon glyphicon-plus"></span>
-        </button>
-      </div>
-    </div>
+    <!-- <div class="form&#45;group"> -->
+    <!--   <label for="typeInput" class="col&#45;md&#45;2 control&#45;label">Type</label> -->
+    <!--   <div class="col&#45;md&#45;1"> -->
+    <!--     <input type="radio" name="typeRadios" value="option1" checked> -->
+    <!--   </div> -->
+    <!--   <div id="typeInput" class="col&#45;md&#45;8"> -->
+    <!--     <select class="form&#45;control" ng&#45;model="type" ng&#45;options="i.prefixedName group by i.group for i in rdf.baseTypes"> -->
+    <!--       <option value="">Select suggested classes ... </option> -->
+    <!--     </select> -->
+    <!--   </div> -->
+    <!--   <div class="col&#45;md&#45;1"> -->
+    <!--     <button type="button" class="btn btn&#45;primary"> -->
+    <!--       <span class="glyphicon glyphicon&#45;plus"></span> -->
+    <!--     </button> -->
+    <!--   </div> -->
+    <!-- </div> -->
 
-    <div class="form-group">
-      <div class="col-md-1 col-md-offset-2">
-        <input type="radio" name="typeRadios" value="option2">
-      </div>
-      <div class="col-md-8">
-        <input class="form-control" type="text" ng-model="selectedClass" placeholder="Search Linked Open Vocabulary (LOV) ..." 
-               typeahead="property.uri for property in getLOVProperties($viewValue) | filter:$viewValue" 
-               typeahead-loading="loadingLocations" typeahead-template-url="partials/properties_ta.html" />
-      </div>
-      <div class="col-md-1">
-        <button type="button" class="btn btn-primary">
-          <span class="glyphicon glyphicon-plus"></span>
-        </button>
-      </div>
-    </div>
+    <!-- <div class="form&#45;group"> -->
+    <!--   <div class="col&#45;md&#45;1 col&#45;md&#45;offset&#45;2"> -->
+    <!--     <input type="radio" name="typeRadios" value="option2"> -->
+    <!--   </div> -->
+    <!--   <div class="col&#45;md&#45;8"> -->
+    <!--     <input class="form&#45;control" type="text" ng&#45;model="selectedClass" placeholder="Search Linked Open Vocabulary (LOV) ..."  -->
+    <!--            typeahead="property.uri for property in getLOVEntities($viewValue, 'class') | filter:$viewValue"  -->
+    <!--            typeahead&#45;template&#45;url="partials/results_ta.html" /> -->
+    <!--   </div> -->
+    <!--   <div class="col&#45;md&#45;1"> -->
+    <!--     <button type="button" class="btn btn&#45;primary"> -->
+    <!--       <span class="glyphicon glyphicon&#45;plus"></span> -->
+    <!--     </button> -->
+    <!--   </div> -->
+    <!-- </div> -->
 
     <div class="form-group">
       <label for="columnInput" class="col-md-2 control-label">Map</label>
       <div id="columnSelect" class="col-md-9">
-        <select class="form-control" ng-model="column" ng-options="i for i in rdb.columns">
+        <select class="form-control" ng-model="column" ng-options="i for i in rdb.columns" ng-change="suggestProperties(column)">
           <option value="">Column ... </option>
         </select>
       </div>
@@ -57,7 +57,7 @@
         <input type="radio" name="propertyRadios" value="option1" checked>
       </div>
       <div id="propertyInput" class="col-md-8">
-        <select class="form-control" ng-model="property" ng-options="i.prefixedName group by i.group for i in rdf.properties">
+        <select class="form-control" ng-model="property" ng-options="i.prefixedName group by i.group for i in properties()">
           <option value="">Select suggested properties ... </option>
         </select>
       </div>
@@ -74,8 +74,9 @@
       </div>
       <div class="col-md-8">
         <input class="form-control" type="text" ng-model="selectedProperty" placeholder="Search Linked Open Vocabulary (LOV) ..." 
-               typeahead="property.uri for property in getProperties($viewValue) | filter:$viewValue" 
-               typeahead-loading="loadingLocations" typeahead-template-url="partials/properties_ta.html" />
+               typeahead="property.localName for property in typeaheadLOVProperties($viewValue) | filter:$viewValue"
+               typeahead-template-url="partials/results_ta.html" />
+        <!-- <input type="text" class="form&#45;control" ng&#45;model="foo" ng&#45;options="i for i in suggestedProperties" bs&#45;typeahead />        -->
       </div>
       <div class="col-md-1">
         <button type="button" class="btn btn-primary">
@@ -85,28 +86,28 @@
     </div>
   </form>
 
-  <hr />
+  <!-- <hr /> -->
 
-  <form class="form-search"> 
-    <div>
-      <input type="text" ng-model="search" placeholder="Search ..." class="form-control search-query">
-    </div>
-  </form>
+  <!-- <form class="form&#45;search">  -->
+  <!--   <div> -->
+  <!--     <input type="text" ng&#45;model="search" placeholder="Search ..." class="form&#45;control search&#45;query"> -->
+  <!--   </div> -->
+  <!-- </form> -->
 
-  <div class="table-scrollable">
-    <table class="table">
-      <tr>
-        <th>Subject</th>
-        <th>Predicate</th>
-        <th>Object</th>
-      </tr>
+  <!-- <div class="table&#45;scrollable"> -->
+  <!--   <table class="table"> -->
+  <!--     <tr> -->
+  <!--       <th>Subject</th> -->
+  <!--       <th>Predicate</th> -->
+  <!--       <th>Object</th> -->
+  <!--     </tr> -->
 
-      <tr ng-repeat="triple in triples | filter:search">
-        <td>{{triple[0]}}</td>
-        <td>{{triple[1]}}</td>
-        <td>{{triple[2]}}</td>
-      </tr>
-    </table>
+  <!--     <tr ng&#45;repeat="triple in triples | filter:search"> -->
+  <!--       <td>{{triple[0]}}</td> -->
+  <!--       <td>{{triple[1]}}</td> -->
+  <!--       <td>{{triple[2]}}</td> -->
+  <!--     </tr> -->
+    <!-- </table> -->
   </div>
 </div>
 
