@@ -1,4 +1,3 @@
-// /* global escape:true */
 'use strict';
 
 angular.module('app')
@@ -9,8 +8,7 @@ angular.module('app')
     $scope.rdf = Rdf;
     $scope.jsedn = Jsedn;
 
-    $scope.subjectTemplate = '';
-    $scope.objectTemplate = '';
+    $scope.template = '';
     $scope.column = '';
     $scope.property = '';
     $scope.triples = [];
@@ -22,6 +20,8 @@ angular.module('app')
         });
       }
     }, true);
+
+    $scope.types = function () { return $scope.rdf.baseTypes; };
 
     $scope.properties = function () {
       if ($scope.suggestedProperties) {
@@ -39,23 +39,21 @@ angular.module('app')
       return $scope.rdf.getLOVEntities(value, 'property');
     };
 
-    // $scope.submitSubjectTemplate = function (template) {
-    //   if (($scope.rdb.table !== '') && (template !== '')) {
-    //     var triples = [];
-    //     
-    //     $http.get($scope.rdb.host +
-    //               'subjects' +
-    //               '?table=' + $scope.rdb.table +
-    //               '&template=' + escape($scope.config.baseUri + template)).success(function(data) {
-    //       var mydata = $scope.jsedn.toJS($scope.jsedn.parse(data));
-    //       for (var i = 0; i < mydata.length; i++) {
-    //         triples.push([mydata[i], 'rdf:type', 'rdfs:resource']);
-    //       }
-    //     });
-    //
-    //     $scope.rdf.triples = triples;
-    //   }
-    // };
+    $scope.$watch('column', function (value) {
+      if (value) {
+        $scope.rdf.getSuggestedProperties(value).then(function (promise) {
+          $scope.suggestedProperties = promise;
+        });
+      }
+    }, true);
+
+    $scope.submitTemplate = function () {
+      if (($scope.rdb.table !== '') && ($scope.template !== '')) {
+        $scope.rdf.getSubjectsForTemplate($scope.rdb.table, $scope.config.baseUri, $scope.template).then(function (promise) {
+          $scope.triples = promise;
+        });
+      }
+    };
 
     // mapPredicateToColumn : function() {
     //   // var table = 'products';

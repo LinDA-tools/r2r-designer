@@ -1,8 +1,16 @@
+/* global encodeURI:true */
 'use strict';
 
 angular.module('app')
-  .factory('Rdf', function ($http, Jsedn) {
+  .factory('Rdf', function ($http, Jsedn, Rdb) {
+    var host = 'http://localhost:3000';
+    var dbAdapter = host + '/api/v1/db';
+    var lovAdapter = host + '/api/v1/lov';
+
+    var lovAutocompleteApi = 'http://lov.okfn.org/dataset/lov/api/v2/autocomplete';
+
     return {
+
       baseProperties: [
         {
           prefix: 'rdfs',
@@ -70,7 +78,7 @@ angular.module('app')
       ],
         
       getLOVEntities: function (val, type) {
-        return $http.get('http://lov.okfn.org/dataset/lov/api/v2/autocomplete/terms', {
+        return $http.get(lovAutocompleteApi + '/terms', {
           params: {
             q: val,
             type: type
@@ -92,7 +100,7 @@ angular.module('app')
       },
 
       getSuggestedProperties: function (column) {
-        return $http.get('http://localhost:3000/api/v1/lov/properties', {
+        return $http.get(lovAdapter + '/properties', {
           params: { column: column }
         }).then(function (res) {
           var suggestions = [];
@@ -110,16 +118,34 @@ angular.module('app')
 
           return suggestions;
         });
+      },
+
+      getSubjectsForTemplate: function (table, baseUri, template) {
+        var triples = [];
+
+        return $http.get(Rdb.host + 'subjects', {
+          params: {
+            table: table,
+            template: encodeURI(baseUri + template)
+          }
+        }).then(function (res) {
+          var mydata = Jsedn.toJS(Jsedn.parse(res.data));
+          for (var i = 0; i < mydata.length; i++) {
+            triples.push([mydata[i], 'rdf:type', 'rdfs:resource']);
+          }
+
+          return triples;
+        });
       }
     };
   });
 
-            // if (prefixMap[prefix] === undefined) {
-            //   $http.get('http://lov.okfn.org/dataset/lov/api/v2/autocomplete/vocabularies', {
-            //     params: {
-            //       q: prefix
-            //     }
-            //   }).then(function (res) {
-            //     prefixMap[prefix] = res.data.results[0].uri;
-            //   });
-            // }
+  // if (prefixMap[prefix] === undefined) {
+  //   $http.get('http://lov.okfn.org/dataset/lov/api/v2/autocomplete/vocabularies', {
+  //     params: {
+  //       q: prefix
+  //     }
+  //   }).then(function (res) {
+  //     prefixMap[prefix] = res.data.results[0].uri;
+  //   });
+  // }

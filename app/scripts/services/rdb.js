@@ -7,7 +7,7 @@ angular.module('app')
 
       tables: [],
       data: [],
-      table: 'products',
+      table: '',
       columns: [],
       columnsMap: []
     };
