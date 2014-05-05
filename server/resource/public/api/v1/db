@@ -1,0 +1,129 @@
+{
+   "models" : {},
+   "produces" : [
+      "application/edn"
+   ],
+   "resourcePath" : "/db",
+   "apis" : [
+      {
+         "path" : "/db/tables",
+         "operations" : [
+            {
+               "method" : "GET",
+               "nickname" : "get-tables",
+               "summary" : "Returns a list of table names with the current database specification.",
+               "type" : "string",
+               "parameters" : [],
+               "responseMessages" : [
+                  {
+                     "message" : "Not found!",
+                     "code" : 404
+                  }
+               ]
+            }
+         ]
+      },
+
+      {
+         "path" : "/db/table",
+         "operations" : [
+            {
+               "method" : "GET",
+               "nickname" : "get-table",
+               "summary" : "Returns a map of the data associated with 'table' with the current database specification.",
+               "type" : "string",
+               "parameters" : [
+                  {
+                     "name" : "name",
+                     "description" : "table name",
+                     "paramType" : "query",
+                     "type" : "string",
+                     "required" : true
+                  }
+                 ],
+               "responseMessages" : [
+                  {
+                     "message" : "Not found!",
+                     "code" : 404
+                  }
+               ]
+            }
+         ]
+      },
+
+      {
+         "path" : "/db/columns",
+         "operations" : [
+            {
+               "method" : "GET",
+               "nickname" : "get-columns",
+               "summary" : "Returns a list of column names for 'table' with the current database specification.",
+               "type" : "string",
+               "parameters" : [
+                  {
+                     "name" : "table",
+                     "description" : "table name",
+                     "paramType" : "query",
+                     "type" : "string",
+                     "required" : true
+                  }
+                 ],
+               "responseMessages" : [
+                  {
+                     "message" : "Not found!",
+                     "code" : 404
+                  }
+               ]
+            }
+         ]
+      },
+
+      {
+         "path" : "/db/subjects",
+         "operations" : [
+            {
+               "method" : "GET",
+               "nickname" : "get-subjects",
+               "summary" : "Returns a list of samples of individuals according to the schema expressed in 'template' with the current database specification. If 'property' and 'column' is given, the operation returns a list of samples of triples respectively.",
+               "type" : "string",
+               "parameters" : [
+                  {
+                     "name" : "table",
+                     "description" : "table name",
+                     "paramType" : "query",
+                     "type" : "string",
+                     "required" : true
+                  },
+                  {
+                     "name" : "template",
+                     "description" : "subject template; terms in curly braces denote column names, e.g. /products/{ProductID}/{ProductName}",
+                     "paramType" : "query",
+                     "type" : "string",
+                     "required" : true
+                  },
+                  {
+                     "name" : "property",
+                     "description" : "property name",
+                     "paramType" : "query",
+                     "type" : "string",
+                     "required" : false
+                  },
+                  {
+                     "name" : "column",
+                     "description" : "column name",
+                     "paramType" : "query",
+                     "type" : "string",
+                     "required" : false
+                  }
+                ],
+               "responseMessages" : [
+                  {
+                     "message" : "Not found!",
+                     "code" : 404
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}

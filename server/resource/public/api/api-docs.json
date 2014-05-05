@@ -1,0 +1,16 @@
+{
+   "basePath" : "http://localhost:3000/api/v1",
+   "resourcePath" : "/db",
+   "apiVersion" : "v1",
+   "swaggerVersion" : "1.2",
+   "apis" : [
+      {
+         "path" : "/db",
+         "description" : "interacting with the database backend"
+      },
+      {
+         "path" : "/lov",
+         "description" : "interacting with the Linked Open Vocabulary (LOV) adapter"
+      }
+   ]
+}
