@@ -49,38 +49,9 @@ angular.module('app')
 
     $scope.submitTemplate = function () {
       if (($scope.rdb.table !== '') && ($scope.template !== '')) {
-        $scope.rdf.getSubjectsForTemplate($scope.rdb.table, $scope.config.baseUri, $scope.template).then(function (promise) {
+        $scope.rdb.getSubjectsForTemplate($scope.rdb.table, $scope.config.baseUri, $scope.template).then(function (promise) {
           $scope.triples = promise;
         });
       }
     };
-
-    // mapPredicateToColumn : function() {
-    //   // var table = 'products';
-    //   // var column = 'ProductName';
-    //   // var template = 'http://foo/{ProductID}'; 
-    //   // var predicate = 'rdfs:label'; 
-    //   var table = this.get('controllers.rdb.currentTable');
-    //   var base_uri = this.get('controllers.config.base_uri');
-    //   var template = base_uri + this.get('controllers.rdf.subjectTemplate');
-    //   var predicate = this.get('controllers.rdf.currentPredicate');
-    //   var column = this.get('controllers.rdf.currentColumn');
-    //   var subjects = []
-
-    //   $.ajax({
-    //     url: 'http://localhost:3000/subjects',
-    //     type: 'GET',
-    //     async: false,
-    //     data: 'table=' + table +
-    //           '&template=' + escape(template) + 
-    //           '&predicate=' + predicate +
-    //           '&column=' + column,
-    //     success: function(data) {
-    //       subjects = $scope.jsedn.toJS($scope.jsedn.parse(data));
-    //     }
-    //   });
-  
-    //   old_subjects = this.get('controllers.rdf.subjects');
-    //   this.set('controllers.rdf.subjects', old_subjects.concat(subjects));
-    // }
   });

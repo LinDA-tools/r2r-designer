@@ -42,6 +42,7 @@ angular.module('app')
 
       modalInstance.result.then(function (item) {
         $scope.config.datasources.push(item);
+        $scope.config.datasource = item;
       });
     };
 
@@ -63,6 +64,7 @@ angular.module('app')
 
       modalInstance.result.then(function (item) {
         $scope.config.datasources[index] = item;
+        $scope.config.datasource = item;
       });
     };
   });
