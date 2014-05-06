@@ -1,13 +1,10 @@
 'use strict';
 
 angular.module('app')
-  .controller('RdfCtrl', function ($scope, $http, Config, Rdb, Rdf, Jsedn) {
+  .controller('RdfCtrl', function ($scope, $http, Config, Rdb, Rdf, Lov, R2rs) {
 
-    $scope.config = Config;
     $scope.rdb = Rdb;
-    $scope.rdf = Rdf;
-    $scope.jsedn = Jsedn;
-
+    
     $scope.template = '';
     $scope.column = '';
     $scope.property = '';
@@ -15,41 +12,41 @@ angular.module('app')
 
     $scope.$watch('column', function (value) {
       if (value) {
-        $scope.rdf.getSuggestedProperties(value).then(function (promise) {
+        R2rs.getSuggestedProperties(value).then(function (promise) {
           $scope.suggestedProperties = promise;
         });
       }
     }, true);
 
-    $scope.types = function () { return $scope.rdf.baseTypes; };
+    $scope.types = function () { return Rdf.baseTypes; };
 
     $scope.properties = function () {
       if ($scope.suggestedProperties) {
-        return $scope.suggestedProperties.concat($scope.rdf.baseProperties);
+        return $scope.suggestedProperties.concat(Rdf.baseProperties);
       } else {
-        return [].concat($scope.rdf.baseProperties);
+        return [].concat(Rdf.baseProperties);
       }
     };
 
     $scope.typeaheadLOVClasses = function (value) {
-      return $scope.rdf.getLOVEntities(value, 'class');
+      return Lov.getLOVTerms(value, 'class');
     };
 
     $scope.typeaheadLOVProperties = function (value) {
-      return $scope.rdf.getLOVEntities(value, 'property');
+      return Lov.getLOVTerms(value, 'property');
     };
 
     $scope.$watch('column', function (value) {
       if (value) {
-        $scope.rdf.getSuggestedProperties(value).then(function (promise) {
+        R2rs.getSuggestedProperties(value).then(function (promise) {
           $scope.suggestedProperties = promise;
         });
       }
     }, true);
 
     $scope.submitTemplate = function () {
-      if (($scope.rdb.table !== '') && ($scope.template !== '')) {
-        $scope.rdb.getSubjectsForTemplate($scope.rdb.table, $scope.config.baseUri, $scope.template).then(function (promise) {
+      if ((Rdb.table !== '') && ($scope.template !== '')) {
+        R2rs.getSubjectsForTemplate(Rdb.table, Config.baseUri, $scope.template).then(function (promise) {
           $scope.triples = promise;
         });
       }
