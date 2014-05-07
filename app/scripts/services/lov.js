@@ -3,9 +3,8 @@
 angular.module('app')
   .factory('Lov', function ($http) {
 
-    // var searchApi = 'http://lov.okfn.org/dataset/lov/api/v1/search';
+    var v1Api = 'http://lov.okfn.org/dataset/lov/api/v1';
     var autocompleteApi = 'http://lov.okfn.org/dataset/lov/api/v2/autocomplete';
-    // var vocabApi = 'http://lov.okfn.org/dataset/lov/api/v1/vocabs';
 
     return {
       getLOVTerms: function (val, type) {
@@ -34,6 +33,21 @@ angular.module('app')
         return $http.get(autocompleteApi + '/vocabularies', {
           params: { q: val, }
         }).then(function (res) {
+          var vocabs = [];
+          angular.forEach(res.data.results, function(item) {
+            vocabs.push({
+              uri: item.uri,
+              prefix: item.prefix,
+              score: item.score.toPrecision(3)
+            });
+          });
+
+          return vocabs;
+        });
+      },
+
+      getAllVocabularies: function () {
+        return $http.get(v1Api + '/vocabs').then(function (res) {
           var vocabs = [];
           angular.forEach(res.data.results, function(item) {
             vocabs.push({
