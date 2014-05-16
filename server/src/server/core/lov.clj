@@ -1,17 +1,19 @@
 (ns server.core.lov
   (:require
     [clojure.core.async :as async :refer [go go-loop chan timeout <! >! <!! >!! alts! alts!! alt! alt!!]]
-    [clojure.tools.logging :refer (info warn error debug)]
     [clojure.data.json :as json]
     [clj-http.client :as client]
+    [taoensso.timbre :as timbre]
     [server.core.db :as db]
     )
   )
+(timbre/refer-timbre)
 
 (defn listen! [lov]
   (if @(:mom-adapter lov)
     (go-loop []
       (let [v (<! @(:mom-adapter lov))]
+        (debug v)
         (if v (swap! (:recommender lov)
           (fn [m]
             (let [payload (dissoc v :topic)
@@ -59,25 +61,35 @@
     )
   )
 
-(defn update-entity! [lov entity type]
+(defn update-entity! [lov table entity type]
+  (debug lov table entity type)
   (go
     (let [queue (get-in lov [:mom :queue])
           type-uri (type->type-uri type)
           results (search lov entity type-uri)
           filtered (filter-results results)]
       (if filtered
-        (>! @queue {:topic :lov [entity type] filtered })
+        (>! @queue {:topic :lov [table entity type] filtered })
         )
       )
     )
   )
 
-(defn update-recommender! [lov table]
-  (let [spec (:spec (:database lov))
+(defn update-recommender! 
+  ([lov]
+  (let [spec @(:spec (:database lov))
+        tables (db/get-tables spec)]
+    (doseq [i tables]
+      (update-recommender! lov i)
+      )
+    ))
+
+  ([lov table]
+  (let [spec @(:spec (:database lov))
         columns (db/query-column-names spec table)]
     (doseq [i columns]
-      (update-entity! lov i :class) 
-      (update-entity! lov i :property) 
+      (update-entity! lov table i :class) 
+      (update-entity! lov table i :property) 
       )
-    )
+    ))
   )

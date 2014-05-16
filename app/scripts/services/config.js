@@ -2,24 +2,27 @@
 
 angular.module('app')
   .factory('Config', function () {
+
+    var datasources = [
+      {
+        'name' : 'Northwind Postgres Database',
+        'subprotocol' : 'psql',
+        'subname' : 'psql',
+        'username' : 'postgres',
+        'password' : 'postgres'
+      },
+      {
+        'name' : 'MySQL Sample Database',
+        'subprotocol' : 'mysql',
+        'subname' : 'mysql',
+        'username' : 'mysql',
+        'password' : 'mysql'
+      }
+    ];
+
     return {
-      datasources: [
-        {
-          'name' : 'MySQL Sample Database',
-          'subprotocol' : 'mysql',
-          'subname' : 'mysql',
-          'username' : 'mysql',
-          'password' : 'mysql'
-        },
-        {
-          'name' : 'Northwind Postgres Database',
-          'subprotocol' : 'psql',
-          'subname' : 'psql',
-          'username' : 'postgres',
-          'password' : 'postgres'
-        }
-      ],
-      datasource: null,
+      datasources: datasources,
+      datasource: datasources[0],
       baseUri: ''
     };
   });

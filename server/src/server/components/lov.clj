@@ -1,13 +1,14 @@
 (ns server.components.lov
   (:require
-    [clojure.tools.logging :refer (info warn error debug)]
     [com.stuartsierra.component :as c]
+    [taoensso.timbre :as timbre]
     [clojure.core.async :as async :refer [pub sub chan close!]]
     [server.core.lov :refer :all]
     )
   )
+(timbre/refer-timbre)
 
-(defrecord LOV [recommender mom-adapter api search-api autocomplete-api]
+(defrecord LOV [recommender mom-adapter search-api autocomplete-api]
   c/Lifecycle
 
   (start [component]
@@ -41,4 +42,3 @@
              :mom-adapter (atom nil)
              }) 
   )
-

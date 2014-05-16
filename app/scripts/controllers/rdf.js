@@ -6,19 +6,40 @@ angular.module('app')
     $scope.rdb = Rdb;
     
     $scope.template = '';
+    $scope.templateColumns = [];
     $scope.column = '';
     $scope.property = '';
     $scope.triples = [];
 
+    $scope.$watch('template', function (value) {
+      if (value) {
+        $scope.templateColumns = value.match(/{[^}]*}/g);
+      }
+    }, true);
+
+    $scope.$watch('templateColumns', function (value) {
+      if ($scope.rdb.table && $scope.template && value) {
+        R2rs.getSuggestedDBPediaTypes($scope.rdb.table, $scope.template).then(function (promise) {
+          $scope.suggestedTypes = promise;
+        });
+      }
+    }, true);
+
     $scope.$watch('column', function (value) {
       if (value) {
-        R2rs.getSuggestedProperties(value).then(function (promise) {
+        R2rs.getSuggestedLOVProperties(value).then(function (promise) {
           $scope.suggestedProperties = promise;
         });
       }
     }, true);
 
-    $scope.types = function () { return Rdf.baseTypes; };
+    $scope.types = function () {
+      if ($scope.suggestedTypes) {
+        return $scope.suggestedTypes.concat(Rdf.baseTypes);
+      } else {
+        return [].concat(Rdf.baseTypes);
+      }
+    };
 
     $scope.properties = function () {
       if ($scope.suggestedProperties) {
@@ -38,7 +59,7 @@ angular.module('app')
 
     $scope.$watch('column', function (value) {
       if (value) {
-        R2rs.getSuggestedProperties(value).then(function (promise) {
+        R2rs.getSuggestedLOVProperties(Rdb.table, value).then(function (promise) {
           $scope.suggestedProperties = promise;
         });
       }

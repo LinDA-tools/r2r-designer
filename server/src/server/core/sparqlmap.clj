@@ -1,8 +1,9 @@
 (ns server.core.sparqlmap
   (:require 
-    [clojure.tools.logging :refer [info error debug]]
+    [taoensso.timbre :as timbre]
     )
   )
+(timbre/refer-timbre)
 
 (defn sparqlmap [& args]
   (debug args)

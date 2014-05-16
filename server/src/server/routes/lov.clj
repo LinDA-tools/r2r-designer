@@ -1,10 +1,11 @@
 (ns server.routes.lov
   (:require 
     [compojure.core :refer :all]
-    [clojure.tools.logging :refer [info debug error]]
+    [taoensso.timbre :as timbre]
     [server.core.lov :refer :all]
     )
   )
+(timbre/refer-timbre)
 
 (defn lov-routes-fn [component]
   (let [api (:lov-api component)

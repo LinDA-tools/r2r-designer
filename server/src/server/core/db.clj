@@ -1,10 +1,20 @@
 (ns server.core.db
   (:require
+    [com.stuartsierra.component :as c]
+    [taoensso.timbre :as timbre]
     [clojure.java.io :as io]
     [clojure.java.jdbc :as jdbc]
     [clojure.string :as str]
-    [clojure.tools.logging :refer [info debug error spy]]
+    [server.components.db :as db]
     )
+  )
+(timbre/refer-timbre)
+
+(defn register-db [db new-spec]
+  (if db 
+    (c/stop db))
+  (reset! (:spec db) new-spec)
+  (c/start db) 
   )
 
 (defn column->kw [column] (keyword (str/lower-case column)))

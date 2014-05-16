@@ -16,7 +16,7 @@
       </div>
       <div id="typeInput" class="col-md-8">
         <select class="form-control" ng-model="type" ng-options="i.prefixedName group by i.group for i in types()">
-          <option value="">Select suggested classes ... </option>
+          <option value="">Select suggested types ... </option>
         </select>
       </div>
       <div class="col-md-1">
@@ -43,17 +43,17 @@
     </div>
 
     <div class="form-group">
-      <label for="columnInput" class="col-md-2 control-label">Map</label>
+      <label for="columnInput" class="col-md-2 control-label">Map from</label>
       <div id="columnSelect" class="col-md-9">
         <select class="form-control" ng-model="column" ng-options="i for i in rdb.columns" ng-change="suggestProperties(column)">
           <option value="">Column ... </option>
         </select>
       </div>
-      <label class="col-md-1 control-label">to</label>
     </div>
 
     <div class="form-group">
-      <div class="col-md-1 col-md-offset-2">
+      <label class="col-md-2 control-label" align="right">to</label>
+      <div class="col-md-1">
         <input type="radio" name="propertyRadios" value="option1" checked>
       </div>
       <div id="propertyInput" class="col-md-8">

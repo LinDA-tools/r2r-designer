@@ -7,9 +7,29 @@ angular.module('app')
     var host = 'http://localhost:3000';
     var dbAdapter = host + '/api/v1/db';
     var lovAdapter = host + '/api/v1/lov';
+    var recommenderAdapter = host + '/api/v1/recommender';
 
     var rowValuesToArray = function (keys, row) {
       return keys.map(function (i) { return row[i]; });
+    };
+
+    var getSuggestedEntities = function (url, params) {
+      return $http.get(url, { params: params }).then(function (res) {
+        var suggestions = [];
+        var mydata = Jsedn.toJS(Jsedn.parse(res.data));
+        angular.forEach(mydata, function(item) {
+          suggestions.push({
+            uri: item.uri,
+            prefixedName: item.uriPrefixed,
+            localName: item.uriPrefixed.slice(item.vocabularyPrefix.length + 1, item.uriPrefixed.length),
+            prefix: item.vocabularyPrefix + ':',
+            score: item.score.toPrecision(3),
+            group: 'suggested'
+          });
+        });
+
+        return suggestions;
+      });
     };
 
     return {
@@ -58,25 +78,45 @@ angular.module('app')
           return triples;
         });
       },
-        
-      getSuggestedProperties: function (column) {
-        return $http.get(lovAdapter + '/properties', {
-          params: { column: column }
-        }).then(function (res) {
+       
+      getSuggestedLOVClasses: function (table, column) {
+        return getSuggestedEntities(lovAdapter + '/classes', { table: table, column: column });
+      },
+
+      getSuggestedLOVProperties: function (table, column) {
+        return getSuggestedEntities(lovAdapter + '/properties', { table: table, column: column });
+      },
+
+      getSuggestedDBPediaTypes: function (table, template) {
+        return $http.get(recommenderAdapter + '/types', { params: {
+          table: table,
+          template: encodeURI(template)
+        }}).then(function (res) {
           var suggestions = [];
           var mydata = Jsedn.toJS(Jsedn.parse(res.data));
           angular.forEach(mydata, function(item) {
             suggestions.push({
-              uri: item.uri,
-              prefixedName: item.uriPrefixed,
-              localName: item.uriPrefixed.slice(item.vocabularyPrefix.length + 1, item.uriPrefixed.length),
-              prefix: item.vocabularyPrefix + ':',
-              score: item.score.toPrecision(3),
+              // uri: item.uri,
+              prefixedName: item.uri,
+              // localName: item.uriPrefixed.slice(item.vocabularyPrefix.length + 1, item.uriPrefixed.length),
+              // prefix: item.vocabularyPrefix + ':',
+              // score: item.score.toPrecision(3),
               group: 'suggested'
             });
           });
 
           return suggestions;
+        });
+      },
+
+      registerDatabase: function(dbSpec) {
+        return $http.get(dbAdapter + '/config/register', {
+          params: {
+            subname: dbSpec.subname,
+            subprotocol: dbSpec.subprotocol,
+            username: dbSpec.username,
+            password: dbSpec.password
+          }
         });
       }
     };

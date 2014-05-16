@@ -1,9 +1,10 @@
 (ns server.components.db
   (:require
-    [clojure.tools.logging :refer (info warn error debug)]
+    [taoensso.timbre :as timbre]
     [com.stuartsierra.component :as c]
     )
   )
+(timbre/refer-timbre)
 
 (defrecord Database [spec]
   c/Lifecycle
@@ -20,6 +21,5 @@
   )
   
 (defn new-database [opts]
-  (map->Database {:spec (select-keys opts [:subprotocol :subname :user :password])})
+  (map->Database {:spec (atom (select-keys opts [:subprotocol :subname :username :password]))})
   )
-

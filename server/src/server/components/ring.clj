@@ -1,17 +1,18 @@
 (ns server.components.ring
   (:require
-    [clojure.tools.logging :refer (info warn error debug)]
     [com.stuartsierra.component :as c]
+    [taoensso.timbre :as timbre]
     [server.routes.app :refer [app-fn]]
     [ring.server.standalone :refer [serve]]
     )
   )
+(timbre/refer-timbre)
 
-(defrecord Ring [server app-fn opts db-api lov-api]
+(defrecord Ring [server app-fn opts db-api lov-api recommender-api]
   c/Lifecycle
 
   (start [component] 
-    (println "starting ring adapter ...")
+    (info "starting ring adapter ...")
     (let [app (app-fn component)]
       (reset! server (serve app opts))
       component
@@ -19,7 +20,7 @@
     )
 
   (stop [component] 
-    (println "stopping ring adapter ...") 
+    (info "stopping ring adapter ...") 
     (if @server
       (.stop @server)
       (reset! server nil))
@@ -32,5 +33,6 @@
               :server (atom nil) 
               :app-fn app-fn
               :db-api "/api/v1/db"
-              :lov-api "/api/v1/lov"})
+              :lov-api "/api/v1/lov"
+              :recommender-api "/api/v1/recommender"})
   )

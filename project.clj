@@ -8,7 +8,6 @@
   :dependencies [
     [org.clojure/clojure "1.6.0"]
     [org.clojure/java.jdbc "0.3.3"]
-    [org.clojure/tools.logging "0.2.6"]
     [org.clojure/data.json "0.2.4"]
     [org.clojure/core.async "0.1.278.0-76b25b-alpha"]
     [com.stuartsierra/component "0.2.1"]
@@ -19,6 +18,8 @@
     [clj-http "0.9.1"]
     [org.clojure/data.json "0.2.4"]
     [org.clojure/core.async "0.1.278.0-76b25b-alpha"]
+    [edu.ucdenver.ccp/kr-sesame-core "1.4.8"]
+    [com.taoensso/timbre "3.2.0"]
     ]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler server.handler/app}

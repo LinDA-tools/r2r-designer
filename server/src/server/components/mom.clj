@@ -1,10 +1,11 @@
 (ns server.components.mom
   (:require
-    [clojure.tools.logging :refer (info warn error debug)]
     [com.stuartsierra.component :as c]
+    [taoensso.timbre :as timbre]
     [clojure.core.async :as async :refer [pub sub chan close!]]
     )
   )
+(timbre/refer-timbre)
 
 (defrecord MoM [queue publishers]
   c/Lifecycle
