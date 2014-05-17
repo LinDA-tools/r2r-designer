@@ -5,6 +5,7 @@
     [clojure.core.async :as async :refer [pub sub chan close!]]
     )
   )
+
 (timbre/refer-timbre)
 
 (defrecord MoM [queue publishers]
@@ -32,5 +33,3 @@
              :publishers (atom nil)
              }) 
   )
-
-

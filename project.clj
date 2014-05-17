@@ -20,6 +20,7 @@
     [org.clojure/core.async "0.1.278.0-76b25b-alpha"]
     [edu.ucdenver.ccp/kr-sesame-core "1.4.8"]
     [com.taoensso/timbre "3.2.0"]
+    [com.jolbox/bonecp "0.8.0.RELEASE"]
     ]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler server.handler/app}

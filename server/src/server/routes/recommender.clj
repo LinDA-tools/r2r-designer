@@ -8,6 +8,7 @@
     [server.core.recommender :refer :all]
     )
   )
+
 (timbre/refer-timbre)
 
 (defn recommender-routes-fn [component]
@@ -15,7 +16,7 @@
     (defroutes recommender-routes
       (GET (str api "/types") [table template :as r] (do
         (debug r)
-        (let [db @(:spec (:database component))
+        (let [db (:database component)
               all-columns (into #{} (db/query-column-names db table))
               template-decoded (codec/url-decode template)
               template-columns (into #{} (db/parse-columns template-decoded))
