@@ -1,6 +1,6 @@
 {
    "basePath" : "http://localhost:3000/api/v1",
-   "resourcePath" : "/db",
+   "resourcePath" : "",
    "apiVersion" : "v1",
    "swaggerVersion" : "1.2",
    "apis" : [
@@ -11,6 +11,14 @@
       {
          "path" : "/lov",
          "description" : "interacting with the Linked Open Vocabulary (LOV) adapter"
+      },
+      {
+        "path": "/vocab-repo",
+        "description": "basic vocabulary repository services"
       }
-   ]
+   ],
+	 "info": {
+		"title": "URI proposal Service",
+		"description": "Proposal of best fitting URIS for search terms."
+   }
 }
