@@ -1,0 +1,174 @@
+{
+	"apiVersion": "1.0.0",
+	"swaggerVersion": "1.2",
+	"resourcePath": "/vocab-repo",
+    "produces": [
+		"application/json",
+    "application/rdf+xml",
+    "application/n3",
+    "text/turtle"
+	],
+	"authorizations": {},
+	"info": {
+		"title": "Vocabulary and Metadata Repository Services",
+		"description": ""
+	},
+	"apis": [
+		{
+			"path": "/vocab",
+			"description": "basic vocabulary repository services",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "fetches vocabularies based on their namespace",
+          "notes": "",
+          "nickname": "getVocab",
+          "authorizations": {},
+          "parameters": [
+            {
+              "name": "uri",
+              "description": "namespace of vocabulary to fetch",
+              "required": true,
+              "type": "string",
+              "paramType": "query"
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 400,
+              "message": "Bad Request"
+            },
+            {
+              "code": 404,
+              "message": "Proposal not found"
+            },
+            {
+              "code": 405,
+              "message": "Method Not Allowed"
+            }
+          ]
+        }
+      ]
+		},
+		{
+			"path": "/properties",
+			"description": "find RDF properties for search term",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "gets proposed properties for submitted string",
+          "notes": "",
+          "type": "array",
+          "items" : {
+            "$ref" : "EntityResult"
+          },
+          "nickname": "getProperties",
+          "authorizations": {},
+          "parameters": [
+            {
+              "name": "q",
+              "description": "search expression to fetch proposals for",
+              "required": true,
+              "type": "string",
+              "paramType": "query"
+            },
+            {
+              "name": "vocab",
+              "description": "namespace of vocabulary to search within",
+              "required": false,
+              "type": "string",
+              "paramType": "query"
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 400,
+              "message": "Bad Request"
+            },
+            {
+              "code": 404,
+              "message": "Proposal not found"
+            },
+            {
+              "code": 405,
+              "message": "Method Not Allowed"
+            }
+          ]
+        }
+      ]
+		},
+		{
+			"path": "/classes",
+			"description": "find RDF classes for search term",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "gets proposed classes for submitted string",
+          "notes": "",
+          "type": "array",
+          "items" : {
+            "$ref" : "EntityResult"
+          },
+          "nickname": "getClasses",
+          "authorizations": {},
+          "parameters": [
+            {
+              "name": "q",
+              "description": "search expression to fetch proposals for",
+              "required": true,
+              "type": "string",
+              "paramType": "query"
+            },
+            {
+              "name": "vocab",
+              "description": "namespace of vocabulary to search within",
+              "required": false,
+              "type": "string",
+              "paramType": "query"
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 400,
+              "message": "Bad Request"
+            },
+            {
+              "code": 404,
+              "message": "Proposal not found"
+            },
+            {
+              "code": 405,
+              "message": "Method Not Allowed"
+            }
+          ]
+        }
+      ]
+		}
+	],
+	"models": {
+		"EntityResult": {
+			"properties": {
+				"preferredPrefix": {
+					"type": "string",
+					"description": "e.g. \"schema\" for \"http://schema.org\""
+				},
+				"namespace": {
+					"type": "string",
+					"description": "e.g. \"http://schema.org\" for an entity \"http://schema.org/productID\""
+				},
+				"localName": {
+					"type": "string",
+					"description": "e.g. \"Agent\" for entity \"http://schema.org/Agent\""
+				},				
+				"score": {
+					"type": "number",
+					"description": "quality score for the match",
+					"format": "float",
+					"minimum": "0",
+					"maximum": "1"
+				}
+			}
+						
+		}
+  }	
+}
