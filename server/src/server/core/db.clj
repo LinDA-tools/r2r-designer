@@ -7,10 +7,32 @@
     [clojure.string :as str]
     [server.components.db :as db]
     )
+  (:import
+    [java.sql DriverManager]
+    )
   )
 (timbre/refer-timbre)
 
+(defn test-db [spec]
+  (let [sp (:subprotocol spec)
+        host (:host spec)
+        sn (:subname spec)
+        user (:username spec)
+        pass (:password spec)
+        connection-str (str "jdbc:" sp "://" host "/" sn)]
+    (try 
+      (do
+        (DriverManager/getConnection connection-str user pass)
+        true
+        )
+      (catch Exception e false)
+      )
+    )
+  )
+
 (defn register-db [db new-spec]
+  (info "registering new data source")
+  (debug new-spec)
   (if db 
     (c/stop db))
   (reset! (:spec db) new-spec)

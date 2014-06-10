@@ -13,6 +13,31 @@
 		"title": "Vocabulary and Metadata Repository Services",
 		"description": ""
 	},
+	"models": {
+		"EntityResult": {
+			"properties": {
+				"preferredPrefix": {
+					"type": "string",
+					"description": "e.g. \"schema\" for \"http://schema.org\""
+				},
+				"namespace": {
+					"type": "string",
+					"description": "e.g. \"http://schema.org\" for an entity \"http://schema.org/productID\""
+				},
+				"localName": {
+					"type": "string",
+					"description": "e.g. \"Agent\" for entity \"http://schema.org/Agent\""
+				},				
+				"score": {
+					"type": "number",
+					"description": "quality score for the match",
+					"format": "float",
+					"minimum": "0",
+					"maximum": "1"
+				}
+			}
+		}
+  },	
 	"apis": [
 		{
 			"path": "/vocab",
@@ -144,31 +169,5 @@
         }
       ]
 		}
-	],
-	"models": {
-		"EntityResult": {
-			"properties": {
-				"preferredPrefix": {
-					"type": "string",
-					"description": "e.g. \"schema\" for \"http://schema.org\""
-				},
-				"namespace": {
-					"type": "string",
-					"description": "e.g. \"http://schema.org\" for an entity \"http://schema.org/productID\""
-				},
-				"localName": {
-					"type": "string",
-					"description": "e.g. \"Agent\" for entity \"http://schema.org/Agent\""
-				},				
-				"score": {
-					"type": "number",
-					"description": "quality score for the match",
-					"format": "float",
-					"minimum": "0",
-					"maximum": "1"
-				}
-			}
-						
-		}
-  }	
+	]
 }

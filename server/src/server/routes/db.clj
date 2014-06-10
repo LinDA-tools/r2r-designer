@@ -24,14 +24,27 @@
             )
           )
         )
-      (POST (str api "/config/register") [subname subprotocol username password :as r]
+      (POST (str api "/test") [subname subprotocol username password :as r]
+        (let [db (:database component)
+              spec {:subname subname 
+                    :subprotocol subprotocol 
+                    :username username
+                    :password password}
+              result (test-db spec)]
+          (debug r)
+          (debug result)
+          {:status 200 :body (str result)}
+          )
+        )
+      (POST (str api "/register") [subname subprotocol username password :as r]
         (let [db (:database component)
               new-spec {:subname subname 
                         :subprotocol subprotocol 
                         :username username
                         :password password}]
+          (debug r)
           (register-db db new-spec)
-          "success"
+          {:status 200}
           )
         )
       )

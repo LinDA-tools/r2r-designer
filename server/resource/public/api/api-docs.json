@@ -13,12 +13,16 @@
          "description" : "interacting with the Linked Open Vocabulary (LOV) adapter"
       },
       {
+         "path" : "/recommend",
+         "description" : "interacting with the recommendation service"
+      },
+      {
         "path": "/vocab-repo",
         "description": "basic vocabulary repository services"
       }
    ],
 	 "info": {
-		"title": "URI proposal Service",
-		"description": "Proposal of best fitting URIS for search terms."
+		"title": "LinDA transformation backend",
+		"description": "services for internal components and adapters for the LinDA transformation engine"
    }
 }

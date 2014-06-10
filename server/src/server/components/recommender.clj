@@ -12,7 +12,7 @@
   c/Lifecycle
 
   (start [component]
-    (info "starting Recommender ...")
+    (info "starting recommender ...")
     (reset! (:kb component) 
             (new-server (:endpoint component)))
     ;; (reset! mom-adapter (chan 10))
@@ -28,7 +28,7 @@
     )
 
   (stop [component]
-    (info "stopping Recommender ...")
+    (info "stopping recommender ...")
     (reset! (:kb component) nil)
     ;; (if @mom-adapter
     ;;   (close! @mom-adapter)

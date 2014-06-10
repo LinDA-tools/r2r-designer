@@ -1,0 +1,66 @@
+{
+   "models" : {
+      "Result" : {
+         "id" : "Result",
+         "required" : [
+            "score",
+            "uri",
+            "uriPrefixed"  
+         ],
+         "properties" : {
+            "score" : {
+               "type" : "float"
+            },
+            "uri" : {
+               "type" : "string"
+            },
+            "uriPrefixed" : {
+               "type" : "string"
+            }
+         }
+      }
+   },
+   "produces" : [
+      "application/edn"
+   ],
+   "resourcePath" : "/recommend",
+   "apis" : [
+      {
+         "path" : "/recommend/types",
+         "operations" : [
+            {
+               "method" : "GET",
+               "nickname" : "get-subject-type",
+               "summary" : "Returns a list of computed and recommended types according to a database table.",
+               "type" : "array",
+               "items" : {
+                  "$ref" : "Result"
+               },
+               "parameters" : [
+                  {
+                     "name" : "table",
+                     "description" : "name of the database table for the current database specification",
+                     "paramType" : "query",
+                     "type" : "string",
+                     "required" : true
+                  },
+                  {
+                     "name" : "template",
+                     "description" : "name of the subject template",
+                     "paramType" : "query",
+                     "type" : "string",
+                     "required" : true
+                  }
+               ],
+               "responseMessages" : [
+                  {
+                     "message" : "Not found!",
+                     "code" : 404
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}
+

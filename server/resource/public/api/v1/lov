@@ -9,13 +9,23 @@
          ],
          "properties" : {
             "score" : {
-               "type" : "float"
+               "type" : "number",
+               "description": "quality score for the match",
+               "format": "float",
+               "minimum": "0",
+               "maximum": "1"
             },
             "uri" : {
-               "type" : "string"
+               "type" : "string",
+               "description": "the URI of the entity, e.g. \"http://schema.org/productID\""
             },
             "uriPrefixed" : {
-               "type" : "string"
+               "type" : "string",
+               "description": "the URI prefixed with the preferred prefix, e.g. \"schema:Agent\" for entity \"http://schema.org/Agent\""
+            },
+            "localName": {
+              "type": "string",
+              "description": "e.g. \"Agent\" for entity \"http://schema.org/Agent\""
             }
          }
       }
