@@ -39,4 +39,5 @@
       :source-paths ["server/dev"]
       }
     }
+  :main server.system
   )
