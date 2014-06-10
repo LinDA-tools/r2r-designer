@@ -12,6 +12,9 @@ RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-s
 RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
 RUN apt-get -y install oracle-java7-installer
 
+RUN git clone https://github.com/LinDA-tools/r2r-designer.git
+WORKDIR r2r-designer
+
 RUN curl -o /usr/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 RUN chmod 0755 /usr/bin/lein
 #RUN /usr/sbin/useradd -m -r -s /bin/bash leinuser
