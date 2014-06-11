@@ -5,12 +5,12 @@
     [clojure.java.io :as io]
     [clojure.java.jdbc :as jdbc]
     [clojure.string :as str]
-    [server.components.db :as db]
     )
   (:import
     [java.sql DriverManager]
-    )
+    [com.jolbox.bonecp BoneCPDataSource])
   )
+
 (timbre/refer-timbre)
 
 (defn test-db [spec]
@@ -28,6 +28,27 @@
       (catch Exception e false)
       )
     )
+
+(defn new-pool [c]
+  (let [min-pool (:min-pool c)
+        max-pool (:max-pool c)
+        partitions (spy :info (:partitions c))
+        spec @(:spec c)
+        cpds (doto (BoneCPDataSource.)
+               (.setJdbcUrl (str "jdbc:" (:subprotocol spec) ":" (:subname spec)))
+               (.setUsername (:username spec))
+               (.setPassword (:password spec))
+               (.setMinConnectionsPerPartition (inc (int (/ min-pool partitions))))
+               (.setMaxConnectionsPerPartition (inc (int (/ max-pool partitions))))
+               (.setPartitionCount partitions)
+               (.setStatisticsEnabled true)
+               ;; test connections every 25 mins (default is 240):
+               (.setIdleConnectionTestPeriodInMinutes 25)
+               ;; allow connections to be idle for 3 hours (default is 60 minutes):
+               (.setIdleMaxAgeInMinutes (* 3 60))
+               ;; consult the BoneCP documentation for your database:
+               (.setConnectionTestStatement "/* ping *\\/ SELECT 1"))] 
+    {:datasource cpds})
   )
 
 (defn register-db [db new-spec]
@@ -62,74 +83,61 @@
     )
   )
 
-(defn get-tables [db]
-  (debug db)
-  (if db 
-    (let [result (jdbc/query db "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'public'")
-          tables (map :table_name result)]
-      (debug tables)
-      tables 
-      )
+(defn get-tables [c]
+  (let [pool @(:pool c)
+        result (jdbc/query pool "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'public'")
+        tables (map :table_name result)]
+    (debug tables)
+    tables 
     )
   )
 
-(defn query-column-names [db table]
-  (debug db table)
-  (if db 
-    (let [result (jdbc/query db (str "SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" table "'"))
-          columns (map :column_name result)]
-      (debug columns)
-      columns 
-      )
+(defn query-column-names [c table]
+  (let [pool @(:pool c)
+        result (jdbc/query pool (str "SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" table "'"))
+        columns (map :column_name result)]
+    (debug columns)
+    columns 
     )
   )
 
-(defn query-column-names-map [db table]
-  (debug db table)
-  (if db 
-    (let [columns (query-column-names db table)
-          result (apply merge (for [i columns] {(keyword (str/lower-case i)) i}))]
-      (debug result)
-      result 
-      )
+(defn query-column-names-map [c table]
+  (let [pool @(:pool c)
+        columns (query-column-names pool table)
+        result (apply merge (for [i columns] {(keyword (str/lower-case i)) i}))]
+    (debug result)
+    result 
     )
   )
 
-(defn query-columns [db table columns]
-  (debug db table columns)
-  (if db 
-    (let [columns-joined (str/join ", " (map #(str "\"" % "\"") columns))
-          result (jdbc/query db (str "SELECT " columns-joined " FROM " table))]
-      (debug result)
-      result 
-      )
+(defn query-columns [c table columns]
+  (let [pool @(:pool c)
+        columns-joined (str/join ", " (map #(str "\"" % "\"") columns))
+        result (jdbc/query pool (str "SELECT " columns-joined " FROM " table))]
+    (debug result)
+    result 
     )
   )
 
-(defn query-column [db table column]
-  (debug db table column)
-  (if db 
-    (let [result (jdbc/query db (str "SELECT \"" column "\" FROM " table))
-          values (map second (map first result))]
-      (debug values)
-      values 
-      )
+(defn query-column [c table column]
+  (let [pool @(:pool c)
+        result (jdbc/query pool (str "SELECT \"" column "\" FROM " table))
+        values (map second (map first result))]
+    (debug values)
+    values 
     )
   )
 
-(defn query-table [db table]
-  (debug db table)
-  (if db 
-    (let [result (take 20 (jdbc/query db (str "SELECT * FROM " table)))
-          filtered (map drop-bytes result)]
-      (debug filtered)
-      filtered 
-      )
+(defn query-table [c table]
+  (let [pool @(:pool c)
+        result (take 20 (jdbc/query pool (str "SELECT * FROM " table)))
+        filtered (map drop-bytes result)]
+    (debug filtered)
+    filtered 
     )
   )
 
 (defn parse-template-str [template-str]
-  (debug template-str)
   (let [p #"\{[^\}]*\}"
         leftovers (str/split template-str p)
         matches (re-seq p template-str)
@@ -142,7 +150,6 @@
   )
 
 (defn parse-columns [template-str]
-  (debug template-str)
   (let [p #"\{[^\}]*\}"
         matches (re-seq p template-str)
         columns (for [i matches] (subs i 1 (- (count i) 1)))]
@@ -152,26 +159,25 @@
   )
 
 (defn match-template [template row]
-  (debug template row)
   (str/join (for [i template] (if (keyword? i) (i row) i)))
   )
 
-(defn query-subject-template [db table template-str]
-  (debug db table template-str)
-  (let [template (parse-template-str template-str)
+(defn query-subject-template [c table template-str]
+  (let [pool @(:pool c)
+        template (parse-template-str template-str)
         columns (parse-columns template-str)
-        data (query-columns db table columns)
+        data (query-columns pool table columns)
         result (take 20 (for [row data] (match-template template row)))]
     (debug result)
     result
     )
   )
 
-(defn predicate->column [db table template-str predicate column]
-  (debug db table template-str predicate column)
-  (let [template (parse-template-str template-str)
+(defn predicate->column [c table template-str predicate column]
+  (let [pool @(:pool c)
+        template (parse-template-str template-str)
         columns (parse-columns template-str)
-        data (query-columns db table (conj columns column))
+        data (query-columns pool table (conj columns column))
         column-kw (column->kw column)
         result (take 20 (for [row data] [(match-template template row) predicate (column-kw row)]))]
     (debug result)

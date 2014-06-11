@@ -53,7 +53,8 @@
   "Creates and initializes the system under development in the Var
   #'system."
   []
-  (let [db-opts {:subprotocol "postgresql" 
+  (let [db-opts {:classname "org.postgresql.Driver"
+                 :subprotocol "postgresql" 
                  :subname "mydb" 
                  :username "postgres" 
                  :password ""}
