@@ -40,7 +40,8 @@
                    :auto-reload? true}
         recommender-sparql "http://dbpedia.org/sparql"
         log-config log-config
-        system (new-system db-opts 
+        system (new-system 
+                  db-opts 
                   #'app-fn 
                   ring-opts 
                   recommender-sparql 

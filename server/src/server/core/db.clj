@@ -28,6 +28,7 @@
       (catch Exception e false)
       )
     )
+  )
 
 (defn new-pool [c]
   (let [min-pool (:min-pool c)
