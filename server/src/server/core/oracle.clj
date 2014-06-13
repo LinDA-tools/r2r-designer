@@ -1,6 +1,5 @@
-(ns server.core.recommender
+(ns server.core.oracle
   (:require
-    [clojure.core.async :as async :refer [go go-loop chan timeout <! >! <!! >!! alts! alts!! alt! alt!!]]
     [clojure.data.json :as json]
     [clojure.string :refer [join]]
     [clj-http.client :as client]
@@ -13,17 +12,6 @@
     )
   )
 (timbre/refer-timbre)
-
-(defn listen! [recommender]
-  (if @(:mom-adapter recommender)
-    (go-loop []
-      (let [v (<! @(:mom-adapter recommender))]
-        ;do nothing 
-        (if v (recur))
-        )
-      )
-    )
-  )
 
 (defn new-server [endpoint]
   (open 

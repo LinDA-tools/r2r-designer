@@ -33,7 +33,7 @@
 (defn new-pool [c]
   (let [min-pool (:min-pool c)
         max-pool (:max-pool c)
-        partitions (spy :info (:partitions c))
+        partitions (:partitions c)
         spec @(:spec c)
         cpds (doto (BoneCPDataSource.)
                (.setJdbcUrl (str "jdbc:" (:subprotocol spec) ":" (:subname spec)))

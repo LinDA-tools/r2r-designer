@@ -13,7 +13,6 @@
     [clojure.test :as test]
     [clojure.tools.namespace.repl :refer (refresh refresh-all)]
     [clojure.tools.reader.edn :as edn]
-    [clojure.core.async :as async :refer [pub sub chan close! timeout <! >! <!! >!! alts! alts!! alt! alt!!]]
     [clojure.set :refer :all]
     [com.stuartsierra.component :as c]
     [ring.server.standalone :refer :all]
@@ -26,13 +25,10 @@
     [edu.ucdenver.ccp.kr.sesame.kb :as sesame]
     [taoensso.timbre :as timbre]
     [server.components.db :refer :all]
-    [server.components.mom :refer :all]
-    [server.components.lov :refer :all]
-    [server.components.recommender :refer :all]
+    [server.components.oracle :refer :all]
     [server.components.ring :refer :all]
     [server.core.db :refer :all]
-    [server.core.lov :as lov]
-    [server.core.recommender :refer :all]
+    [server.core.oracle :refer :all]
     [server.routes.app :refer [app-fn]]
     [server.system :refer [new-system]]
     )
@@ -62,8 +58,8 @@
                    :open-browser? false
                    :join true
                    :auto-reload? true}
-        recommender-sparql "http://dbpedia.org/sparql"]
-    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts recommender-sparql log-config)))
+        oracle-sparql "http://dbpedia.org/sparql"]
+    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql log-config)))
     )
   )
 
@@ -71,10 +67,6 @@
   "Starts the system running, updates the Var #'system."
   []
   (alter-var-root #'system c/start)
-  (let [mock-recommender (edn/read-string (slurp (io/resource "recommender.samples")))
-        recommender (get-in system [:lov :recommender])]
-    (reset! recommender mock-recommender)
-    )
   )
 
 (defn stop

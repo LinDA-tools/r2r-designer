@@ -9,18 +9,16 @@
     [org.clojure/clojure "1.6.0"]
     [org.clojure/java.jdbc "0.3.3"]
     [org.clojure/data.json "0.2.4"]
-    [org.clojure/core.async "0.1.278.0-76b25b-alpha"]
+    [org.clojure/java.classpath "0.2.2"]
     [com.stuartsierra/component "0.2.1"]
-    [compojure "1.1.6"]
-    [log4j/log4j "1.2.17"]
-    [ring-server "0.3.1"]
-    [ring-cors "0.1.0"]
-    [clj-http "0.9.1"]
-    [org.clojure/data.json "0.2.4"]
-    [org.clojure/core.async "0.1.278.0-76b25b-alpha"]
-    [edu.ucdenver.ccp/kr-sesame-core "1.4.8"]
-    [com.taoensso/timbre "3.2.0"]
+    [compojure "1.1.8"]
+    [ring-server "0.3.1" :exclusions [org.clojure/java.classpath]]
+    [ring-cors "0.1.1"]
+    [clj-http "0.9.2"]
+    [edu.ucdenver.ccp/kr-sesame-core "1.4.12" :exclusions [org.clojure/java.classpath ]]
+    [com.taoensso/timbre "3.2.1"]
     [com.jolbox/bonecp "0.8.0.RELEASE"]
+    [org.postgresql/postgresql "9.3-1101-jdbc41"]
     ]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler server.handler/app}
@@ -31,13 +29,11 @@
     :dev {
       :dependencies [
         [org.clojure/tools.namespace "0.2.4"]
-        [javax.servlet/servlet-api "2.5"]
-        [org.hsqldb/hsqldb "1.8.0.10"]
-        [org.postgresql/postgresql "9.2-1004-jdbc41"]
         [ring-mock "0.1.5"]
-        [ring/ring-devel "1.2.1"]
+        [ring/ring-devel "1.3.0" :exclusions [org.clojure/tools.namespace org.clojure/java-classpath]]
         ]
       :source-paths ["server/dev"]
+      :main user
       }
     }
   :main server.system

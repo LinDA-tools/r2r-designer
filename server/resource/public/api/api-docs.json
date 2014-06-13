@@ -9,10 +9,6 @@
          "description" : "interacting with the database backend"
       },
       {
-         "path" : "/lov",
-         "description" : "interacting with the Linked Open Vocabulary (LOV) adapter"
-      },
-      {
          "path" : "/recommend",
          "description" : "interacting with the recommendation service"
       },
