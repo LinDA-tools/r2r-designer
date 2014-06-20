@@ -3,7 +3,7 @@
 angular.module('app')
   .directive('config', function () {
     return {
-      templateUrl: 'partials/config.html',
-      restrict: 'E'
+      restrict: 'E',
+      templateUrl: 'partials/config.html'
     };
   });

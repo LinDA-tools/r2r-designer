@@ -64,7 +64,7 @@ angular.module('app')
       getSubjectsForTemplate: function (table, baseUri, template) {
         var triples = [];
 
-        return $http.get(dbAdapter + '/subjects', {
+        return $http.get(dbAdapter + '/resources', {
           params: {
             table: table,
             template: encodeURI(baseUri + template)
