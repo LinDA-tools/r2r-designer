@@ -1,4 +1,5 @@
 $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
+// @import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
 
 @import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
 
@@ -74,7 +75,7 @@ body {
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
-      max-width: 730px;
+      // max-width: 730px;
   }
 
   /* Remove the padding we set earlier */
@@ -92,6 +93,11 @@ body {
   .jumbotron {
       border-bottom: 0;
   }
+}
+
+/* ========= */
+.main {
+  // font-family: "Lato", sans-serif;
 }
 
 .table-scrollable {
@@ -131,5 +137,31 @@ body {
 }
 
 .link {
-  color: #428bca;
+  // color: #428bca;
+  color: #0088cc;
+}
+
+.treated {
+  color: lightGrey;
+}
+
+.description {
+  // font-size: large;
+  font-style: italic;
+  color: darkGrey;
+}
+
+.navigation {
+  position: fixed;
+}
+
+.active > a {
+  color: #005580;
+  -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset -1px 0 0 rgba(0,0,0,.2);
+     -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset -1px 0 0 rgba(0,0,0,.2);
+          box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset -1px 0 0 rgba(0,0,0,.2);
+}
+
+.wizard {
+  margin-bottom: 512px;
 }

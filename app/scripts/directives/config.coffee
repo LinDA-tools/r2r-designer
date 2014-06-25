@@ -2,5 +2,5 @@
 
 angular.module 'app'
   .directive 'config', ->
-    templateUrl: 'partials/config.html'
     restrict: 'E'
+    templateUrl: 'partials/config.html'

@@ -28,72 +28,73 @@ angular.module 'app'
           mydata
 
           suggestions
+    {
+      getTables: ->
+        $http.get dbAdapter + '/tables'
+             .then (res) -> Jsedn.toJS Jsedn.parse res.data
 
-    getTables: ->
-      $http.get dbAdapter + '/tables'
-           .then (res) -> Jsedn.toJS Jsedn.parse res.data
+      getColumnsMap: (table) ->
+        $http.get dbAdapter + '/columns',
+          params:
+            table: table
+        .then (res) ->
+          Jsedn.toJS Jsedn.parse res.data
 
-    getColumnsMap: (table) ->
-      $http.get dbAdapter + '/columns',
-        params:
+      getTableData: (table, columnsMap) ->
+        $http.get dbAdapter + '/table',
+          params:
+            name: table
+        .then (res) ->
+          columnKeys = (i) -> i[0] for i in columnsMap
+          columnNames = (i) -> i[1] for i in columnsMap
+          mydata = Jsedn.toJS Jsedn.parse res.data
+
+            columns: columnNames,
+            data: (i) -> rowValuesToArray columnKeys, i for i in mydata
+
+      getSubjectsForTemplate: (table, baseUri, template) ->
+        triples = []
+
+        $http.get dbAdapter + '/subjects',
+          params:
+            table: table
+            template: encodeURI baseUri + template
+        .then (res) ->
+          mydata = Jsedn.toJS Jsedn.parse res.data
+          (i) -> triples.push [i, 'rdf:type', 'rdfs:resource'] for i in mydata
+
+          triples
+       
+      getSuggestedLOVClasses: (table, column) ->
+        getSuggestedEntities lovAdapter + '/classes',
           table: table
-      .then (res) ->
-        Jsedn.toJS Jsedn.parse res.data
+          column: column
 
-    getTableData: (table, columnsMap) ->
-      $http.get dbAdapter + '/table',
-        params:
-          name: table
-      .then (res) ->
-        columnKeys = (i) -> i[0] for i in columnsMap
-        columnNames = (i) -> i[1] for i in columnsMap
-        mydata = Jsedn.toJS Jsedn.parse res.data
-
-          columns: columnNames,
-          data: (i) -> rowValuesToArray columnKeys, i for i in mydata
-
-    getSubjectsForTemplate: (table, baseUri, template) ->
-      triples = []
-
-      $http.get dbAdapter + '/subjects',
-        params:
+      getSuggestedLOVProperties: (table, column) ->
+        getSuggestedEntities lovAdapter + '/properties',
           table: table
-          template: encodeURI baseUri + template
-      .then (res) ->
-        mydata = Jsedn.toJS Jsedn.parse res.data
-        (i) -> triples.push [i, 'rdf:type', 'rdfs:resource'] for i in mydata
+          column: column
 
-        triples
-     
-    getSuggestedLOVClasses: (table, column) ->
-      getSuggestedEntities lovAdapter + '/classes',
-        table: table
-        column: column
+      getSuggestedDBPediaTypes: (table, template) ->
+        $http.get recommenderAdapter + '/types',
+          params:
+            table: table
+            template: encodeURI template
+        .then (res) ->
+          suggestions = []
+          mydata = Jsedn.toJS Jsedn.parse res.data
+          (i) -> suggestions.push
+            prefixedName: i.uri
+            group: 'suggested'
+          mydata
 
-    getSuggestedLOVProperties: (table, column) ->
-      getSuggestedEntities lovAdapter + '/properties',
-        table: table
-        column: column
+          suggestions
 
-    getSuggestedDBPediaTypes: (table, template) ->
-      $http.get recommenderAdapter + '/types',
-        params:
-          table: table
-          template: encodeURI template
-      .then (res) ->
-        suggestions = []
-        mydata = Jsedn.toJS Jsedn.parse res.data
-        (i) -> suggestions.push
-          prefixedName: i.uri
-          group: 'suggested'
-        mydata
-
-        suggestions
-
-    registerDatabase: (dbSpec) ->
-      $http.get dbAdapter + '/config/register',
-        params:
-          subname: dbSpec.subname
-          subprotocol: dbSpec.subprotocol
-          username: dbSpec.username
-          password: dbSpec.password
+      registerDatabase: (dbSpec) ->
+        $http.get dbAdapter + '/config/register',
+          params:
+            subname: dbSpec.subname
+            subprotocol: dbSpec.subprotocol
+            username: dbSpec.username
+            password: dbSpec.password
+    }
