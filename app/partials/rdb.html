@@ -1,30 +1,33 @@
 <div ng-controller="RdbCtrl">
   <h3>Database View</h3>
 
-  <div class="row">
-    <div class="radio">
-      <label>
-        <input type="radio" name="logicalTableRadios" value="option1" checked>
-        <div id="tableSelect">
-          <select class="form-control" ng-model="rdb.table" ng-options="i for i in tables">
-            <option value="">Select Table ...</option>
-          </select>
-        </div>
-      </label>
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <div class="radio">
+        <label>
+          <input type="radio" name="logicalTableRadios" value="option1" checked>
+          <div id="tableSelect">
+            <select class="form-control" ng-model="rdb.table" ng-options="i for i in tables">
+              <option value="">Select Table ...</option>
+            </select>
+          </div>
+        </label>
+      </div>
+
+      <div class="radio">
+        <label>
+          <input type="radio" name="logicalTableRadios" value="option2">
+          <textarea class="form-control" rows="6" cols="80">
+  SELECT EMP.*, (CASE JOB
+      WHEN 'CLERK' THEN 'general-office'
+      WHEN 'NIGHTGUARD' THEN 'security'
+      WHEN 'ENGINEER' THEN 'engineering'
+  END) ROLE FROM EMP
+          </textarea>
+        </label>
+      </div>
     </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="logicalTableRadios" value="option2">
-        <textarea class="form-control" rows="8">
-SELECT EMP.*, (CASE JOB
-    WHEN 'CLERK' THEN 'general-office'
-    WHEN 'NIGHTGUARD' THEN 'security'
-    WHEN 'ENGINEER' THEN 'engineering'
-END) ROLE FROM EMP
-        </textarea>
-      </label>
-    </div>
-  </div>
+  </form>
 
   <div class="table-scrollable">
     <table class="table">

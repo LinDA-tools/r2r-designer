@@ -6,7 +6,8 @@ app = angular.module('app', [
   'ngSanitize',
   'ngRoute',
   'ui.bootstrap',
-  'duScroll'
+  'duScroll',
+  'underscore'
 ])
 
 app.config ($routeProvider) ->

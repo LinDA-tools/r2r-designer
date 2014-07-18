@@ -1,6 +1,5 @@
 'use strict'
 
-
 angular.module 'app'
   .factory 'R2rs', ($http, Jsedn) ->
 
