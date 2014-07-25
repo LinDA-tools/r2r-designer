@@ -33,8 +33,10 @@
         [ring/ring-devel "1.3.0" :exclusions [org.clojure/tools.namespace org.clojure/java-classpath]]
         ]
       :source-paths ["server/dev"]
-      :main user
+      :aot [dev]
+      :main dev
       }
     }
+  :aot [server.system]
   :main server.system
   )
