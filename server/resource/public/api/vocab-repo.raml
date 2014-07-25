@@ -1,0 +1,101 @@
+#%RAML 0.8
+
+title: LinDA Vocabulary Repository API
+# baseUri: 
+version: v1
+# documentation:
+
+/vocab:
+  get:
+    queryParameters:
+      uri:
+        type: string
+        required: true
+    responses:
+      200:
+        body:
+          application/xml:
+          text/turtle:
+          text/n3:
+  /search:
+    # is: [paged]
+    get:
+      queryParameters:
+        q:
+          type: string
+          required: true
+      responses:
+        200:
+          body:
+            application/json:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/schema",
+                  "type": "collection",
+                  "properties": {
+                    "prefix":  { "type": "string" },
+                    "namespace": { "type": "string" },
+                    "score": { "type": "string" }
+                  },
+                  "required": [ "prefix", "namespace", "score" ]
+                }
+
+/classes:
+  /search:
+    # is: [paged]
+    get:
+      queryParameters:
+        q:
+          type: string
+          required: true
+        vocab:
+          type: string
+          required: false
+      responses:
+        200:
+          body:
+            application/json:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/schema",
+                  "type": "collection",
+                  "properties": {
+                    "uri": { "type": "string" },
+                    "prefix":  { "type": "string" },
+                    "namespace": { "type": "string" },
+                    "localName": { "type": "string" },
+                    "score": { "type": "string" }
+                  },
+                  "required": [ "prefix", "namespace", "score" ]
+                }
+              example: |
+
+/properties:
+  /search:
+    # is: [paged]
+    get:
+      queryParameters:
+        q:
+          type: string
+          required: true
+        vocab:
+          type: string
+          required: false
+      responses:
+        200:
+          body:
+            application/json:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/schema",
+                  "type": "collection",
+                  "properties": {
+                    "uri": { "type": "string" },
+                    "prefix":  { "type": "string" },
+                    "namespace": { "type": "string" },
+                    "localName": { "type": "string" },
+                    "score": { "type": "string" }
+                  },
+                  "required": [ "prefix", "namespace", "score" ]
+                }
+              example: |
