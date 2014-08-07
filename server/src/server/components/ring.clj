@@ -6,6 +6,7 @@
     [ring.server.standalone :refer [serve]]
     )
   )
+
 (timbre/refer-timbre)
 
 (defrecord Ring [server app-fn opts db-api oracle-api]

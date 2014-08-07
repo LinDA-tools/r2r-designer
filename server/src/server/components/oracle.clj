@@ -5,6 +5,7 @@
     [server.core.oracle :refer :all]
     )
   )
+
 (timbre/refer-timbre)
 
 (defrecord Oracle [kb endpoint sample threshold limit n]
@@ -26,6 +27,7 @@
   
 (defn new-oracle [endpoint]
   (map->Oracle {:endpoint endpoint
+                :vocab-repo-api "http://linda-project.eu/vocabRepo/"
                 :kb (atom nil)
                 :sample 20
                 :threshold 0

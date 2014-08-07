@@ -7,7 +7,6 @@
     [server.components.logging :refer :all]
     [server.routes.app :refer [app-fn]]
     )
-  (:gen-class)
   )
 
 (defn new-system [db-opts app-fn ring-opts oracle-sparql log-config] 

@@ -5,6 +5,7 @@
     [server.core.db :refer [new-pool]]
     )
   )
+
 (timbre/refer-timbre)
 
 (defrecord Database [spec pool conn]
@@ -19,6 +20,7 @@
   (stop [component]
     (info "stopping database adapter ...")
     (if @(:pool component)
+      (.close (:datasource @(:pool component)))
       (reset! (:pool component) nil))
     component
     )

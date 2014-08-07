@@ -8,12 +8,13 @@
     [clojure.pprint :refer (pprint)]
     [clojure.reflect :refer (reflect)]
     [clojure.repl :refer (apropos dir doc find-doc pst source)]
-    [clojure.set :as set]
-    [clojure.string :as str]
+    [clojure.string :as string]
     [clojure.test :as test]
     [clojure.tools.namespace.repl :refer (refresh refresh-all)]
     [clojure.tools.reader.edn :as edn]
     [clojure.set :refer :all]
+    [clojure.java.classpath :refer :all]
+    [clojure.data.json :as json]
     [com.stuartsierra.component :as c]
     [ring.server.standalone :refer :all]
     [ring.middleware.file-info :refer :all]
@@ -89,6 +90,6 @@
   "Stops the system, reloads modified source files, and restarts it."
   []
   (stop)
-  (refresh :after '(dev/go)))
+  (refresh :after 'dev/go))
 
-(defn -main [& args] (dev/go))
+;; (defn -main [& args] (dev/go))

@@ -36,6 +36,9 @@
           {:status 200 :body (str result)}
           )
         )
+      ;; (OPTIONS (str api "/register") [subname subprotocol username password :as r]
+      ;;   {:status 200}       
+      ;;   )
       (POST (str api "/register") [subname subprotocol username password :as r]
         (let [db (:database component)
               new-spec {:subname subname 

@@ -5,8 +5,7 @@ angular.module 'app'
 
     host = 'http://localhost:3000'
     dbAdapter = host + '/api/v1/db'
-    lovAdapter = host + '/api/v1/lov'
-    recommenderAdapter = host + '/api/v1/recommender'
+    oracleAdapter = host + '/api/v1/oracle'
 
     rowValuesToArray = (keys, row) ->
       (i) -> row[i] key for key in keys
@@ -63,37 +62,21 @@ angular.module 'app'
           (i) -> triples.push [i, 'rdf:type', 'rdfs:resource'] for i in mydata
 
           triples
-       
-      getSuggestedLOVClasses: (table, column) ->
-        getSuggestedEntities lovAdapter + '/classes',
-          table: table
-          column: column
-
-      getSuggestedLOVProperties: (table, column) ->
-        getSuggestedEntities lovAdapter + '/properties',
-          table: table
-          column: column
-
-      getSuggestedDBPediaTypes: (table, template) ->
-        $http.get recommenderAdapter + '/types',
-          params:
-            table: table
-            template: encodeURI template
-        .then (res) ->
-          suggestions = []
-          mydata = Jsedn.toJS Jsedn.parse res.data
-          (i) -> suggestions.push
-            prefixedName: i.uri
-            group: 'suggested'
-          mydata
-
-          suggestions
 
       registerDatabase: (dbSpec) ->
-        $http.get dbAdapter + '/config/register',
-          params:
-            subname: dbSpec.subname
-            subprotocol: dbSpec.subprotocol
-            username: dbSpec.username
-            password: dbSpec.password
+        $http.post dbAdapter + '/register',
+          ""
+          # params:
+          #   subname: dbSpec.subname
+          #   subprotocol: dbSpec.subprotocol
+          #   username: dbSpec.username
+          #   password: dbSpec.password
+
+      getSuggestedClasses: (query) ->
+        getSuggestedEntities oracleAdapter + '/classes',
+          q: table
+
+      getSuggestedProperties: (query) ->
+        getSuggestedEntities oracleAdapter + '/properties',
+          q: query
     }
