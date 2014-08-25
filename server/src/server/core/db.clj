@@ -93,7 +93,7 @@
     )
   )
 
-(defn query-column-names [c table]
+(defn get-columns [c table]
   (let [pool @(:pool c)
         result (jdbc/query pool (str "SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" table "'"))
         columns (map :column_name result)]
@@ -102,9 +102,17 @@
     )
   )
 
+(defn get-table-columns [c]
+  (let [pool @(:pool c)
+        tables (get-tables c)
+        table-columns (apply merge (for [table tables] {table (get-columns c table)}))]
+    table-columns 
+    ) 
+  )
+
 (defn query-column-names-map [c table]
   (let [pool @(:pool c)
-        columns (query-column-names c table)
+        columns (get-columns c table)
         result (apply merge (for [i columns] {(keyword (str/lower-case i)) i}))]
     (debug result)
     result 

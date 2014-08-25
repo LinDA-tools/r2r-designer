@@ -17,7 +17,6 @@ angular.module 'app'
 
     $scope.$watch 'config.datasource', (value) ->
       if value
-        console.log value
         R2rs.registerDatabase value
 
     $scope.newDatasource = ->

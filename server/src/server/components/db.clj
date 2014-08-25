@@ -30,6 +30,6 @@
   (map->Database {:spec (atom (select-keys opts [:classname :subprotocol :subname :username :password]))
                   :pool (atom nil)
                   :min-pool 1
-                  :max-pool 15
-                  :partitions 3})
+                  :max-pool 1
+                  :partitions 1})
   )

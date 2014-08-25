@@ -2,5 +2,5 @@
 
 angular.module 'app'
   .directive 'playground', ->
-    templateUrl: 'partials/playground.html'
     restrict: 'E'
+    templateUrl: 'partials/playground.html.tpl'

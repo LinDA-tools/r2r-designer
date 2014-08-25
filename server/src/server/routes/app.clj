@@ -35,10 +35,8 @@
   (-> (routes (db-routes-fn component) 
               (oracle-routes-fn component) 
               app-routes)
-    (wrap-cors :access-control-allow-origin #"http://localhost:9000"
-               :access-control-allow-methods  [:option :get :put :post :delete]) 
-    (wrap-cors :access-control-allow-origin #"http://127.0.0.1:9000"
-               :access-control-allow-methods  [:option :get :put :post :delete])
+    (wrap-cors :access-control-allow-origin #"http://localhost:9000")
+    (wrap-cors :access-control-allow-origin #"http://127.0.0.1:9000")
     wrap-params
     wrap-json-body
     wrap-json-response

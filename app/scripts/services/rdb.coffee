@@ -2,5 +2,5 @@
 
 angular.module 'app'
   .factory 'Rdb', ->
-    table: ''
+    table: null
     columns: []

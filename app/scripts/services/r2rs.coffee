@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'app'
-  .factory 'R2rs', ($http, Jsedn) ->
+  .factory 'R2rs', ($http, $resource) ->
 
     host = 'http://localhost:3000'
     dbAdapter = host + '/api/v1/db'
@@ -14,7 +14,7 @@ angular.module 'app'
       $http.get url, params: params
         .then (res) ->
           suggestions = []
-          mydata = Jsedn.toJS Jsedn.parse res.data
+          mydata = res.data
           (item) ->
             suggestions.push
               uri: item.uri
@@ -28,15 +28,18 @@ angular.module 'app'
           suggestions
     {
       getTables: ->
-        $http.get dbAdapter + '/tables'
-             .then (res) -> Jsedn.toJS Jsedn.parse res.data
+        $http.get dbAdapter + '/table-columns'
+             .then (res) -> key for key of res.data
+
+      getTableColumns: ->
+        $http.get dbAdapter + '/table-columns'
+             .then (res) -> res.data
 
       getColumnsMap: (table) ->
         $http.get dbAdapter + '/columns',
           params:
             table: table
-        .then (res) ->
-          Jsedn.toJS Jsedn.parse res.data
+        .then (res) -> res.data
 
       getTableData: (table, columnsMap) ->
         $http.get dbAdapter + '/table',
@@ -45,10 +48,11 @@ angular.module 'app'
         .then (res) ->
           columnKeys = (i) -> i[0] for i in columnsMap
           columnNames = (i) -> i[1] for i in columnsMap
-          mydata = Jsedn.toJS Jsedn.parse res.data
-
+          mydata = res.data
+          {
             columns: columnNames,
             data: (i) -> rowValuesToArray columnKeys, i for i in mydata
+          }
 
       getSubjectsForTemplate: (table, baseUri, template) ->
         triples = []
@@ -58,19 +62,18 @@ angular.module 'app'
             table: table
             template: encodeURI baseUri + template
         .then (res) ->
-          mydata = Jsedn.toJS Jsedn.parse res.data
+          mydata = res.data
           (i) -> triples.push [i, 'rdf:type', 'rdfs:resource'] for i in mydata
 
           triples
 
       registerDatabase: (dbSpec) ->
-        $http.post dbAdapter + '/register',
-          ""
-          # params:
-          #   subname: dbSpec.subname
-          #   subprotocol: dbSpec.subprotocol
-          #   username: dbSpec.username
-          #   password: dbSpec.password
+        $http.get dbAdapter + '/register',
+          params:
+            subname: dbSpec.subname
+            subprotocol: dbSpec.subprotocol
+            username: dbSpec.username
+            password: dbSpec.password
 
       getSuggestedClasses: (query) ->
         getSuggestedEntities oracleAdapter + '/classes',
