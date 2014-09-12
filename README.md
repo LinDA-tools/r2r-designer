@@ -42,16 +42,10 @@ To start the web application for the R2R designer, run:
     grunt serve
 ```
 
-To start a web server for the application, run:
+To start the web service for the R2R designer, run:
 
 ```
-    lein repl
-```
-
-and from within the REPL:
-
-```
-   (go)
+    lein run
 ```
 
 ## License

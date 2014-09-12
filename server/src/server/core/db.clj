@@ -6,16 +6,34 @@
     [clojure.java.jdbc :as jdbc]
     [clojure.string :as str]
     )
-  (:import 
+  (:import
+    [java.sql DriverManager]
     [com.jolbox.bonecp BoneCPDataSource])
   )
 
 (timbre/refer-timbre)
 
+(defn test-db [spec]
+  (let [sp (:subprotocol spec)
+        host (:host spec)
+        sn (:subname spec)
+        user (:username spec)
+        pass (:password spec)
+        connection-str (str "jdbc:" sp "://" host "/" sn)]
+    (try 
+      (do
+        (DriverManager/getConnection connection-str user pass)
+        true
+        )
+      (catch Exception e false)
+      )
+    )
+  )
+
 (defn new-pool [c]
   (let [min-pool (:min-pool c)
         max-pool (:max-pool c)
-        partitions (spy :info (:partitions c))
+        partitions (:partitions c)
         spec @(:spec c)
         cpds (doto (BoneCPDataSource.)
                (.setJdbcUrl (str "jdbc:" (:subprotocol spec) ":" (:subname spec)))
@@ -35,6 +53,8 @@
   )
 
 (defn register-db [db new-spec]
+  (info "registering new data source")
+  (debug new-spec)
   (if db 
     (c/stop db))
   (reset! (:spec db) new-spec)
@@ -84,7 +104,7 @@
 
 (defn query-column-names-map [c table]
   (let [pool @(:pool c)
-        columns (query-column-names pool table)
+        columns (query-column-names c table)
         result (apply merge (for [i columns] {(keyword (str/lower-case i)) i}))]
     (debug result)
     result 
@@ -147,20 +167,20 @@
   (let [pool @(:pool c)
         template (parse-template-str template-str)
         columns (parse-columns template-str)
-        data (query-columns pool table columns)
+        data (query-columns c table columns)
         result (take 20 (for [row data] (match-template template row)))]
     (debug result)
     result
     )
   )
 
-(defn predicate->column [c table template-str predicate column]
+(defn property->column [c table template-str property column]
   (let [pool @(:pool c)
         template (parse-template-str template-str)
         columns (parse-columns template-str)
-        data (query-columns pool table (conj columns column))
+        data (query-columns c table (conj columns column))
         column-kw (column->kw column)
-        result (take 20 (for [row data] [(match-template template row) predicate (column-kw row)]))]
+        result (take 20 (for [row data] [(match-template template row) property (column-kw row)]))]
     (debug result)
     result 
     )

@@ -27,7 +27,7 @@
 (defn new-database [opts]
   (map->Database {:spec (atom (select-keys opts [:classname :subprotocol :subname :username :password]))
                   :pool (atom nil)
-                  :min-pool 0
+                  :min-pool 1
                   :max-pool 15
                   :partitions 3})
   )

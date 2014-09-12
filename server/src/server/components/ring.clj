@@ -8,7 +8,7 @@
   )
 (timbre/refer-timbre)
 
-(defrecord Ring [server app-fn opts db-api lov-api recommender-api]
+(defrecord Ring [server app-fn opts db-api oracle-api]
   c/Lifecycle
 
   (start [component] 
@@ -33,6 +33,5 @@
               :server (atom nil) 
               :app-fn app-fn
               :db-api "/api/v1/db"
-              :lov-api "/api/v1/lov"
-              :recommender-api "/api/v1/recommender"})
+              :oracle-api "/api/v1/oracle"})
   )
