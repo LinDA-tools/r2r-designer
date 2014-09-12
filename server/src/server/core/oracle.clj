@@ -8,36 +8,6 @@
     [edu.ucdenver.ccp.kr.sparql :refer :all]
     [edu.ucdenver.ccp.kr.sesame.kb :as sesame]
     [taoensso.timbre :as timbre]
-<<<<<<< HEAD
-    [server.core.db :as db]
-    )
-  )
-
-(timbre/refer-timbre)
-
-(defn filter-results [results]
-  (let [filter-fn #(select-keys % [:score :uri :uriPrefixed :vocabularyPrefix]) ; "vocabulary" "types"
-        filtered (map filter-fn results)]
-    filtered
-    )
-  )
-
-;TODO
-(defn search-classes [c query]
-  (let [api "http://lov.okfn.org/dataset/lov/api/v1/search"
-        results (-> (client/get api {:query-params {:q query}}) :body json/read-json :results)]
-    (filter-results results)
-    )
-  )
-
-;TODO
-(defn search-properties [c query]
-  (let [api "http://lov.okfn.org/dataset/lov/api/v1/search"
-        results (-> (client/get api {:query-params {:q query}}) :body json/read-json :results)]
-    (filter-results results)
-    )
-  )
-=======
     [server.core.db :as db]))
 
 (timbre/refer-timbre)
@@ -75,70 +45,11 @@
     {:table t-rec :columns c-rec}))
 
 ;;;;
->>>>>>> server
 
 (defn new-server [endpoint]
   (open 
     (sesame/new-sesame-server
       :server endpoint
-<<<<<<< HEAD
-      :repo-name "")
-    )
-  )
-
-;; (defn add-namespaces [kb]
-;;   (update-namespaces kb
-;;    '(("rdf" "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
-;;      ("rdfs" "http://www.w3.org/2000/01/rdf-schema#")))
-;;   )
-;;
-;; (defn uri->result [uri]
-;;   {"uri" (str uri)}
-;;   )
-;;
-;; (defn find-classes-sparql [c label limit]
-;;   (let [kb (add-namespaces @(:kb c))]
-;;     (binding [*select-limit* limit
-;;               *select-type* select-distinct]
-;;       (let [var-uris (query kb `((?/s rdfs/label ~(cond (string? label) (str label) 
-;;                                                         (number? label) (int label)))
-;;                              (?/s rdf/type ?/t)))
-;;             uris (map '?/t var-uris) 
-;;             result (map uri->result uris)]
-;;         result
-;;         )
-;;       )
-;;     )
-;;   )
-;;
-;; (defn merge-results [resultset threshold n]
-;;   (let [indexed (map #(zipmap % (repeat 1)) resultset)
-;;         merged (apply merge-with + indexed)
-;;         sequenced (seq merged)
-;;         filtered (filter #(<= threshold (second %)) sequenced)
-;;         sorted (sort-by second > filtered)
-;;         cut (take n sorted)
-;;         result (map first cut)]
-;;     result
-;;     )
-;;   )
-;;
-;; (defn recommend-types [c labels limit threshold n]
-;;   (let [results (map #(find-types c % limit) labels)
-;;         merged (merge-results results threshold n)]
-;;     merged
-;;     )
-;;   )
-;;
-;; (defn recommend-for-column [c table column]
-;;   (let [data (db/query-column @(:spec (:database c)) table column)
-;;         sample-data (take (:sample c) data)
-;;         result (recommend-types c sample-data (:limit c) (:threshold c) (:n c))]
-;;     result
-;;     )
-;;   )
-;;
-=======
       :repo-name "")))
 
 (defn add-namespaces [kb]
@@ -180,4 +91,3 @@
         sample-data (take (:sample c) data)
         result (recommend-types c sample-data (:limit c) (:threshold c) (:n c))]
     result))
->>>>>>> server

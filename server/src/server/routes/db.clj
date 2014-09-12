@@ -18,12 +18,12 @@
 
       (GET (str api "/columns") [table :as r] (str (seq (query-column-names-map db table))))
 
-      (GET (str api "/subjects") [table template predicate column :as r] 
-        (let [template-decoded (codec/url-decode template)]
-          (cond
-            (and table template predicate column) (str (seq (predicate->column db table template-decoded predicate column)))
-            (and table template) (str (seq (query-subject-template db table template-decoded)))
-            :else {:status 400})))
+      ;; (GET (str api "/subjects") [table template predicate column :as r] 
+      ;;   (let [template-decoded (codec/url-decode template)]
+      ;;     (cond
+      ;;       (and table template predicate column) (str (seq (predicate->column db table template-decoded predicate column)))
+      ;;       (and table template) (str (seq (query-subject-template db table template-decoded)))
+      ;;       :else {:status 400})))
 
       (POST (str api "/test") [subname subprotocol username password :as r]
         (let [db (:database component)
