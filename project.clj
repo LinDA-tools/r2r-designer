@@ -21,7 +21,7 @@
     [edu.ucdenver.ccp/kr-sesame-core "1.4.8"]
     [com.taoensso/timbre "3.2.0"]
     [com.jolbox/bonecp "0.8.0.RELEASE"]
-    ]
+    [org.postgresql/postgresql "9.3-1101-jdbc41"]]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler server.handler/app}
   :source-paths ["server/src"]

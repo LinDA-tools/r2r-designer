@@ -1,0 +1,180 @@
+#%RAML 0.8
+---
+title: R2RDesigner service API
+baseUri: http://localhost:3000/api/{version}
+version: v1
+
+schemas:
+ - table: |
+    {
+      "type": "object",
+      "description": "represents a database table or view along its columns",
+      "$schema": "http://json-schema.org/draft-03/schema",
+       "required": true,
+      "properties": {
+        "name": { "type": "string" },
+        "cloumns": { 
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+ - singleResult: | 
+    {
+      "type": "object",
+      "$schema": "http://json-schema.org/draft-03/schema",
+       "required": true,
+      "properties": {
+        "uri": { "type": "string" },
+        "uriPrefixed": { "type": "string" },
+        "localName": { "type": "string" },
+        "score": { "type": "float" }
+      }
+    }
+  
+ - resultSet: |
+    {
+      "type": "object",
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "required": true,
+      "properties": {
+        "table": { 
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "recommend": { "type": "array" } 
+          }
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "column": { "type": "string" },
+              "recommend": {
+                "type": "array"
+              }
+            }
+          }
+        }
+      }
+    }
+
+/db:
+  description: "interacting with the database backend"
+  /table:
+    get:
+      description: "Returns a map of the data associated with 'table' with the current database specification."
+      queryParameters:
+        name:
+          type: string
+          description: "table name"
+          required: true
+      responses:
+        200:
+          body:
+            application/edn:
+              example: |
+                ({:reorderlevel 10, :productname "Chai", :supplierid 8} {:reorderlevel 25, :productname "Chang", :supplierid 1})
+  /tables:
+    get:
+      description: "Returns a list of table names with the current database specification."
+      responses:
+        200:
+          body:
+            application/edn:
+              example: |
+                ("categories" "customers" "customercustomerdemo" "customerdemographics")
+  /columns:
+    get:
+      description: "Returns a list of keyword/column name pairs for 'table' with the current database specification."
+      queryParameters:
+        table:
+          type: string
+          description: "table name"
+          required: true
+      responses:
+        200:
+          body:
+            application/edn:
+              example: |
+                ([:reorderlevel "ReorderLevel"] [:productname "ProductName"] [:supplierid "SupplierID"])
+  /resources:
+    get:
+      description: |
+        Returns a list of samples of individuals according to the schema expressed in 'template' with the current database specification. 
+      queryParameters:
+        table:
+          type: string
+          description: "table name"
+          required: true
+        template:
+          type: string
+          description: "subject template; terms in curly braces denote column names, e.g. /products/{ProductID}/{ProductName}"
+          required: true
+      responses:
+        200:
+          body:
+            application/edn:
+              example: |
+                (["http://example.com/1" "rdf:type" rdfs:Resource] ["http://example.com/2" "rdf:type" rdfs:Resource] ["http://example.com/3" "rdf:type" rdfs:Resource])
+  /triples:
+    get:
+      description: |
+        Returns a list of sample triples of individuals according to the schema expressed in 'template' 
+        with the current database specification and a mapping between 'column' and 'property'.
+      queryParameters:
+        table:
+          type: string
+          description: "table name"
+          required: true
+        template:
+          type: string
+          description: "subject template; terms in curly braces denote column names, e.g. /products/{ProductID}/{ProductName}"
+          required: true
+        property:
+          type: string
+          description: "property name"
+          required: false
+        column:
+          type: string
+          description: "column name"
+          required: false
+      responses:
+        200:
+          body:
+            application/edn:
+              example: |
+                (["http://example.com/1" "schema:productId" 1] ["http://example.com/2" "schema:productId" 2] ["http://example.com/3" "schema:productId" 3])
+
+/oracle:
+  description: "interacting with the recommendation service"
+  post:
+    body:
+      application/json:
+        schema: table
+        example: |
+          {
+            "name": "products",
+            "columns": ["productId", "productName"]
+          }
+
+    responses:
+      200:
+        body:
+          application/json:
+            schema: resultSet 
+
+  /classes:
+    get:
+      queryParameters:
+        q:
+          type: string
+          required: true
+
+  /properties:
+    get:
+      queryParameters:
+        q:
+          type: string
+          required: true

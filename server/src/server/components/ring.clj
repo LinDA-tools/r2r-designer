@@ -15,24 +15,18 @@
     (info "starting ring adapter ...")
     (let [app (app-fn component)]
       (reset! server (serve app opts))
-      component
-      )
-    )
+      component))
 
   (stop [component] 
     (info "stopping ring adapter ...") 
     (if @server
       (.stop @server)
       (reset! server nil))
-    component
-    )
-  )
+    component))
 
 (defn new-ring [app-fn opts]
   (map->Ring {:opts opts 
               :server (atom nil) 
               :app-fn app-fn
               :db-api "/api/v1/db"
-              :lov-api "/api/v1/lov"
-              :recommender-api "/api/v1/recommender"})
-  )
+              :oracle-api "/api/v1/oracle"}))
