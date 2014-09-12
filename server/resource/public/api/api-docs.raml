@@ -1,12 +1,64 @@
 #%RAML 0.8
-
+---
 title: R2RDesigner service API
 baseUri: http://localhost:3000/api/{version}
 version: v1
-documentation:
-  - title: LinDA transformation backend
-    content: |
-      services for internal components and adapters for the LinDA transformation engine
+
+schemas:
+ - table: |
+    {
+      "type": "object",
+      "description": "represents a database table or view along its columns",
+      "$schema": "http://json-schema.org/draft-03/schema",
+       "required": true,
+      "properties": {
+        "name": { "type": "string" },
+        "cloumns": { 
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+ - singleResult: | 
+    {
+      "type": "object",
+      "$schema": "http://json-schema.org/draft-03/schema",
+       "required": true,
+      "properties": {
+        "uri": { "type": "string" },
+        "uriPrefixed": { "type": "string" },
+        "localName": { "type": "string" },
+        "score": { "type": "float" }
+      }
+    }
+  
+ - resultSet: |
+    {
+      "type": "object",
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "required": true,
+      "properties": {
+        "table": { 
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "recommend": { "type": "array" } 
+          }
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "column": { "type": "string" },
+              "recommend": {
+                "type": "array"
+              }
+            }
+          }
+        }
+      }
+    }
 
 /db:
   description: "interacting with the database backend"
@@ -97,7 +149,32 @@ documentation:
 
 /oracle:
   description: "interacting with the recommendation service"
-  /types:
+  post:
+    body:
+      application/json:
+        schema: table
+        example: |
+          {
+            "name": "products",
+            "columns": ["productId", "productName"]
+          }
+
+    responses:
+      200:
+        body:
+          application/json:
+            schema: resultSet 
+
+  /classes:
     get:
+      queryParameters:
+        q:
+          type: string
+          required: true
+
   /properties:
     get:
+      queryParameters:
+        q:
+          type: string
+          required: true

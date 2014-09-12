@@ -5,6 +5,9 @@ angular.module 'app'
 
     # $scope.config = Config
     # $scope.rdb = Rdb
+    $scope.oracle = Oracle
+    $scope.ask = () ->
+      $scope.oracle.ask $scope.table, $scope.columns
 
     $scope.table = 'products'
     $scope.columns = ['ProductID', 'ProductName', 'UnitPrice']
@@ -31,8 +34,8 @@ angular.module 'app'
     }
     $scope.selectedTables = ['products']
     $scope.selectedColumns = {}
-    $scope.data = []
-    $scope.columnsMap = []
+    # $scope.data = []
+    # $scope.columnsMap = []
 
     $scope.getTables = R2rs.getTables
 

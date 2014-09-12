@@ -30,8 +30,6 @@
                 :vocab-repo-api "http://linda-project.eu/vocabRepo/"
                 :kb (atom nil)
                 :sample 20
-                :threshold 0
+                :threshold 0.4
                 :limit 20
-                :n 10
-                }) 
-  )
+                :n 5}))

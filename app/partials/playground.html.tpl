@@ -1,10 +1,13 @@
 <div ng-controller="PlaygroundCtrl">
   <h3>Playground</h3>
 
+  {{table}}
+  {{columns}}
+
   <div class="panel panel-default">
     <div class="panel-body">
       <p align="right">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" ng-click="ask()">
           Ask the Oracle!
         </button>
       </p>
@@ -29,15 +32,17 @@
         <!-- table -->
         <td>
           <div class="list-group">
-            <button type="button" class="btn btn-sm btn-default btn-block active">Cras justo odio</button>
-            <button type="button" class="btn btn-sm btn-default btn-block">Dapibus ac facilisis in</a>
-            <button type="button" class="btn btn-sm btn-default btn-block active">Morbi leo risus</a>
-            <button type="button" class="btn btn-sm btn-default btn-block">Porta ac consectetur ac</a>
-            <button type="button" class="btn btn-sm btn-default btn-block active">Vestibulum at eros</a>
+            <button type="button" class="btn btn-sm btn-default btn-block active">Type1</button>
+            <button type="button" class="btn btn-sm btn-default btn-block active">Type2</button>
           </div>
         </td>
         <!-- columns -->
         <td ng-repeat="column in columns">
+          <div class="list-group">
+            <select class="form-control">
+              <option>Choose Property …</option>
+            </select>
+          </div>
         </td>
       </tr>
     </table>
