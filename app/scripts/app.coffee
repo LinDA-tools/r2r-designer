@@ -11,9 +11,28 @@ app = angular.module('app', [
 ])
 
 app.config ($routeProvider) ->
-  $routeProvider.when('/', {
-    templateUrl: 'views/main.html',
-    controller: 'MainCtrl'
-  }).otherwise {
-    redirectTo: '/'
-  }
+#app.config '$routeProvider', ($routeProvider) ->
+  $routeProvider
+    .when '/',
+      templateUrl: 'partials/start.html'
+      controller: 'StartCtrl'
+    .when '/step/connection',
+      templateUrl: 'partials/config.html'
+      controller: 'ConfigCtrl'
+    .when '/step/database',
+      templateUrl: 'partials/playground2.html'
+      controller: 'Playground2Ctrl'
+    .when '/step/triples',
+      templateUrl: 'partials/triples.html'
+      controller: 'TriplesCtrl'
+    .when '/start',
+      templateUrl: 'partials/start.html'
+      controller: 'StartCtrl'
+    .when '/about',
+      templateUrl: 'partials/about.html'
+      controller: 'AboutCtrl'
+    .when '/contact',
+      templateUrl: 'partials/contact.html'
+      controller: 'ContactCtrl'
+    .otherwise
+      redirectTo: '/'

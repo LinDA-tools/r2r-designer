@@ -1,0 +1,114 @@
+  	<h3>Step #2</h3>
+  	<h2 class="mainControl">Relational Database View</h2>
+
+
+	<div class="row">
+	  	<div class="col-xs-2">
+	  		<select multiple class="form-control" id="tabList">
+				<option ng-repeat="table in tables | filter:{enlist:false}">{{table.tableName}}</option>
+			</select>
+			<!--<button type="button" class="btn btn-primary" ng-click="enlistTable(true, this);">Add table >></button>-->
+			<button type="button" class="btn btn-primary" ng-click="enlistTable(true , 'tabList');">Add table >></button>
+	  	</div>
+		<div class="col-xs-10">
+			<div class="table-responsive" ng-repeat="table in tables | filter:{enlist:true}">
+				<!--
+					<h4>{{table.tableName}} <th><button type="button" class="btn btn-danger btn-xs">exclude table</button></h4>-->
+		      	<table class="table table-bordered" id="{{table.tableName}}_table">
+			      	<colgroup>
+				        <col class="col-xs-1 col-sm-1 col-xmd-1">
+				        <col class="col-xs-1 col-sm-1 col-xmd-1">
+				        <col class="col-xs-5 col-sm-5 col-xmd-5">
+				        <col class="col-xs-1 col-sm-1 col-xmd-1">    
+		      		</colgroup>
+			        <thead>
+			        	<tr class="info">
+			          		<th colspan="3">
+								{{table.tableName}}
+							</th>
+							<th>
+								<!--<button type="button" class="btn btn-danger btn-xs">exclude table</button>-->
+								<button type="button" class="close" title="exclude" ng-click="enlistTable(false, table.tableName+'_table')"><span aria-hidden="true">&times;</span><span class="sr-only">Exclude</span></button>
+							</th>
+						</tr>
+			          <tr class="warning">
+			            <th>row name</th>
+			            <th>row preferences</th>
+			            <th>RDF Prediction</th>
+			            <th>Inclusion</th>
+			          </tr>
+			        </thead>
+			        <tbody>
+			        	<!--
+			          	<tr>
+			            	<td>
+							some row name 
+			            	</td>
+			            	<td>
+					            <span class="label label-default">primary key</span>
+								<span class="label label-primary">auto-increment</span>
+								<span class="label label-success">not null</span>
+								<span class="label label-info">integer</span>
+								<span class="label label-warning">Warning</span>
+								<span class="label label-danger">Danger</span>
+							</td>
+			            	<td>
+								<div class="input-group">
+				          		<div class="input-group-btn">
+				            		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Prediction <span class="caret"></span></button>
+				            			<ul class="dropdown-menu" role="menu">
+								              <li><a href="#">Pred 1</a></li>
+								              <li><a href="#">Pred 2</a></li>
+								              <li><a href="#">Pred 3</a></li>
+								              <li class="divider"></li>
+								              <li><a href="#">Enter own</a></li>
+				            			</ul>
+				          		</div>
+				          		<input type="text" class="form-control">
+			        			</div>
+			            	</td>
+			            	<td>
+			            		<button type="button" class="btn btn-danger btn-xs">exclude row</button>
+			            	</td>
+			          	</tr>-->
+
+			          	<tr ng-repeat="col in table.columns" ng-class="{disabled:col.enlist==false, default:col.enlist}">
+							<td>
+								{{col.colName}}
+							</td>
+							<td>
+								<span class="label label-primary">{{col.colType}}</span><span class="label label-default" ng-repeat="pref in col.colPreference">{{pref}}</span>	
+							</td>
+							<td>
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default dropdown-toggle" ng-class="{disabled:col.enlist==false}" data-toggle="dropdown">Prediction <span class="caret"></span></button>
+											<ul class="dropdown-menu" role="menu" ng-class="{disabled:col.enlist==false}">
+												<li ng-repeat="pred in col.predictions"><a href="#">{{pred}}</a></li>
+												<li class="divider"></li>
+												<li><a href="#">Enter own</a></li>
+											</ul>
+									</div>
+								<input type="text" class="form-control" ng-model="col.predictions[0]"  ng-disabled="col.enlist==false">
+								</div>
+				            </td>
+				            <td>
+				            	<button ng-if="col.enlist==true" ng-click="enlistTableRow(false , col);" type="button" class="close" title="exclude"><span aria-hidden="true">-</span><span class="sr-only">Exclude</span></button>
+
+				            	<button  ng-if="col.enlist==false" ng-click="enlistTableRow(true , col);" type="button" class="close" title="include"><span aria-hidden="true">+</span><span class="sr-only">Include</span></button>
+				            </td>
+
+
+
+			          	</tr>
+
+			        </tbody>
+		      </table>
+		    </div>	        
+		</div>
+	</div>
+
+	{{tables}}
+
+
+

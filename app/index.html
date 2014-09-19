@@ -17,14 +17,48 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
+
+
   <body ng-app="app">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ng-view="main">
-    </div>
+    <div>
+
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a ng-href="#/start">Start</a></li>
+          <li><a ng-href="#/about">About</a></li>
+          <li><a ng-href="#/contact">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">R2R Mapping Designer</h3>
+      </div>
+    
+
+
+      <div ng-view class="mainControl"></div>
+
+
+
+      <div ng-controller="NavigationCtrl">
+          <ul class="pager">
+            <li><a ng-show="getPreviousURL()" ng-href="{{getPreviousURL()}}" ng-click="adjustPointer()">Previous Step</a></li>
+            <li><a ng-show="getNextURL()" ng-href="{{getNextURL()}}" ng-click="adjustPointer()">Next Step</a></li>
+          </ul>
+
+          <ol class="breadcrumb">
+            <li><a ng-href="#/step/connection" ng-hide="isCurrentURL('#/step/connection')">Connection</a><span ng-show="isCurrentURL('#/step/connection')" ng-click="adjustPointer()">Connection</span></li>
+            
+            <li><a ng-href="#/step/database" ng-hide="isCurrentURL('#/step/database')">Rel. Database</a><span ng-show="isCurrentURL('#/step/database')" ng-click="adjustPointer()">Rel. Database</span></li>
+            
+            <li><a ng-href="#/step/triples" ng-hide="isCurrentURL('#/step/triples')" ng-click="adjustPointer()">Triples</a><span ng-show="isCurrentURL('#/step/triples')">Triples</span></li>
+          </ol>
+          
+      </div>
+</div>
+
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <!--  <script> -->
@@ -87,12 +121,19 @@
         <script src="scripts/directives/vocab.js"></script>
         <script src="scripts/directives/wizard.js"></script>
         <script src="scripts/directives/playground.js"></script>
+        <script src="scripts/directives/playground2.js"></script>
+        <script src="scripts/controllers/playground.js"></script>
+        <script src="scripts/controllers/playground2.js"></script>
+        <script src="scripts/controllers/navigation.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/rdb.js"></script>
         <script src="scripts/controllers/rdf.js"></script>
         <script src="scripts/controllers/vocab.js"></script>
         <script src="scripts/controllers/config.js"></script>
-        <script src="scripts/controllers/oracle.js"></script>
+        <script src="scripts/controllers/start.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/contact.js"></script>
+        <script src="scripts/controllers/triples.js"></script>
         <!-- endbuild -->
 </body>
 </html>

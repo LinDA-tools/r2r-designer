@@ -1,9 +1,13 @@
 'use strict'
 
 angular.module 'app'
-  .controller 'RdfCtrl', ($scope, $http, Config, Rdb, Rdf, R2rs) ->
+  #.controller 'RdfCtrl', ($scope, $http, Config, Rdb, Rdf, R2rs, RdbFactory) ->
+  .controller 'RdfCtrl', ($scope, RdbFactory) ->
 
-    $scope.rdb = Rdb
+    $scope.tables = RdbFactory.tables
+    $scope.test = 'test success'
+###
+    $scope.rdb = Rdb    
     
     $scope.template = ''
     $scope.templateColumns = []
@@ -44,3 +48,4 @@ angular.module 'app'
       if (Rdb.table != '') and ($scope.template != '')
         R2rs.getSubjectsForTemplate(Rdb.table, Config.baseUri, $scope.template).then (promise) ->
           $scope.triples = promise
+###
