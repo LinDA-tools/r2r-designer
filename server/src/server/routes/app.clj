@@ -16,26 +16,31 @@
   (route/resources "/")
   (route/not-found "Not Found!"))
 
-(defn wrap-request-logging [handler]
+(defn allow-content-type [handler]
+  (fn [request]
+    (let [response (handler request)
+          headers (:headers response)]
+      (assoc response :headers (assoc headers "Access-Control-Allow-Content-Type" "application/json")))))
+
+(defn monitor [handler]
   (fn [{:keys [request-method uri query-string] :as request}]
     (let [response (handler request)]
-      (debug request-method uri query-string)
-        response)))
-
-(defn wrap-response-logging [handler]
-  (fn [request]
-    (let [response (handler request)]
-      (debug (:status response) (:body response)) 
-      response)))
+      (debug request)
+      (info request-method uri query-string)
+      (let [{:keys [status body]} response]
+        (info status body)
+        (debug response)
+        response))))
 
 (defn app-fn [component]
   (-> (routes (db-routes-fn component) 
               (oracle-routes-fn component) 
               app-routes)
-    wrap-request-logging
-    wrap-response-logging
-    (wrap-cors :access-control-allow-origin #"http://localhost:9000")
-    (wrap-cors :access-control-allow-origin #"http://127.0.0.1:9000")
-    wrap-params
-    (wrap-json-body {:keywords? true})
-    wrap-json-response))
+      wrap-params
+      (wrap-json-body {:keywords? true})
+      (wrap-json-response {:pretty true})
+      (wrap-cors :access-control-allow-origin [#"http://localhost:9000" #"http://127.0.0.1:9000"]
+                 :access-control-allow-methods [:get :put :post :delete :options])
+      allow-content-type
+      monitor
+      ))
