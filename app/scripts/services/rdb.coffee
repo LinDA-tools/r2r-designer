@@ -3,7 +3,7 @@ angular.module 'app'
 	.factory 'RdbFactory', ->
 		tables : [{
 			tableName: "table1"
-			enlist: false
+			enlist: true
 			columns: [{colName:"col1_1"
 			colType : "INT"
 			colPreference : ["auto-inc","NOT NULL"]
@@ -19,7 +19,7 @@ angular.module 'app'
 		},
 		{
 			tableName: "table2"
-			enlist: false
+			enlist: true
 			columns: [{colName:"col2_1"
 			colType : "INT"
 			enlist: true

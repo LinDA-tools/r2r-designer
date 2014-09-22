@@ -185,3 +185,47 @@ div.mainControl {
   -webkit-border-radius: 6px;
   border-radius: 6px;
 }
+
+div.table_tree {
+  font-size: larger;
+}
+
+div.table_tree .table{
+  margin-bottom: 1.5em;
+}
+
+div.table_tree .row{
+  margin-left: 2em;
+}
+
+
+.table_tree button {
+  border: none;
+  color: #999999;
+  background: transparent;
+  font-weight: bold;
+  font-size: larger;
+  width: 1.5em;
+}
+
+.table_tree div.item {
+  background-color: #fdfdfd;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  margin-bottom: .2em;
+}
+
+.table_tree .glyphicon {
+  color: #999999;
+}
+
+.table_tree .label {
+  margin-top: 0.3em;
+  margin-right: 0.3em;
+}
+
+.table_tree .col_name {
+  width: 20em;
+}
+

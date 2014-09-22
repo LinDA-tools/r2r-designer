@@ -34,5 +34,8 @@ app.config ($routeProvider) ->
     .when '/contact',
       templateUrl: 'partials/contact.html'
       controller: 'ContactCtrl'
+    .when '/rdb',
+      templateUrl: 'partials/rdb.html'
+      controller: 'RdbCtrl'
     .otherwise
       redirectTo: '/'
