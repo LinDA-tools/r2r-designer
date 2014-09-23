@@ -4,7 +4,7 @@ angular.module 'app'
   .factory 'Oracle', ($http, Jsedn) ->
 
     host = 'http://localhost:3000'
-    oracleAdapter = host + '/api/v1/oracle'
+    oracleApi = host + '/api/v1/oracle'
 
     # getSuggestedEntities = (url, params) ->
     #   $http.get url, params: params
@@ -34,11 +34,8 @@ angular.module 'app'
       #     column: column
 
       ask: (table, columns) ->
-        if table? && columns?
-          console.log table
-          console.log columns
-          $http.post oracleAdapter, data: { "table": table, "columns": columns }
+        if table? and columns?
+          $http.post oracleApi, {name: table, columns: columns}
             .then (res) ->
-              console.log res.data
+              res.data
     }
-

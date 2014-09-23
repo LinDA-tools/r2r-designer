@@ -33,6 +33,7 @@
         [ring/ring-devel "1.3.0"]
         ]
       :source-paths ["server/dev"]
+      :resource-paths [".tmp" "app"]
       ;; :aot [dev]
       ;; :main dev
       }

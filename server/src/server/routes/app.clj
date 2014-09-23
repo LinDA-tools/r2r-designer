@@ -13,10 +13,22 @@
 (timbre/refer-timbre)
 
 (defroutes app-routes
-  (route/resources "/")
+  (route/resources "/" {:root "."})
   (route/not-found "Not Found!"))
 
-(defn wrap-request-logging [handler]
+(defn allow-content-type [handler]
+  (fn [request]
+    (let [response (handler request)
+          headers (:headers response)]
+      (assoc response :headers (assoc headers "Access-Control-Allow-Content-Type" "application/json")))))
+
+(defn wrap-dir-index [handler]
+  (fn [req]
+    (handler
+     (update-in req [:uri]
+                #(if (= "/" %) "/index.html" %)))))
+
+(defn monitor [handler]
   (fn [{:keys [request-method uri query-string] :as request}]
     (let [response (handler request)]
       (debug request-method uri query-string)
@@ -32,10 +44,11 @@
   (-> (routes (db-routes-fn component) 
               (oracle-routes-fn component) 
               app-routes)
-    wrap-request-logging
-    wrap-response-logging
-    (wrap-cors :access-control-allow-origin #"http://localhost:9000")
-    (wrap-cors :access-control-allow-origin #"http://127.0.0.1:9000")
-    wrap-params
-    (wrap-json-body {:keywords? true})
-    wrap-json-response))
+      wrap-params
+      (wrap-json-body {:keywords? true})
+      (wrap-json-response {:pretty true})
+      ;; (wrap-cors :access-control-allow-origin [#"http://localhost:9000" #"http://127.0.0.1:9000"]
+      ;;            :access-control-allow-methods [:get :put :post :delete :options])
+      wrap-dir-index
+      monitor
+      ))

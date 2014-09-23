@@ -1,13 +1,10 @@
 <div ng-controller="PlaygroundCtrl">
   <h3>Playground</h3>
 
-  {{table}}
-  {{columns}}
-
   <div class="panel panel-default">
     <div class="panel-body">
       <p align="right">
-        <button class="btn btn-primary" ng-click="ask()">
+        <button class="btn btn-primary" ng-click="ask(table, columns)">
           Ask the Oracle!
         </button>
       </p>
@@ -15,33 +12,34 @@
 
     <table class="table table-scrollable">
       <tr>
-        <!-- table -->
         <th><button type="button" class="btn btn-primary btn-sm btn-block">{{table}}</button></th>
-        <!-- columns -->
-        <th ng-repeat="column in columns"><button type="button" class="btn btn-default btn-sm btn-block">{{column}}</button></th>
+        <th ng-repeat="column in suggestions.columns"><button type="button" class="btn btn-default btn-sm btn-block">{{column.name}}</button></th>
+      </tr>
+
+      {{table}}
+      {{columns}}
+      {{tableTag}}
+      {{columnTags}}
+      <tr>
+        <td><input type="text" class="table-input" placeholder="{{table}}" ng-model="tableTag" /></td>
+        <td ng-repeat="column in suggestions.columns"><input type="text" class="table-input" placeholder="{{column.name}}" ng-model="columnTags[$index]"/></td>
       </tr>
 
       <tr>
-        <!-- table -->
-        <td><input type="text" class="table-input" placeholder="search words, e.&nbsp;g. '{{table}}'" /></td>
-        <!-- columns -->
-        <td ng-repeat="column in columns"><input type="text" class="table-input" placeholder="search words, e.&nbsp;g. '{{column}}'" /></td>
-      </tr>
-
-      <tr>
-        <!-- table -->
         <td>
           <div class="list-group">
-            <button type="button" class="btn btn-sm btn-default btn-block active">Type1</button>
-            <button type="button" class="btn btn-sm btn-default btn-block active">Type2</button>
+            <a href="#" class="list-group-item" ng-repeat="i in suggestions.table.recommend">
+              {{i.prefixedName[0]}}
+              <span class="score">{{i.score}}</span>
+            </a>
           </div>
         </td>
-        <!-- columns -->
-        <td ng-repeat="column in columns">
+        <td ng-repeat="column in suggestions.columns">
           <div class="list-group">
-            <select class="form-control">
-              <option>Choose Property …</option>
-            </select>
+            <a href="#" class="list-group-item" ng-repeat="i in column.recommend">
+              {{i.prefixedName[0]}}
+              <span class="score">{{i.score}}</span>
+            </a>
           </div>
         </td>
       </tr>
