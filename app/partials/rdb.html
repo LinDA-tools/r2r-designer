@@ -7,8 +7,8 @@
   
   <div class="table" ng-repeat="table in tables" id="{{table.tableName}}_table">
     <div class="item">
-      <button ng-if="table.enlist" type="button" title="exclude table" ng-click="enlistTable(false, table.tableName+'_table')">-</button>
-      <button ng-if="!table.enlist" type="button" title="include table" ng-click="enlistTable(true, table.tableName+'_table')">+</button>
+      <button ng-if="table.enlist" type="button" title="exclude table" ng-click="enlistTable(false, table.tableName+'_table')"><span class="glyphicon glyphicon-eye-close"></span></button>
+      <button ng-if="!table.enlist" type="button" title="include table" ng-click="enlistTable(true, table.tableName+'_table')"><span class="glyphicon glyphicon-eye-open"></span></button>
       {{table.tableName}}
     </div>
 
@@ -22,7 +22,6 @@
         <span class="col_name">{{col.colName}}</span>
         <span class="label label-primary">{{col.colType}}</span><span class="label label-default" ng-repeat="pref in col.colPreference">{{pref}}</span> 
       </div>
-
   </div>
 
 

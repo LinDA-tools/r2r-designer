@@ -188,14 +188,18 @@ div.mainControl {
 
 div.table_tree {
   font-size: larger;
+  /*width: 50%;
+  border: 1px dashed red;*/
 }
 
 div.table_tree .table{
   margin-bottom: 1.5em;
+  width: 35em;
 }
 
 div.table_tree .row{
   margin-left: 2em;
+  width: 33em;
 }
 
 
@@ -214,6 +218,7 @@ div.table_tree .row{
   -webkit-border-radius: 3px;
   border-radius: 3px;
   margin-bottom: .2em;
+  border: 1px solid #ddd;
 }
 
 .table_tree .glyphicon {
