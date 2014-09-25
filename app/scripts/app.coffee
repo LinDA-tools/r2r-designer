@@ -34,7 +34,7 @@ app.config ($routeProvider) ->
     .when '/contact',
       templateUrl: 'partials/contact.html'
       controller: 'ContactCtrl'
-    .when '/rdb',
+    .when '/step/rdb',
       templateUrl: 'partials/playground2.html'
       controller: 'Playground2Ctrl'
     .otherwise

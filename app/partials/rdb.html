@@ -1,4 +1,4 @@
-<a href="#/step/database">alternative view</a>
+<a href="#/step/rdb">alternative view</a>
 
 <h3>Step #2</h3>
 <h2 class="mainControl">Relational Database View</h2>
@@ -12,16 +12,40 @@
       {{table.tableName}}
     </div>
 
-      <div ng-if="table.enlist" class="row item" ng-repeat="col in table.columns">
-        <button ng-if="col.enlist" type="button" title="exclude table row" ng-click="enlistTableRow(false, col)">
-          <span class="glyphicon glyphicon-eye-open"></span>
-        </button>
-        <button ng-if="!col.enlist" type="button" title="include table row" ng-click="enlistTableRow(true, col)">
-          <span class="glyphicon glyphicon-eye-close"></span>
-        </button>
-        <span class="col_name">{{col.colName}}</span>
-        <span class="label label-primary">{{col.colType}}</span><span class="label label-default" ng-repeat="pref in col.colPreference">{{pref}}</span> 
-      </div>
+    <div ng-if="table.enlist" ng-repeat="col in table.columns">
+      <div>
+          <div class="row item_dbl_top" ng-if="col.enlist">
+            <button ng-if="col.enlist" type="button" title="exclude table row" ng-click="enlistTableRow(false, col)">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </button>
+            <button ng-if="!col.enlist" type="button" title="include table row" ng-click="enlistTableRow(true, col)">
+              <span class="glyphicon glyphicon-eye-close"></span>
+            </button>
+            <span class="col_name">{{col.colName}}</span>
+            <span class="label label-primary">{{col.colType}}</span><span class="label label-default" ng-repeat="pref in col.colPreference">{{pref}}</span> 
+          </div>
+          <div class="row item_dbl_bottom" ng-if="col.enlist">
+            <span ng-repeat="sample in col.sampleValues">{{sample}}, </span>...
+          </div>
+        </div>
+
+        <div class="row item" ng-if="!col.enlist">
+          <button ng-if="col.enlist" type="button" title="exclude table row" ng-click="enlistTableRow(false, col)">
+              <span class="glyphicon glyphicon-eye-open"></span>
+          </button>
+          <button ng-if="!col.enlist" type="button" title="include table row" ng-click="enlistTableRow(true, col)">
+            <span class="glyphicon glyphicon-eye-close"></span>
+          </button>
+          <span class="col_name">{{col.colName}}</span>
+          <span class="label label-primary">{{col.colType}}</span><span class="label label-default" ng-repeat="pref in col.colPreference">{{pref}}</span> 
+        </div>
+
+    </div>
+
+  <div ng-if="table.enlist && !col.enlist" ng-repeat="col in table.columns">
+
+    </div>
+
   </div>
 
 

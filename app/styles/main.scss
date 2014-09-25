@@ -234,6 +234,32 @@ div.table_tree .row{
   border-radius: 3px;
   margin-bottom: .2em;
   border: 1px solid #ddd;
+  padding: .2em;
+}
+
+.table_tree div.item_dbl_top {
+-moz-border-radius: 3px 3px 0px 0px;
+border-radius: 3px 3px 0px 0px;
+border-style:solid;
+border-color: #ddd;
+border-width: 1px 1px 0px 1px;
+padding: .2em;
+background-color: #fdfdfd;
+}
+
+.table_tree div.item_dbl_bottom {
+-moz-border-radius: 0px 0px 3px 3px;
+border-radius: 0px 0px 3px 3px;
+border-style:solid;
+border-color: #ddd;
+border-width: 0px 1px 1px 1px;
+padding: .2em .2em .2em 3em;
+background-color: #f8f8f8;
+margin-bottom: .2em;
+}
+
+.table_tree div.item_dbl_bottom > span{
+font-size: smaller;
 }
 
 .table_tree .glyphicon {
@@ -243,10 +269,21 @@ div.table_tree .row{
 .table_tree .label {
   margin-top: 0.3em;
   margin-right: 0.3em;
+  float: right; 
+  font-size: 60%;
 }
 
 .table_tree .col_name {
   width: 20em;
 }
+
+/*
+.chosen{
+  background-color: green;
+}
+
+.rejected{
+  background-color: red;
+}*/
 
 
