@@ -20,8 +20,8 @@ app.config ($routeProvider) ->
       templateUrl: 'partials/config.html'
       controller: 'ConfigCtrl'
     .when '/step/database',
-      templateUrl: 'partials/playground2.html'
-      controller: 'Playground2Ctrl'
+      templateUrl: 'partials/rdb.html'
+      controller: 'RdbCtrl'
     .when '/step/triples',
       templateUrl: 'partials/triples.html'
       controller: 'TriplesCtrl'
@@ -35,7 +35,7 @@ app.config ($routeProvider) ->
       templateUrl: 'partials/contact.html'
       controller: 'ContactCtrl'
     .when '/rdb',
-      templateUrl: 'partials/rdb.html'
-      controller: 'RdbCtrl'
+      templateUrl: 'partials/playground2.html'
+      controller: 'Playground2Ctrl'
     .otherwise
       redirectTo: '/'

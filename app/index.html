@@ -27,26 +27,33 @@
     <!-- Add your site or application content here -->
     <div>
 
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#/start">Start</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#/contact">Contact</a></li>
-        </ul>
+    <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <li class="active"><a ng-href="#/start">Start</a></li>
+                <li><a ng-href="#/about">About</a></li>
+                <li><a ng-href="#/contact">Contact</a></li>
+            </ul>
         <h3 class="text-muted">R2R Mapping Designer</h3>
-      </div>
+    </div>
     
 
-
-      <div ng-view class="mainControl"></div>
+    <div class="row mainArea">
+            <div ng-view class="mainControl col-md-9"></div>
+            <div class="col-md-3 guide" ng-controller="NavigationCtrl">
+                <h3>Step By Step Guide</h3>
+                <span ng-bind-html="getGuideText()"></span>
+                <ul class="pager">
+                    <li><a ng-show="getPreviousURL()" ng-href="{{getPreviousURL()}}" ng-click="adjustPointer()">Previous Step</a></li>
+                    <li><a ng-show="getNextURL()" ng-href="{{getNextURL()}}" ng-click="adjustPointer()">Next Step</a></li>
+                </ul>
+            </div>
+    </div>
+    <!--<div ng-view class="mainControl"></div>-->
 
 
 
       <div ng-controller="NavigationCtrl">
-          <ul class="pager">
-            <li><a ng-show="getPreviousURL()" ng-href="{{getPreviousURL()}}" ng-click="adjustPointer()">Previous Step</a></li>
-            <li><a ng-show="getNextURL()" ng-href="{{getNextURL()}}" ng-click="adjustPointer()">Next Step</a></li>
-          </ul>
+
 
           <ol class="breadcrumb">
             <li><a ng-href="#/step/connection" ng-hide="isCurrentURL('#/step/connection')">Connection</a><span ng-show="isCurrentURL('#/step/connection')" ng-click="adjustPointer()">Connection</span></li>
