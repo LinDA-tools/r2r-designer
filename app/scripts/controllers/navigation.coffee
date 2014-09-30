@@ -3,7 +3,7 @@
 angular.module 'app'
 	.controller 'NavigationCtrl', ($scope) ->
 
-		$scope.pointer = 0
+		$scope.step = 0
 		#wizard pages, in right order
 		$scope.URLs = [
 			"#/step/connection"
@@ -19,7 +19,7 @@ angular.module 'app'
 
 		$scope.getGuideText = () ->
 			$scope.adjustPointer()
-			$scope.GuideTexts[$scope.pointer]
+			$scope.GuideTexts[$scope.step]
 
 
 		$scope.currentURL = () ->
@@ -30,22 +30,22 @@ angular.module 'app'
 			curr = $scope.currentURL()
 			p = 0
 			angular.forEach $scope.URLs, (x) ->
-				$scope.pointer = p if x.search(curr) > -1
+				$scope.step = p if x.search(curr) > -1
 				p++
 
 
 		$scope.getCurrentURL = () ->
 			$scope.adjustPointer()
-			$scope.URLs[$scope.pointer]
+			$scope.URLs[$scope.step]
 		$scope.getNextURL = () ->
 			$scope.adjustPointer()
 			result = false
-			result = $scope.URLs[$scope.pointer+1] if ($scope.pointer < ($scope.URLs.length - 1))
+			result = $scope.URLs[$scope.step+1] if ($scope.step < ($scope.URLs.length - 1))
 			result			 
 		$scope.getPreviousURL = () ->
 			$scope.adjustPointer()
 			result = false
-			result = $scope.URLs[$scope.pointer-1] if $scope.pointer > 0
+			result = $scope.URLs[$scope.step-1] if $scope.step > 0
 			result		
 
 		$scope.isCurrentURL = (u) ->

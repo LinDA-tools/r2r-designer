@@ -40,6 +40,7 @@
     <div class="row mainArea">
             <div ng-view class="mainControl col-md-9"></div>
             <div class="col-md-3 guide" ng-controller="NavigationCtrl">
+                <span class="step">#{{step + 1}}</span>
                 <h3>Step By Step Guide</h3>
                 <span ng-bind-html="getGuideText()"></span>
                 <ul class="pager">

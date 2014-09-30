@@ -7,6 +7,12 @@ $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/
 @import "../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
 // endbower
 
+/* scrollbars always visible*/
+html {
+     overflow: -moz-scrollbars-vertical;
+     overflow: scroll;
+}
+
 .browsehappy {
     margin: 0.2em 0;
     background: #ccc;
@@ -188,6 +194,13 @@ div.mainArea > div{
   border-radius: 5px;
 }
 
+/* step number in step by step guide*/
+div.mainArea span.step{
+float: right;
+font-size: 400%;
+color: #79f079;
+}
+
 div.mainControl {
   background-color: #f5f5f5;
   /*margin: 0 3em;*/
@@ -276,6 +289,8 @@ font-size: smaller;
 .table_tree .col_name {
   width: 20em;
 }
+
+
 
 /*
 .chosen{
