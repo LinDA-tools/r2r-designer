@@ -37,8 +37,5 @@ app.config ($routeProvider) ->
     .when '/step/rdb',
       templateUrl: 'partials/playground2.html'
       controller: 'Playground2Ctrl'
-    .when '/vocab',
-      templateUrl: 'partials/vocab.html'
-      controller: 'VocabCtrl'
     .otherwise
       redirectTo: '/'
