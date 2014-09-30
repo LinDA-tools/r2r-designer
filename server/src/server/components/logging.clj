@@ -4,6 +4,7 @@
     [taoensso.timbre :as timbre]
     )
   )
+
 (timbre/refer-timbre)
 
 (defrecord Logger [config]

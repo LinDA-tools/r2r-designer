@@ -8,28 +8,61 @@
     [edu.ucdenver.ccp.kr.sparql :refer :all]
     [edu.ucdenver.ccp.kr.sesame.kb :as sesame]
     [taoensso.timbre :as timbre]
-    [server.core.db :as db]
-    )
-  )
+    [server.core.db :as db]))
+
 (timbre/refer-timbre)
+
+(defn significant [c results]
+  (filter #(> (:score %) (:threshold c)) results))
+
+(defn cut [c results]
+  (take (:n c) results))
+
+(defn shaped [results]
+  (let [filter-fn #(select-keys % [:score :uri :prefixedName :vocabularyPrefix]) ; "vocabulary" "types"
+        filtered (map filter-fn results)]
+    filtered))
+
+(defn search-classes [c query]
+  (if (and c query (seq query))
+    (let [api "http://lov.okfn.org/dataset/lov/api/v2/search"
+          results (-> (client/get api {:query-params {:q query :type "class"}}) :body json/read-json :results)]
+      (->> results
+           (significant c)
+           (cut c)
+           shaped)) 
+    []))
+
+(defn search-properties [c query]
+  (if (and c query (seq query))
+    (let [api "http://lov.okfn.org/dataset/lov/api/v2/search"
+          results (-> (client/get api {:query-params {:q query :type "property"}}) :body json/read-json :results)]
+      (->> results 
+           (significant c)
+           (cut c) 
+           shaped))
+    []))
+
+(defn recommend [c table columns]
+  (let [t-rec {:name table :recommend (search-classes c table)}
+        c-rec (for [i columns] {:name i :recommend (search-properties c i)})]
+    {:table t-rec :columns c-rec}))
+
+;;;;
 
 (defn new-server [endpoint]
   (open 
     (sesame/new-sesame-server
       :server endpoint
-      :repo-name "")
-    )
-  )
+      :repo-name "")))
 
 (defn add-namespaces [kb]
   (update-namespaces kb
    '(("rdf" "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
-     ("rdfs" "http://www.w3.org/2000/01/rdf-schema#")))
-  )
+     ("rdfs" "http://www.w3.org/2000/01/rdf-schema#"))))
 
 (defn uri->result [uri]
-  {"uri" (str uri)}
-  )
+  {"uri" (str uri)})
 
 (defn find-types [c label limit]
   (let [kb (add-namespaces @(:kb c))]
@@ -40,11 +73,7 @@
                              (?/s rdf/type ?/t)))
             uris (map '?/t var-uris) 
             result (map uri->result uris)]
-        result
-        )
-      )
-    )
-  )
+        result))))
 
 (defn merge-results [resultset threshold n]
   (let [indexed (map #(zipmap % (repeat 1)) resultset)
@@ -54,21 +83,15 @@
         sorted (sort-by second > filtered)
         cut (take n sorted)
         result (map first cut)]
-    result
-    )
-  )
+    result))
 
 (defn recommend-types [c labels limit threshold n]
   (let [results (map #(find-types c % limit) labels)
         merged (merge-results results threshold n)]
-    merged
-    )
-  )
+    merged))
 
 (defn recommend-for-column [c table column]
   (let [data (db/query-column @(:spec (:database c)) table column)
         sample-data (take (:sample c) data)
         result (recommend-types c sample-data (:limit c) (:threshold c) (:n c))]
-    result
-    )
-  )
+    result))

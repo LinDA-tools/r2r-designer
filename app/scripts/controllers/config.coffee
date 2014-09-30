@@ -16,10 +16,8 @@ angular.module 'app'
     $scope.datasource = $scope.config.datasources[0]
 
     $scope.$watch 'config.datasource', (value) ->
-      spec = (i for i in $scope.config.datasources when i.name == value)[0]
-
-      if spec
-        R2rs.registerDatabase spec
+      if value
+        R2rs.registerDatabase value
 
     $scope.newDatasource = ->
       modalInstance = $modal.open

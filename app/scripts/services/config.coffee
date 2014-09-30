@@ -4,17 +4,17 @@ angular.module 'app'
   .factory 'Config', ->
     datasources = [{
         'name' : 'Northwind Postgres Database'
-        'subprotocol' : 'psql'
-        'subname' : 'psql'
+        'subprotocol' : 'postgresql'
+        'subname' : 'mydb'
         'username' : 'postgres'
-        'password' : 'postgres'
+        'password' : ''
       },
       {
         'name' : 'MySQL Sample Database'
         'subprotocol' : 'mysql'
-        'subname' : 'mysql'
+        'subname' : 'mydb'
         'username' : 'mysql'
-        'password' : 'mysql'
+        'password' : ''
       }
     ]
 
