@@ -220,6 +220,10 @@ div.table_tree {
   border: 1px dashed red;*/
 }
 
+div.mainControl, div.guide{
+  min-height: 35em;
+}
+
 div.table_tree .table{
   margin-bottom: 1.5em;
   width: 35em;

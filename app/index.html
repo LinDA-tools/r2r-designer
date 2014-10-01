@@ -33,11 +33,12 @@
     </div>
     
 
-    <div class="row mainArea">
+    <div class="row mainArea" ng-controller="NavigationCtrl">
+            <div ng-view class="mainControl" ng-class="{'col-md-9': isGuidePage()}"></div>
 
-            <div ng-view class="mainControl col-md-9"></div>
 
-            <div class="col-md-3 guide" ng-controller="NavigationCtrl">
+            <div class="guide col-md-3" ng-if="isGuidePage()">
+
                 <span class="step">#{{step + 1}}</span>
                 <h3>Step By Step Guide</h3>
                 <span ng-bind-html="getGuideText()"></span>

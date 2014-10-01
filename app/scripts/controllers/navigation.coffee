@@ -6,6 +6,10 @@ angular.module 'app'
 		$route.reloadOnSearch =false;
 
 		$scope.step = 0
+
+		$scope.isGuidePage = () ->			
+			document.URL.search("step")	> -1		
+
 		#wizard pages, in right order
 		$scope.URLs = [
 			"#/step/connection"
