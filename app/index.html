@@ -34,33 +34,63 @@
     
 
     <div class="row mainArea">
+
             <div ng-view class="mainControl col-md-9"></div>
+
             <div class="col-md-3 guide" ng-controller="NavigationCtrl">
                 <span class="step">#{{step + 1}}</span>
                 <h3>Step By Step Guide</h3>
                 <span ng-bind-html="getGuideText()"></span>
                 <ul class="pager">
-                    <li><a ng-show="getPreviousURL()" ng-href="{{getPreviousURL()}}" ng-click="adjustPointer()">Previous Step</a></li>
-                    <li><a ng-show="getNextURL()" ng-href="{{getNextURL()}}" ng-click="adjustPointer()">Next Step</a></li>
+                    <li ng-class="{disabled: getPreviousURL()===false}">
+                        <a ng-if="getPreviousURL()!==false" ng-href="{{getPreviousURL()}}">Previous Step</a>
+                        <span ng-if="getPreviousURL()===false" >Previous Step</span>
+                    </li>
+                    <li ng-class="{disabled: getNextURL()===false}">
+                        <a ng-if="getNextURL()!==false" ng-href="{{getNextURL()}}">Next Step</a>
+                        <span ng-if="getNextURL()===false" >Next Step</span>
+                    </li>
                 </ul>
+
+
+<!--
+                <ol class="breadcrumb">
+                    <li><a ng-href="#/step/connection" ng-hide="isCurrentURL('#/step/connection')">Connection</a><span ng-show="isCurrentURL('#/step/connection')" ng-click="adjustStep()">Connection</span></li>
+                    
+                    <li><a ng-href="#/step/database" ng-hide="isCurrentURL('#/step/database')">Rel. Database</a><span ng-show="isCurrentURL('#/step/database')" ng-click="adjustStep()">Rel. Database</span></li>
+                    
+                    <li><a ng-href="#/step/triples" ng-hide="isCurrentURL('#/step/triples')" ng-click="adjustStep()">Triples</a><span ng-show="isCurrentURL('#/step/triples')">Triples</span></li>
+                </ol>
+
+                <ul class="pagination">
+                  <li><a ng-class="{disabled: getPreviousURL()==false}" ng-href="{{getPreviousURL()}}" ng-click="adjustStep()">&laquo;</a></li>
+                  <li><a ng-click="adjustStep()" ng-class="{active: isCurrentURL('#/step/connection')}" href="#/step/connection">1</a></li>
+                  <li><a ng-click="adjustStep()" href="#/step/database">2</a></li>
+                  <li><a ng-click="adjustStep()" href="#/step/triples">3</a></li>
+                  <li><a ng-href="{{getNextURL()}}" ng-click="adjustStep()">&raquo;</a></li>
+                </ul>
+            -->
+
             </div>
+
     </div>
     <!--<div ng-view class="mainControl"></div>-->
 
-
+<!--
 
       <div ng-controller="NavigationCtrl">
 
 
           <ol class="breadcrumb">
-            <li><a ng-href="#/step/connection" ng-hide="isCurrentURL('#/step/connection')">Connection</a><span ng-show="isCurrentURL('#/step/connection')" ng-click="adjustPointer()">Connection</span></li>
+            <li><a ng-href="#/step/connection" ng-hide="isCurrentURL('#/step/connection')">Connection</a><span ng-show="isCurrentURL('#/step/connection')">Connection</span></li>
             
-            <li><a ng-href="#/step/database" ng-hide="isCurrentURL('#/step/database')">Rel. Database</a><span ng-show="isCurrentURL('#/step/database')" ng-click="adjustPointer()">Rel. Database</span></li>
+            <li><a ng-href="#/step/database" ng-hide="isCurrentURL('#/step/database')">Rel. Database</a><span ng-show="isCurrentURL('#/step/database')">Rel. Database</span></li>
             
-            <li><a ng-href="#/step/triples" ng-hide="isCurrentURL('#/step/triples')" ng-click="adjustPointer()">Triples</a><span ng-show="isCurrentURL('#/step/triples')">Triples</span></li>
+            <li><a ng-href="#/step/triples" ng-hide="isCurrentURL('#/step/triples')">Triples</a><span ng-show="isCurrentURL('#/step/triples')">Triples</span></li>
           </ol>
           
       </div>
+  -->
 </div>
 
 

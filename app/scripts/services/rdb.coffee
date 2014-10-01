@@ -8,16 +8,29 @@ angular.module 'app'
 			colType : "INT"
 			colPreference : ["auto-inc","NOT NULL"]
 			sampleValues : ["sampleVal1", "sampleVal2", "sampleVal3", "sampleVal4", "sampleVal5"]
-			predictions : ["kartoffel", "donut"]
+			predictions : [
+          	{
+            "prefixedName":["umbel:Products"],
+            "uri":["http://umbel.org/umbel#Products"],
+            "score":0.5555555
+          	}
+          	]
 			enlist: false
 			},
 			{colName:"col1_2"
 			colType : "VARCHAR"
 			colPreference : ["NOT NULL"]
 			sampleValues : ["sampleVal1", "sampleVal2", "sampleVal3", "sampleVal4", "sampleVal5"]
-			predictions : ["brokoli", "senf"]
+			predictions : [
+          	{
+            "prefixedName":["umbel:Products"],
+            "uri":["http://umbel.org/umbel#Products"],
+            "score":0.5555555
+          	}
+          	]
 			enlist: true
-			}]
+			}
+			]
 		},
 		{
 			tableName: "table2"
@@ -40,6 +53,13 @@ angular.module 'app'
 			{colName:"col2_4"
 			colType : "SOME"
 			sampleValues : ["sampleVal1", "sampleVal2", "sampleVal3", "sampleVal4", "sampleVal5"]
+			predictions : [
+          	{
+            "prefixedName":["umbel:Products"],
+            "uri":["http://umbel.org/umbel#Products"],
+            "score":0.5555555
+          	}
+          	]
 			enlist: true
 			}]
 		},
@@ -49,6 +69,13 @@ angular.module 'app'
 			columns: [{colName:"col3_1"
 			colType : "INT"
 			sampleValues : ["sampleVal1", "sampleVal2", "sampleVal3", "sampleVal4", "sampleVal5"]
+			predictions : [
+          	{
+            "prefixedName":["umbel:Products"],
+            "uri":["http://umbel.org/umbel#Products"],
+            "score":0.5555555
+          	}
+          	]
 			enlist: true
 			}]
 		}]
