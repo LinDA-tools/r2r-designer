@@ -3,51 +3,48 @@
 <h2 class="mainControl">Relational Database View</h2>
 
 <div class="table_tree">
-  
+ 
+<!-- TABLE -->  
   <div class="table" ng-repeat="table in tables" id="{{table.tableName}}_table">
-    <div class="item">
-      <button ng-if="table.enlist" type="button" title="exclude table" ng-click="enlistTable(false, table.tableName+'_table')"><span class="glyphicon glyphicon-eye-close"></span></button>
-      <button ng-if="!table.enlist" type="button" title="include table" ng-click="enlistTable(true, table.tableName+'_table')"><span class="glyphicon glyphicon-eye-open"></span></button>
-      {{table.tableName}}
+    <div class="row">
+      <div class="col-md-11 item">
+        <i ng-class="{fa:true, 'fa-minus-square':table.expand, 'fa-plus-square':!table.expand, 'grey':true}" ng-click="table.expand=!table.expand"></i>
+        <span class="table_label">Table:</span>{{table.tableName}}
+      </div>
+      <div class="col-md-1">
+        <i ng-class="{'fa':true, 'fa-times':!table.enlist, 'fa-check':table.enlist, 'green':table.enlist, 'grey':!table.enlist}" ng-click="table.enlist=!table.enlist"></i>
+      </div>
     </div>
 
-    <div ng-if="table.enlist" ng-repeat="col in table.columns">
-      <div>
-          <div class="row item_dbl_top" ng-if="col.enlist">
-            <button ng-if="col.enlist" type="button" title="exclude table row" ng-click="enlistTableRow(false, col)">
-              <span class="glyphicon glyphicon-eye-open"></span>
-            </button>
-            <button ng-if="!col.enlist" type="button" title="include table row" ng-click="enlistTableRow(true, col)">
-              <span class="glyphicon glyphicon-eye-close"></span>
-            </button>
-            <span class="col_name">{{col.colName}}</span>
-            <span class="label label-primary">{{col.colType}}</span><span class="label label-default" ng-repeat="pref in col.colPreference">{{pref}}</span> 
-          </div>
-          <div class="row item_dbl_bottom" ng-if="col.enlist">
-            <span ng-repeat="sample in col.sampleValues">{{sample}}, </span>...
-          </div>
+<!-- COLUMNS -->
+    <div ng-repeat="col in table.columns" ng-if="table.expand">
+      <div class="row">
+        <div class="col-md-1">          
         </div>
-
-        <div class="row item" ng-if="!col.enlist">
-          <button ng-if="col.enlist" type="button" title="exclude table row" ng-click="enlistTableRow(false, col)">
-              <span class="glyphicon glyphicon-eye-open"></span>
-          </button>
-          <button ng-if="!col.enlist" type="button" title="include table row" ng-click="enlistTableRow(true, col)">
-            <span class="glyphicon glyphicon-eye-close"></span>
-          </button>
-          <span class="col_name">{{col.colName}}</span>
-          <span class="label label-primary">{{col.colType}}</span><span class="label label-default" ng-repeat="pref in col.colPreference">{{pref}}</span> 
+        <div ng-class="{'col-md-10':true, item_dbl_top:col.expand, item:!col.expand}">
+          <i ng-class="{'fa':true, 'fa-eye':!col.expand, 'fa-eye-slash':col.expand, 'grey':true}" ng-click="col.expand=!col.expand"></i>
+          <span class="table_label">Column:</span><span class="col_name">{{col.colName}}</span>
+          <span class="label label-primary">{{col.colType}}</span><span class="label label-default" ng-repeat="pref in col.colPreference">{{pref}}</span>
         </div>
-
+        <div class="col-md-1">
+          <i ng-class="{'fa':true, 'fa-times':!col.enlist, 'fa-check':col.enlist, 'green':col.enlist, 'grey':!col.enlist}" ng-click="col.enlist=!col.enlist"></i>
+        </div>
+      </div>
+<!-- SAMPLE VALUES -->
+      <div ng-if="col.expand" class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10 item_dbl_bottom">
+          <span class="table_label">Samples:</span><span ng-repeat="sample in col.sampleValues">{{sample}}, </span>...
+        </div>
+        <div class="col-md-1">
+        </div>        
+      </div>
+    
     </div>
 
-  <div ng-if="table.enlist && !col.enlist" ng-repeat="col in table.columns">
-
-    </div>
 
   </div>
-
-
 
 </div>
 

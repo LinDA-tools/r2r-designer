@@ -195,7 +195,7 @@ div.mainArea > div{
 }
 
 /* step number in step by step guide*/
-div.mainArea span.step{
+div.mainArea .step{
 float: right;
 font-size: 400%;
 color: #79f079;
@@ -228,11 +228,11 @@ div.table_tree .table{
   margin-bottom: 1.5em;
   width: 35em;
 }
-
+/*
 div.table_tree .row{
   margin-left: 2em;
   width: 33em;
-}
+}*/
 
 
 .table_tree button {
@@ -270,14 +270,11 @@ border-radius: 0px 0px 3px 3px;
 border-style:solid;
 border-color: #ddd;
 border-width: 0px 1px 1px 1px;
-padding: .2em .2em .2em 3em;
+padding: .2em;
 background-color: #f8f8f8;
 margin-bottom: .2em;
 }
 
-.table_tree div.item_dbl_bottom > span{
-font-size: smaller;
-}
 
 .table_tree .glyphicon {
   color: #999999;
@@ -312,4 +309,33 @@ font-size: smaller;
 
 .table-input {
   width: 100%;
+}
+
+.green
+{
+  color: #5cb85c;
+}
+
+.grey
+{
+  color: #aaa;
+}
+
+.green_lightbg
+{
+  background-color: #9f9;
+}
+
+.grey_lightbg
+{
+  background-color: #ccc;
+}
+
+.table_label{
+  text-transform: uppercase;
+  font-size: 60%;
+  font-weight: bold;
+  letter-spacing: -1px;
+  padding-right: 1em;
+  width: 7em;
 }
