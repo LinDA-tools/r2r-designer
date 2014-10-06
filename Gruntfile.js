@@ -46,16 +46,6 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer']
       },
-      dev: {
-        files: [
-          '<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}',
-          '<%= yeoman.app %>/{,*/}*.html*',
-          '.tmp/styles/{,*/}*.css',
-          '.tmp/scripts/{,*/}*.js',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-        ],
-        tasks: ['dev']
-      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -119,7 +109,6 @@ module.exports = function (grunt) {
 
     // Empties folders to start fresh
     clean: {
-      dev: '.tmp',
       dist: {
         files: [{
           dot: true,
@@ -326,23 +315,6 @@ module.exports = function (grunt) {
 
     // Copies remaining files to places other tasks can use
     copy: {
-      dev: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= yeoman.app %>',
-          dest: '.tmp',
-          src: [
-            '*.{ico,png,txt}',
-            '.htaccess',
-            '*.html',
-            'views/{,*/}*.html',
-            'partials/{,*/}*.html.tpl',
-            'images/{,*/}*.{webp}',
-            'fonts/*'
-          ]
-        }]
-      },
       dist: {
         files: [{
           expand: true,
@@ -354,7 +326,6 @@ module.exports = function (grunt) {
             '.htaccess',
             '*.html',
             'views/{,*/}*.html',
-            'partials/{,*/}*.html.tpl',
             'images/{,*/}*.{webp}',
             'fonts/*'
           ]
@@ -382,10 +353,6 @@ module.exports = function (grunt) {
       test: [
         'coffee',
         'compass'
-      ],
-      dev: [
-        'coffee:dist',
-        'compass:server'
       ],
       dist: [
         'coffee',
@@ -481,13 +448,4 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
-
-  grunt.registerTask('dev', [
-    'clean:dev',
-    'bowerInstall',
-    'copy:dev',
-    'concurrent:dev',
-    'autoprefixer',
-    'watch:dev'
-    ]);
 };
