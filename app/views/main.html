@@ -9,30 +9,12 @@
     <h3 class="text-muted">{{title}}</h3>
   </div>
 
-  <div class="row">
-    <!-- <config /> -->
-  </div>
+  <wizard>
+    <step name="dsconfig"
+          heading="Datasource Configuration"
+          description="very long description">
+      <config />
+    </step>
+  </wizard>
 
-  <hr />
-
-  <tabset>
-    <!-- <tab heading="Database View"> -->
-    <!--   <dbcontents /> -->
-    <!-- </tab> -->
-
-    <!-- <tab heading="RDF View"> -->
-    <!--   <rdf /> -->
-    <!-- </tab> -->
-
-    <!-- <tab heading="Visualization" disabled="true"> -->
-    <!-- </tab> -->
-
-    <!-- <tab heading="Publish" disabled="true"> -->
-    <!-- </tab> -->
-
-    <tab heading="Playground">
-      <playground />
-    </tab>
-
-  </tabset>
 </div>

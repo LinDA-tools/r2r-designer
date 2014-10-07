@@ -19,29 +19,33 @@
   (take (:n c) results))
 
 (defn shaped [results]
-  (let [filter-fn #(select-keys % [:score :uri :uriPrefixed :vocabularyPrefix]) ; "vocabulary" "types"
+  (let [filter-fn #(select-keys % [:score :uri :prefixedName :vocabularyPrefix]) ; "vocabulary" "types"
         filtered (map filter-fn results)]
     filtered))
 
 (defn search-classes [c query]
-  (let [api "http://lov.okfn.org/dataset/lov/api/v2/search"
-        results (-> (client/get api {:query-params {:q query :type "class"}}) :body json/read-json :results)]
-    (->> results
-         (significant c)
-         (cut c)
-         shaped)))
+  (if (and c query (seq query))
+    (let [api "http://lov.okfn.org/dataset/lov/api/v2/search"
+          results (-> (client/get api {:query-params {:q query :type "class"}}) :body json/read-json :results)]
+      (->> results
+           (significant c)
+           (cut c)
+           shaped)) 
+    []))
 
 (defn search-properties [c query]
-  (let [api "http://lov.okfn.org/dataset/lov/api/v2/search"
-        results (-> (client/get api {:query-params {:q query :type "property"}}) :body json/read-json :results)]
-    (->> results 
-         (significant c)
-         (cut c) 
-         shaped)))
+  (if (and c query (seq query))
+    (let [api "http://lov.okfn.org/dataset/lov/api/v2/search"
+          results (-> (client/get api {:query-params {:q query :type "property"}}) :body json/read-json :results)]
+      (->> results 
+           (significant c)
+           (cut c) 
+           shaped))
+    []))
 
 (defn recommend [c table columns]
   (let [t-rec {:name table :recommend (search-classes c table)}
-        c-rec (for [i columns] {:column i :recommend (search-properties c i)})]
+        c-rec (for [i columns] {:name i :recommend (search-properties c i)})]
     {:table t-rec :columns c-rec}))
 
 ;;;;
