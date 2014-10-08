@@ -16,11 +16,17 @@
   (route/resources "/" {:root "."})
   (route/not-found "Not Found!"))
 
+(defn allow-origin [handler]
+  (fn [request]
+    (let [response (handler request)
+          headers (:headers response)]
+      (assoc response :headers (assoc headers "Access-Control-Allow-Origin" "*")))))
+
 (defn allow-content-type [handler]
   (fn [request]
     (let [response (handler request)
           headers (:headers response)]
-      (assoc response :headers (assoc headers "Access-Control-Allow-Content-Type" "application/json")))))
+      (assoc response :headers (assoc headers "Access-Control-Allow-Content-Type" "*")))))
 
 (defn wrap-dir-index [handler]
   (fn [req]
@@ -45,9 +51,10 @@
       wrap-params
       (wrap-json-body {:keywords? true})
       (wrap-json-response {:pretty true})
-      (wrap-cors :access-control-allow-origin #"http://127.0.0.1:9000"
-                 :access-control-allow-methods [:get :put :post :delete :options])
+      ;; (wrap-cors :access-control-allow-origin [#"http://127.0.0.1:9000" #"http://localhost:9000"] 
+      ;;            :access-control-allow-methods [:get :put :post :delete :options])
       allow-content-type
+      allow-origin
       wrap-dir-index
       monitor
       ))

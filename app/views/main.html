@@ -10,10 +10,28 @@
   </div>
 
   <wizard>
-    <step name="dsconfig"
+    <step name="welcome"
+          heading="Transforming Relational Data to Linked Data"
+          description="">
+      Hi there!
+    </step>
+
+    <step name="datasource configuration"
           heading="Datasource Configuration"
-          description="very long description">
-      <config />
+          description="">
+      <div ng-include src="'partials/config.html.tpl'"></div>
+    </step>
+
+    <step name="database contents"
+          heading="Database Contents"
+          description="">
+      <div ng-include src="'partials/dbcontents.html.tpl'"></div>
+    </step>
+
+    <step name="reconciliation"
+          heading="Reconcile Database Structure"
+          description="">
+      <div ng-include src="'partials/reconcile.html.tpl'"></div>
     </step>
   </wizard>
 

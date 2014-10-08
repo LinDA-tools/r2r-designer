@@ -1,23 +1,25 @@
 <div ng-controller="dbContentsCtrl">
-  <h3>Content of database</h3>
 
-  {{rdb.table}}
-  {{rdb.columns}}
+  <table class="table table-scrollable">
+    <tr ng-repeat="table in tables">
+      <th class="btn-th">
+        <button type="button" 
+                class="btn btn-primary btn-sm table-btn" 
+                ng-class="{active: isSelectedTable(table)}"
+                ng-click="toggleSelectTable(table)"> 
+          {{table}}
+        </button>
+      </th>
 
-  <div class="table-scrollable">
-    <table class="table">
-      <tr>
-        <th ng-repeat="column in rdb.columns">
-          {{column}}
-        </th>
-      </tr>
-      <tr ng-repeat="row in data">
-        <td ng-repeat="item in row track by $index">
-          {{item}}
-        </td>
-      </tr>
-    </table>
-  </div>
+      <td>
+        <button ng-repeat="column in tableColumns[table]" 
+                type="button" 
+                class="btn btn-default btn-sm table-btn"
+                ng-class="{disabled: !isSelectedTable(table), active: isSelectedColumn(table, column)}"
+                ng-click="toggleSelectColumn(table, column)">
+            {{column}}
+        </button>
+      </td>
+    </tr>
+  </table>
 </div>
-
-

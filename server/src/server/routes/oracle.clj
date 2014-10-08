@@ -15,9 +15,8 @@
 (defn oracle-routes-fn [c]
   (let [api (:oracle-api c)]
     (defroutes oracle-routes
-      (OPTIONS (str api) request (preflight request))
-
-      (POST (str api) request 
+      (OPTIONS api request (preflight request))
+      (POST api request 
         (let [oracle (:oracle c)
               table (spy (:body request))
               suggestions (spy (recommend oracle (:name table) (:columns table)))]

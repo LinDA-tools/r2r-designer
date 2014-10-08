@@ -115,9 +115,7 @@
         columns (get-columns c table)
         result (apply merge (for [i columns] {(keyword (str/lower-case i)) i}))]
     (debug result)
-    result 
-    )
-  )
+    result))
 
 (defn query-columns [c table columns]
   (let [pool @(:pool c)
