@@ -1,19 +1,20 @@
 'use strict'
 
 angular.module 'app'
-  .controller 'reconcileCtrl', ($scope, Oracle) ->
-
-    $scope.oracle = Oracle
+  .controller 'reconcileCtrl', ($scope, Oracle, Rdf) ->
 
     $scope.table = 'products'
-    $scope.columns = ['ProductID', 'ProductName', 'UnitPrice']
-    
     $scope.tableTag = ''
-    $scope.columnTags = []
+
+    $scope.columns = ['ProductID', 'ProductName', 'UnitPrice']
+    $scope.columnTags = {}
+
+    $scope.selectedClasses = Rdf.selectedClasses
+    $scope.selectedProperties = Rdf.selectedProperties
 
     $scope.suggestions = {
       table: {
-        "name":"products",
+        "name": "products",
         "recommend": [
           {
             "prefixedName":["umbel:Products"],
@@ -34,7 +35,7 @@ angular.module 'app'
       },
       columns: [
         {
-          "name":"ProductID",
+          "name": "ProductID",
           "recommend": [
             {
               "prefixedName":["schema:productID"],
@@ -44,7 +45,7 @@ angular.module 'app'
           ]
         },
         {
-          "name":"ProductName",
+          "name": "ProductName",
           "recommend": [
             {
               "prefixedName":["dicom:ProductName"],
@@ -58,8 +59,23 @@ angular.module 'app'
     }
 
     $scope.ask = () ->
-      $scope.oracle.ask ($scope.tableTag || $scope.table),
-                        ($scope.columnTags || $scope.columns)
+      Oracle.ask $scope.table, $scope.tableTag, $scope.columns, $scope.columnTags
         .then (promise) ->
           $scope.suggestions = promise
 
+    $scope.selectClass = (table, _class) ->
+      if table? and _class?
+        $scope.selectedClasses[table] = _class
+
+    $scope.selectProperty = (table, column, property) ->
+      if table? and column? and property?
+        currentTable = $scope.selectedProperties[table] or {}
+        currentTable[column] = property
+        $scope.selectedProperties[table] = currentTable
+
+    $scope.isSelectedClass = (table, _class) ->
+      $scope.selectedClasses[table] == _class
+
+    $scope.isSelectedProperty = (table, column, property) ->
+      currentTable = $scope.selectedProperties[table]
+      currentTable and (currentTable[column] == property)

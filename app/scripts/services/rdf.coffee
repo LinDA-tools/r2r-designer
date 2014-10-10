@@ -2,6 +2,10 @@
 
 angular.module 'app'
   .factory 'Rdf', ->
+
+    selectedClasses : {}
+    selectedProperties : {}
+
     baseProperties: [
       {
         prefix: 'rdfs'

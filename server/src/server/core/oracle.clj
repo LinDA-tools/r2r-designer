@@ -1,7 +1,7 @@
 (ns server.core.oracle
   (:require
     [clojure.data.json :as json]
-    [clojure.string :refer [join]]
+    [clojure.string :refer [join split]]
     [clj-http.client :as client]
     [edu.ucdenver.ccp.kr.kb :refer :all]
     [edu.ucdenver.ccp.kr.rdf :refer :all]
@@ -23,29 +23,32 @@
         filtered (map filter-fn results)]
     filtered))
 
-(defn search-classes [c query]
+(defn query-lov [c type query]
   (if (and c query (seq query))
     (let [api "http://lov.okfn.org/dataset/lov/api/v2/search"
-          results (-> (client/get api {:query-params {:q query :type "class"}}) :body json/read-json :results)]
+          results (-> (client/get api {:query-params {:q query :type type}}) :body json/read-json :results)]
       (->> results
            (significant c)
            (cut c)
-           shaped)) 
-    []))
-
-(defn search-properties [c query]
-  (if (and c query (seq query))
-    (let [api "http://lov.okfn.org/dataset/lov/api/v2/search"
-          results (-> (client/get api {:query-params {:q query :type "property"}}) :body json/read-json :results)]
-      (->> results 
-           (significant c)
-           (cut c) 
            shaped))
     []))
 
+(defn expr->items [expr] (filter seq (split expr #"[\s,;]+")))
+
+(defn search-classes [c expr]
+  (apply concat (map #(query-lov c "class" %) (expr->items expr))))
+
+(defn search-properties [c expr]
+  (apply concat (map #(query-lov c "property" %) (expr->items expr))))
+
+(defn item-or-tag [item tag] (if (empty? tag) item tag))
+
 (defn recommend [c table columns]
-  (let [t-rec {:name table :recommend (search-classes c table)}
-        c-rec (for [i columns] {:name i :recommend (search-properties c i)})]
+  (let [t-rec {:name (:name table) 
+               :recommend []};(search-classes c (item-or-tag (:name table) (:tag table)))}
+        c-rec (for [i columns] 
+                {:name (:name i) 
+                 :recommend []})];(search-properties c (item-or-tag (:name i) (:tag i)))})]
     {:table t-rec :columns c-rec}))
 
 ;;;;

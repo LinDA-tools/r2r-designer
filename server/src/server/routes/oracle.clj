@@ -18,8 +18,8 @@
       (OPTIONS api request (preflight request))
       (POST api request 
         (let [oracle (:oracle c)
-              table (spy (:body request))
-              suggestions (spy (recommend oracle (:name table) (:columns table)))]
+              data (spy (:body request))
+              suggestions (spy (recommend oracle (:table data) (:columns data)))]
           (response suggestions)))
 
       (GET (str api "/properties") [q :as r] 
