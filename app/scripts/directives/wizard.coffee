@@ -63,17 +63,17 @@ app.directive 'step', ->
   templateUrl: (element, attributes) ->
     attributes.template || 'partials/step.html.tpl'
   link: (scope, element, attrs, wizard) ->
-
     wizard.addStep
       name: scope.name
       heading: scope.heading
       description: scope.description
       selected: scope.selected
 
-    scope.isSelected = -> wizard.getStep(scope.name).selected
-    scope.isTreated = -> wizard.getStep(scope.name).treated
-    scope.isFirst = -> wizard.isFirst scope.name
-    scope.isLast = -> wizard.isLast scope.name
+    scope.isSelected = () -> wizard.getStep(scope.name).selected
+    scope.isTreated = () -> wizard.getStep(scope.name).treated
+    scope.isFirst = () -> wizard.isFirst scope.name
+    scope.isLast = () -> wizard.isLast scope.name
+    scope.bar = () -> console.log 'bar'
 
 app.directive 'next', ->
   restrict: 'A'

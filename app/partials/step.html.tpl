@@ -13,7 +13,7 @@
         <p><div ng-transclude /></p>
 
         <div ng-show="isSelected()">
-          <a href prev ng-show="!isFirst()">&lt;&lt; Previous</a>
+          <a href prev ng-show="!isFirst()">&lt;&lt; Previous&nbsp;</a>
           <a href next ng-show="!isLast()">Next &gt;&gt;</a>
         </div>
       </div>

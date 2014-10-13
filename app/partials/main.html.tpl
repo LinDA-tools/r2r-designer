@@ -12,19 +12,19 @@
   <wizard>
     <step name="welcome"
           heading="Transforming Relational Data to Linked Data"
-          description="">
+          description="example description">
       Hi there!
     </step>
 
     <step name="datasource configuration"
           heading="Datasource Configuration"
-          description="">
+          description="example description">
       <div ng-include src="'partials/config.html.tpl'"></div>
     </step>
 
     <step name="database contents"
           heading="Database Contents"
-          description="">
+          description="example description">
       <div ng-include src="'partials/dbcontents.html.tpl'"></div>
     </step>
 
@@ -32,6 +32,12 @@
           heading="Reconcile Database Structure"
           description="">
       <div ng-include src="'partials/reconcile.html.tpl'"></div>
+    </step>
+
+    <step name="publishing"
+          heading="Publish as SPARQL endpoint"
+          description="">
+      <button>Publish</button>
     </step>
   </wizard>
 </div>

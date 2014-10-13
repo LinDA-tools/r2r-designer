@@ -16,7 +16,8 @@
                 type="button" 
                 class="btn btn-default btn-sm table-btn"
                 ng-class="{disabled: !isSelectedTable(table), active: isSelectedColumn(table, column)}"
-                ng-click="toggleSelectColumn(table, column)">
+                ng-click="toggleSelectColumn(table, column)"
+                popover popover-html="Some <em>Popover</em><hr/> Text" popover-trigger="hover" popover-placement="bottom">
             {{column}}
         </button>
       </td>
