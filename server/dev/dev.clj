@@ -20,11 +20,11 @@
     [ring.middleware.file-info :refer :all]
     [ring.middleware.file :refer :all]
     [clj-http.client :as client]
-    [edu.ucdenver.ccp.kr.kb :refer :all]
-    [edu.ucdenver.ccp.kr.rdf :refer :all]
-    [edu.ucdenver.ccp.kr.sparql :refer :all]
-    [edu.ucdenver.ccp.kr.sesame.kb :as sesame]
     [taoensso.timbre :as timbre]
+    [edu.ucdenver.ccp.kr.kb :as kb]
+    [edu.ucdenver.ccp.kr.rdf :as rdf]
+    [edu.ucdenver.ccp.kr.sparql :as sparql]
+    [edu.ucdenver.ccp.kr.sesame.kb :as sesame]
     [server.components.db :refer :all]
     [server.components.oracle :refer :all]
     [server.components.ring :refer :all]
@@ -60,7 +60,7 @@
                    :open-browser? false
                    :join true
                    :auto-reload? true}
-        oracle-sparql "http://dbpedia.org/sparql"]
+        oracle-sparql "http://lov.okfn.org/endpoint/lov_aggregator"]
     (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql log-config)))
     )
   )
