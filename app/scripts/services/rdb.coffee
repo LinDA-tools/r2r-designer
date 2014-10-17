@@ -7,6 +7,11 @@ angular.module 'app'
     dbAdapter = host + '/api/v1/db'
 
     {
+      # selectedTables: []
+      # selectedColumns: {}
+      selectedTables: ["products","employees"]
+      selectedColumns: {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
+
       registerDatabase: (dbSpec) ->
         $http.post dbAdapter + '/register', {},
           params:

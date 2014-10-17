@@ -7,7 +7,7 @@ app.directive 'wizard', ->
   scope: {}
   transclude: true
   templateUrl: (element, attribute) ->
-    attribute.template || 'partials/wizard.html.tpl'
+    attribute.template || 'partials/wizard.html'
   controller: ($scope, $document, $timeout) ->
     $scope.steps = []
 
@@ -61,7 +61,7 @@ app.directive 'step', ->
     description: '@'
   transclude: true
   templateUrl: (element, attributes) ->
-    attributes.template || 'partials/step.html.tpl'
+    attributes.template || 'partials/step.html'
   link: (scope, element, attrs, wizard) ->
     wizard.addStep
       name: scope.name

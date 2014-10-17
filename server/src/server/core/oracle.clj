@@ -28,22 +28,27 @@
 
 (defn get-label [c entity]
   (let [kb (add-namespaces @(:kb c))]
-    (let [result (sparql-query kb (format "select distinct * where { <%s> <http://www.w3.org/2000/01/rdf-schema#label> ?x. } limit 10" entity))]
+    (let [result (sparql-query kb (format "select distinct * where { <%s> <http://www.w3.org/2000/01/rdf-schema#label> ?x. } limit 1" entity))]
       (map '?/x result))))
 
 (defn get-comment [c entity]
   (let [kb (add-namespaces @(:kb c))]
-    (let [result (sparql-query kb (format "select distinct * where { <%s> <http://www.w3.org/2000/01/rdf-schema#comment> ?x. } limit 10" entity))]
+    (let [result (sparql-query kb (format "select distinct * where { <%s> <http://www.w3.org/2000/01/rdf-schema#comment> ?x. } limit 1" entity))]
+      (map '?/x result))))
+
+(defn get-title [c entity]
+  (let [kb (add-namespaces @(:kb c))]
+    (let [result (sparql-query kb (format "select distinct * where { <%s> <http://purl.org/dc/terms/title> ?x. } limit 1" entity))]
       (map '?/x result))))
 
 (defn get-description [c entity]
   (let [kb (add-namespaces @(:kb c))]
-    (let [result (sparql-query kb (format "select distinct * where { <%s> <http://purl.org/dc/terms/description> ?x. } limit 10" entity))]
+    (let [result (sparql-query kb (format "select distinct * where { <%s> <http://purl.org/dc/terms/description> ?x. } limit 1" entity))]
       (map '?/x result))))
 
 (defn get-definition [c entity]
   (let [kb (add-namespaces @(:kb c))]
-    (let [result (sparql-query kb (format "select distinct * where { <%s> <http://www.w3.org/2004/02/skos/core#definition> ?x. } limit 10" entity))]
+    (let [result (sparql-query kb (format "select distinct * where { <%s> <http://www.w3.org/2004/02/skos/core#definition> ?x. } limit 1" entity))]
       (map '?/x result))))
 
 (defn significant [c results]
@@ -65,15 +70,18 @@
         vocab (if (and uri localName) (subs uri 0 (- (.length uri) (.length localName))))]
     (assoc entity-map
            :localName (if localName [localName] [])
-           :vocab (if vocab [vocab] []))))
+           :vocabulary.uri (if vocab [vocab] []))))
 
 (defn enrich [c entity-map]
   (let [uri (first (:uri entity-map))
-        vocab (first (:vocab entity-map))]
+        vocab (first (:vocabulary.uri entity-map))]
     (assoc entity-map 
            :label (get-label c uri)
            :comment (get-comment c uri)
-           :definition (get-definition c uri))))
+           :definition (get-definition c uri)
+           :vocabulary.title (get-title c vocab)
+           :vocabulary.description (get-description c vocab)
+           )))
 
 (defn query-lov [c type query]
   (if (and c query (seq query))

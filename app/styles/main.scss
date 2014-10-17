@@ -1,11 +1,10 @@
 $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 // @import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
 
-@import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
-
 // bower:scss
 @import "../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
 // endbower
+@import "../bower_components/font-awesome/scss/font-awesome.scss";
 
 .browsehappy {
     margin: 0.2em 0;
@@ -131,7 +130,7 @@ body {
 }
 
 .score {
-  float: right;
+  // float: right;
   font-style: italic;
   color: lightBlue;
 }
@@ -172,4 +171,9 @@ body {
 
 .table-input {
   width: 100%;
+}
+
+.popover {
+  max-width: 400px;
+  width: auto;
 }

@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'app'
-  .factory 'Oracle', ($http) ->
+  .factory 'Oracle', ($http, _) ->
 
     host = 'http://localhost:3000'
     oracleApi = host + '/api/v1/oracle'

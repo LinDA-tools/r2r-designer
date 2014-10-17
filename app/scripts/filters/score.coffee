@@ -1,6 +1,6 @@
 'use strict'
 
 angular.module 'app'
-  .filter 'score', () ->
+  .filter 'scoreFilter', () ->
     (input) ->
-      return input.toPrecision(2)
+      (Number input).toPrecision 2
