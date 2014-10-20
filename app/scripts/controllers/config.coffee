@@ -1,12 +1,12 @@
 'use strict'
 
 angular.module 'app'
-  .controller 'ConfigCtrl', ($scope, Rdb, Config) ->
+  .controller 'ConfigCtrl', ($scope, Rdb) ->
 
-    $scope.datasource = Config.datasource
+    $scope.rdb = Rdb
 
     $scope.test = () ->
       console.log "test"
 
     $scope.apply = () ->
-      console.log "apply"
+      $scope.rdb.registerDatabase $scope.rdb.datasource

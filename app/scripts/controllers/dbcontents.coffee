@@ -1,18 +1,17 @@
 'use strict'
 
 angular.module 'app'
-  .controller 'dbContentsCtrl', ($scope, Config, Rdb) ->
+  .controller 'dbContentsCtrl', ($scope, Rdb) ->
 
-    $scope.config = Config
     $scope.rdb = Rdb
 
     $scope.tableColumns = {}
 
-    $scope.$watch 'config.datasource', (value) ->
+    $scope.$watch 'rdb.datasource', (value) ->
       if value?
         Rdb.getTables().then (promise) -> $scope.tables = promise
 
-    $scope.$watch 'config.datasource', (value) ->
+    $scope.$watch 'rdb.datasource', (value) ->
       if value?
         Rdb.getTableColumns().then (promise) ->
           $scope.tableColumns = promise
