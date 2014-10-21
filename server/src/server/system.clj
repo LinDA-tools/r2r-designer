@@ -19,16 +19,16 @@
   :ns-blacklist []})
 
 (defn -main []
-  (let [db-opts {:subprotocol "postgresql" 
-                 :subname "mydb" 
-                 :username "postgres" 
+  (let [db-opts {:driver ""
+                 :host ""
+                 :name "" 
+                 :username "" 
                  :password ""}
         ring-opts {:port 3000
                    :open-browser? false
                    :join true
                    :auto-reload? true}
         oracle-sparql "http://dbpedia.org/sparql"
-        log-config log-config
         system (new-system 
                   db-opts 
                   #'app-fn 

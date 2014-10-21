@@ -35,19 +35,21 @@
       ;;       :else {:status 400})))
 
       (OPTIONS (str api "/test") request (preflight request))
-      (POST (str api "/test") [subname subprotocol username password :as r]
-        (let [spec {:subname subname 
-                    :subprotocol subprotocol 
+      (POST (str api "/test") [driver host name username password :as r]
+        (let [spec {:driver driver
+                    :host host
+                    :name name 
                     :username username
                     :password password}
               result (test-db spec)]
           {:status 200 :body (str result)}))
 
       (OPTIONS (str api "/register") request (preflight request))
-      (POST (str api "/register") [subname subprotocol username password :as r]
+      (POST (str api "/register") [driver host name username password :as r]
         (let [db (:database component)
-              new-spec {:subname subname 
-                        :subprotocol subprotocol 
+              new-spec {:host host
+                        :driver driver
+                        :name name 
                         :username username
                         :password password}]
           (register-db db new-spec)

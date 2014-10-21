@@ -31,9 +31,7 @@
     [server.core.db :refer :all]
     [server.core.oracle :refer :all]
     [server.routes.app :refer [app-fn]]
-    [server.system :refer [new-system]]
-    )
-  )
+    [server.system :refer [new-system]]))
 
 (timbre/refer-timbre)
 
@@ -51,10 +49,10 @@
   "Creates and initializes the system under development in the Var
   #'system."
   []
-  (let [db-opts {:classname "" ; org.postgresql.Driver
-                 :subprotocol "" ; postgresql
-                 :subname "" ; mydb
-                 :username "" ; postgres
+  (let [db-opts {:driver "org.postgresql.jdbc4.Jdbc4Connection"
+                 :host "localhost"
+                 :name "mydb"
+                 :username "postgres"
                  :password ""
                  }
         ring-opts {:port 3000
@@ -78,6 +76,7 @@
   []
   (alter-var-root #'system
     (fn [s] (when s (c/stop s))))
+  :stopped
   )
 
 (defn go

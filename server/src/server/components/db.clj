@@ -2,34 +2,26 @@
   (:require
     [taoensso.timbre :as timbre]
     [com.stuartsierra.component :as c]
-    [server.core.db :refer [new-pool]]
-    )
-  )
+    [server.core.db :refer [new-datasource]]))
 
 (timbre/refer-timbre)
 
-(defrecord Database [spec pool conn]
+(defrecord Database [spec datasource]
   c/Lifecycle
 
-  (start [component]
+  (start [c]
     (info "starting database adapter ...")
-    (reset! (:pool component) (new-pool component))
-    component
-    )
+    (reset! (:datasource c) (new-datasource c))
+    c)
 
-  (stop [component]
+  (stop [c]
     (info "stopping database adapter ...")
-    (if @(:pool component)
-      (.close (:datasource @(:pool component)))
-      (reset! (:pool component) nil))
-    component
-    )
-  )
+    (when (:datasource c) 
+      (if @(:datasource c) (.close @(:datasource c)))
+      (reset! (:datasource c) nil))
+    c))
   
 (defn new-database [opts]
-  (map->Database {:spec (atom (select-keys opts [:classname :subprotocol :subname :username :password]))
-                  :pool (atom nil)
-                  :min-pool 1
-                  :max-pool 100
-                  :partitions 1})
-  )
+  (map->Database {:spec (atom (select-keys opts [:driver :host :name :username :password]))
+                  :datasource (atom nil)
+                  :max-pool 10}))
