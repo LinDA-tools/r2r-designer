@@ -1,10 +1,10 @@
 <div ng-controller="ConfigCtrl"> 
   <form class="form-horizontal" role="form">
     <div class="form-group">
-      <label for="datasourceNameInput" class="col-md-4 control-label">Data Source Name</label>
-      <div id="datasourceNameInput" class="col-md-8">
-        <input type="text" class="form-control" ng-model="rdb.datasource.name" />
-      </div>
+      <!-- <label for="datasourceNameInput" class="col&#45;md&#45;4 control&#45;label">Data Source Name</label> -->
+      <!-- <div id="datasourceNameInput" class="col&#45;md&#45;8"> -->
+      <!--   <input type="text" class="form&#45;control" ng&#45;model="rdb.datasource.name" /> -->
+      <!-- </div> -->
 
       <label for="subprotocolInput" class="col-md-4 control-label">Protocol</label>
       <div id="subprotocolInput" class="col-md-8">
@@ -28,6 +28,10 @@
     </div>
 
     <div align="right">
+      <i class="fa fa-spinner fa-spin fa-lg" ng-show="checking"></i>
+      <i class="fa fa-check fa-lg" ng-show="success && checked && !checking" style="color: #449d44"></i>
+      <i class="fa fa-times fa-lg" ng-show="!success && checked && !checking" style="color: #c9302c"></i>
+      &nbsp;
       <button type="button" class="btn btn-default" ng-click="test()">Test</button>
       <button type="button" class="btn btn-primary" ng-click="apply()">Apply</button>
     </div>

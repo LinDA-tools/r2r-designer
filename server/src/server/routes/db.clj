@@ -13,9 +13,15 @@
   (let [api (:db-api component)
         db (:database component)]
     (defroutes db-routes
-      (GET (str api "/tables") [] (write-str (get-tables db)))
+      (GET (str api "/tables") [] 
+           (try 
+             (write-str (get-tables db))
+             (catch Exception _ {:status 500})))
 
-      (GET (str api "/table-columns") [] (write-str (get-table-columns db)))
+      (GET (str api "/table-columns") [] 
+           (try 
+             (write-str (get-table-columns db))
+             (catch Exception _ {:status 500})))
 
       ;; (GET (str api "/table") [name :as r] (str (seq (query-table db name))))
 
@@ -30,14 +36,11 @@
 
       (OPTIONS (str api "/test") request (preflight request))
       (POST (str api "/test") [subname subprotocol username password :as r]
-        (let [db (:database component)
-              spec {:subname subname 
+        (let [spec {:subname subname 
                     :subprotocol subprotocol 
                     :username username
                     :password password}
               result (test-db spec)]
-          (debug r)
-          (debug result)
           {:status 200 :body (str result)}))
 
       (OPTIONS (str api "/register") request (preflight request))
@@ -47,6 +50,5 @@
                         :subprotocol subprotocol 
                         :username username
                         :password password}]
-          (debug r)
           (register-db db new-spec)
           {:status 200})))))

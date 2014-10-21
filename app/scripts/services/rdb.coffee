@@ -7,19 +7,27 @@ angular.module 'app'
     dbAdapter = host + '/api/v1/db'
 
     {
-      # datasource: {}
-      datasource: {
-          'name' : 'Northwind Postgres Database'
-          'subprotocol' : 'postgresql'
-          'subname' : 'mydb'
-          'username' : 'postgres'
-          'password' : ''
-        }
+      datasource: {}
+      # datasource: {
+      #     'name' : 'Northwind Postgres Database'
+      #     'subprotocol' : 'postgresql'
+      #     'subname' : 'mydb'
+      #     'username' : 'postgres'
+      #     'password' : ''
+      #   }
     
       selectedTables: []
       selectedColumns: {}
       # selectedTables: ["products","employees"]
       # selectedColumns: {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
+
+      checkDatabase: (dbSpec) ->
+        $http.post dbAdapter + '/test', {},
+          params:
+            subname: dbSpec.subname
+            subprotocol: dbSpec.subprotocol
+            username: dbSpec.username
+            password: dbSpec.password
 
       registerDatabase: (dbSpec) ->
         $http.post dbAdapter + '/register', {},

@@ -51,11 +51,12 @@
   "Creates and initializes the system under development in the Var
   #'system."
   []
-  (let [db-opts {:classname "org.postgresql.Driver"
-                 :subprotocol "postgresql" 
-                 :subname "mydb" 
-                 :username "postgres" 
-                 :password ""}
+  (let [db-opts {:classname "" ; org.postgresql.Driver
+                 :subprotocol "" ; postgresql
+                 :subname "" ; mydb
+                 :username "" ; postgres
+                 :password ""
+                 }
         ring-opts {:port 3000
                    :open-browser? false
                    :join true
