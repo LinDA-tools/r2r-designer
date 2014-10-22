@@ -2,7 +2,7 @@
 
 app = angular.module 'app'
 
-app.directive 'wizard', ->
+app.directive 'wizard', (Sidetip) ->
   restrict: 'EA'
   scope: {}
   transclude: true
@@ -10,6 +10,7 @@ app.directive 'wizard', ->
     attribute.template || 'partials/wizard.html'
   controller: ($scope, $document, $timeout) ->
     $scope.steps = []
+    $scope.sidetip = Sidetip.sidetip
 
     @addStep = (step) ->
       $scope.steps.push step
@@ -52,28 +53,31 @@ app.directive 'wizard', ->
 
     return
 
-app.directive 'step', ->
+app.directive 'step', (Sidetip) ->
   restrict: 'E'
   require: '^wizard'
   scope:
     name: '@'
     heading: '@'
-    description: '@'
+    sidetip: '='
+    # description: '@'
   transclude: true
-  templateUrl: (element, attributes) ->
-    attributes.template || 'partials/step.html'
+  templateUrl: 'partials/step.html'
+  controller: ($rootScope) ->
+    $rootScope.sidetip = Sidetip
+    $rootScope.$watch 'sidetip.tmpl', (value) ->
+      alert value if value?
   link: (scope, element, attrs, wizard) ->
     wizard.addStep
       name: scope.name
       heading: scope.heading
-      description: scope.description
+      # description: scope.description
       selected: scope.selected
 
     scope.isSelected = () -> wizard.getStep(scope.name).selected
     scope.isTreated = () -> wizard.getStep(scope.name).treated
     scope.isFirst = () -> wizard.isFirst scope.name
     scope.isLast = () -> wizard.isLast scope.name
-    scope.bar = () -> console.log 'bar'
 
 app.directive 'next', ->
   restrict: 'A'

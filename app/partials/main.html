@@ -10,38 +10,34 @@
   </div>
 
   <wizard>
-    <step name="welcome"
-          heading="Transforming Relational Data to Linked Data"
-          description="">
-    </step>
+    <!-- <step name="welcome" -->
+    <!--   heading="Transforming Relational Data to Linked Data"> -->
+    <!-- </step> -->
 
-    <step name="datasource configuration"
-          heading="Datasource Configuration"
-          description="">
-      <div ng-include src="'partials/config.html'"></div>
-    </step>
+    <!-- <step name="datasource configuration" -->
+    <!--   heading="Datasource Configuration"> -->
+    <!--   <div ng&#45;include src="'partials/config.html'"></div> -->
+    <!-- </step> -->
 
     <step name="database contents"
-          heading="Database Contents"
-          description="">
+      heading="Database Contents">
       <div ng-include src="'partials/dbcontents.html'"></div>
     </step>
 
     <step name="reconciliation"
-          heading="Reconcile Database Structure"
-          description="">
+      heading="Reconcile Database Structure">
       <div ng-include src="'partials/reconcile.html'"></div>
     </step>
 
     <step name="refinement"
-          heading="Refine Output RDF"
-          description="">
+      heading="Refine Output RDF">
     </step>
 
     <step name="publishing"
-          heading="Publish as SPARQL endpoint"
-          description="">
+      heading="Publish as SPARQL endpoint" sidetip="sidetip">
       <div ng-include src="'partials/publish.html'"></div>
     </step>
   </wizard>
+
+  <p align="center" style="font-size: 20px">❦</p>
 </div>

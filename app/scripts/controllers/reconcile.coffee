@@ -9,27 +9,27 @@ angular.module 'app'
     $scope.loading = false
 
     $scope.table = ''
-    $scope.tableTag = ''
+    $scope.tableTag = {}
 
     $scope.columns = []
     $scope.columnTags = {}
 
     $scope.suggestions = {}
 
-    $scope.$watch 'rdb.selectedTables', (val) ->
+    $scope.$watch 'rdb.selectedTables()', (val) ->
       if val?
-        $scope.table = _.first $scope.rdb.selectedTables
+        $scope.table = _.first $scope.rdb.selectedTables()
 
     $scope.$watch 'table', (val) ->
       if val?
-        $scope.columns = $scope.rdb.selectedColumns[val]
+        $scope.columns = $scope.rdb.selectedColumns()[val]
 
-    $scope.ask = () ->
+    $scope.ask = (table, columns) ->
       $scope.loading = true
-      Oracle.ask $scope.table, $scope.tableTag, $scope.columns, $scope.columnTags
+      Oracle.ask table, $scope.tableTag[table], columns, $scope.columnTags
         .then (promise) ->
           $scope.loading = false
-          $scope.suggestions[$scope.table] = promise
+          $scope.suggestions[table] = promise
 
     $scope.getColumnSuggestions = (table, column) ->
       if $scope.suggestions? and $scope.suggestions[table] and $scope.suggestions[table].columns?
