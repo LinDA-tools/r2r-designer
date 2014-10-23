@@ -1,10 +1,9 @@
 'use strict'
 
 angular.module 'app'
-  .controller 'dbContentsCtrl', ($scope, Rdb, Sidetip) ->
+  .controller 'dbContentsCtrl', ($scope, Rdb) ->
 
     $scope.rdb = Rdb
-    $scope.sidetip = Sidetip
 
     # $scope.$watch 'rdb.datasource', (value) ->
     #   if value?

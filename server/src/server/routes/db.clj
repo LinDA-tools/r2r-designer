@@ -25,6 +25,8 @@
 
       ;; (GET (str api "/table") [name :as r] (str (seq (query-table db name))))
 
+      (GET (str api "/column") [table name :as r] (str (seq (query-column db table name))))
+
       ;; (GET (str api "/columns") [table :as r] (str (seq (query-column-names-map db table))))
 
       ;; (GET (str api "/subjects") [table template predicate column :as r] 

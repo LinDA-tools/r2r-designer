@@ -49,7 +49,7 @@
   "Creates and initializes the system under development in the Var
   #'system."
   []
-  (let [db-opts {:driver "org.postgresql.jdbc4.Jdbc4Connection"
+  (let [db-opts {:driver "org.postgresql.ds.PGSimpleDataSource"
                  :host "localhost"
                  :name "mydb"
                  :username "postgres"

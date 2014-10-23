@@ -391,6 +391,14 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: true
       }
+    },
+
+    ngtemplates: {
+      app: {
+        cwd: 'app',
+        src: 'partials/**.html',
+        dest: 'dist/app.templates.js'
+      }
     }
   });
 

@@ -6,7 +6,7 @@
       <li><a ng-href="#">About</a></li>
       <li><a ng-href="#">Contact</a></li>
     </ul>
-    <h3 class="text-muted">{{title}}</h3>
+    <h3 class="text-muted">R2R Mapping Designer</h3>
   </div>
 
   <wizard>
@@ -20,23 +20,25 @@
     <!-- </step> -->
 
     <step name="database contents"
-      heading="Database Contents">
+          heading="Database Contents"
+          sidetip="sidetip">
       <div ng-include src="'partials/dbcontents.html'"></div>
     </step>
 
     <step name="reconciliation"
-      heading="Reconcile Database Structure">
+          heading="Reconcile Database Structure"
+          sidetip="sidetip">
       <div ng-include src="'partials/reconcile.html'"></div>
     </step>
 
-    <step name="refinement"
-      heading="Refine Output RDF">
-    </step>
+    <!-- <step name="refinement" -->
+    <!--   heading="Refine Output RDF"> -->
+    <!-- </step> -->
 
-    <step name="publishing"
-      heading="Publish as SPARQL endpoint" sidetip="sidetip">
-      <div ng-include src="'partials/publish.html'"></div>
-    </step>
+    <!-- <step name="publishing" -->
+    <!--   heading="Publish as SPARQL endpoint"> -->
+    <!--   <div ng&#45;include src="'partials/publish.html'"></div> -->
+    <!-- </step> -->
   </wizard>
 
   <p align="center" style="font-size: 20px">❦</p>

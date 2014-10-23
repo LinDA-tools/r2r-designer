@@ -4,12 +4,20 @@ app = angular.module('app')
 
 app.directive 'columntip', () ->
   restrict: 'A'
-  controller: ($rootScope) ->
-    console.log $rootScope.sidetip.tmpl
-    @set = (val) -> $rootScope.sidetip.tmpl = val
-    return @
+  controller: ($scope, Rdb) ->
+    $scope.rdb = Rdb
+    $scope.getData = () ->
+      d = $scope.rdb.getColumn 'products', 'ProductName'
+      console.log d
   link: (scope, element, attrs, ctrl) ->
     element.bind 'mouseenter', () ->
-      ctrl.set 'foo'
+      tmpl = """
+      <h4>Content of Column</h4>
+      """
+      
+      data = scope.getData()
+      console.log data
+
+      scope.$emit 'changeSidetip', tmpl
     element.bind 'mouseleave', () ->
-      ctrl.set 'bar'
+      scope.$emit 'changeSidetip', ''

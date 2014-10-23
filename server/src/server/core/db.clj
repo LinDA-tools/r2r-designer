@@ -39,9 +39,7 @@
 
 (defn register-db [db new-spec]
   (info "registering new data source")
-  (debug new-spec)
-  (if db 
-    (c/stop db))
+  (if db (c/stop db))
   (reset! (:spec db) new-spec)
   (c/start db))
 
