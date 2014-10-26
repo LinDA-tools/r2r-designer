@@ -19,46 +19,48 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-2">
-      Columns:
-    </div>
-    <div class="col-md-10">
-      <button ng-repeat="column in columns" type="button" class="btn btn-default btn-sm" ng-class="{active: isSelected(column)}" ng-click="insert(column)">{{column}}</button>
+  <div ng-show="table && table != ''">
+    <div class="row">
+      <div class="col-md-2">
+        Columns:
+      </div>
+      <div class="col-md-10">
+        <button ng-repeat="column in columns" type="button" class="btn btn-default btn-sm" ng-class="{active: isSelected(column)}" ng-click="insert(column)">{{column}}</button>
+      </div>
+
+      <div class="col-md-2">
+        Subject URI:
+      </div>
+      <div class="col-md-10">
+        <textarea rows="1" cols="60" content="subjectTemplate" cursor cursorpos="cursorpos" ng-model="subjectTemplate"></textarea>
+      </div>
     </div>
 
-    <div class="col-md-2">
-      Subject URI:
+    <div class="row" ng-repeat="class in rdf.selectedClasses[table]">
+      <div class="col-md-1">
+        <div align="right"><i class="fa fa-arrow-right"></i></div>
+      </div>
+      <div class="col-md-3" align="right">
+        <b><em>a</em></b>
+      </div>
+      <div class="col-md-4">
+        <b>{{class.prefixedName[0]}}</b>
+      </div>
     </div>
-    <div class="col-md-10">
-      <textarea rows="1" cols="60" content="subjectTemplate" cursor cursorpos="cursorpos" ng-model="subjectTemplate"></textarea>
-    </div>
-  </div>
 
-  <div class="row" ng-repeat="class in rdf.selectedClasses[table]">
-    <div class="col-md-1">
-      <div align="right"><i class="fa fa-arrow-right"></i></div>
-    </div>
-    <div class="col-md-3" align="right">
-      <b><em>a</em></b>
-    </div>
-    <div class="col-md-4">
-      <b>{{class.prefixedName[0]}}</b>
-    </div>
-  </div>
-
-  <div class="row" ng-repeat="prop in rdf.selectedProperties[table]">
-    <div class="col-md-1">
-      <div align="right"><i class="fa fa-arrow-right"></i></div>
-    </div>
-    <div class="col-md-3" align="right">
-      <b><em>{{prop.prefixedName[0]}}</em></b>
-    </div>
-    <div class="col-md-4">
-      <select class="form-control" ng-model="propertyLiteralSelection[prop.prefixedName[0]]" ng-options="selection for selection in propertyLiteralTypeSelections" />
-    </div>
-    <div class="col-md-4">
-      <input class="form-control" ng-model="propertyLiteralType[prop.prefixedName[0]]" ng-show="propertyLiteralSelection[prop.prefixedName[0]] == 'Typed Literal'"></input>
+    <div class="row" ng-repeat="prop in rdf.selectedProperties[table]">
+      <div class="col-md-1">
+        <div align="right"><i class="fa fa-arrow-right"></i></div>
+      </div>
+      <div class="col-md-3" align="right">
+        <b><em>{{prop.prefixedName[0]}}</em></b>
+      </div>
+      <div class="col-md-4">
+        <select class="form-control" ng-model="propertyLiteralSelection[prop.prefixedName[0]]" ng-options="selection for selection in propertyLiteralTypeSelections" />
+      </div>
+      <div class="col-md-4">
+        <input class="form-control" ng-model="propertyLiteralType[prop.prefixedName[0]]" ng-show="propertyLiteralSelection[prop.prefixedName[0]] == 'Typed Literal'"></input>
+      </div>
     </div>
   </div>
 
