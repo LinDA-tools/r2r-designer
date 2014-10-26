@@ -82,6 +82,6 @@ angular.module 'app'
           params:
             table: table
             name: column
-          .then (res) ->
-          tableColumns = res.data
+        # .then (res) ->
+        #   tableColumns = res.data
     }

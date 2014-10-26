@@ -12,7 +12,7 @@ app.directive 'columntip', () ->
   link: (scope, element, attrs, ctrl) ->
     element.bind 'mouseenter', () ->
       tmpl = """
-      <h4>Content of Column</h4>
+      
       """
       
       data = scope.getData()

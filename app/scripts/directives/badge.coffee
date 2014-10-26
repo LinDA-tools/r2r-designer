@@ -75,14 +75,15 @@ app.directive 'badge', ($timeout) ->
     <span class="score">score: #{$scope.score}</span>
     """
   link: (scope, element, attrs) ->
-    element.popover
-      trigger: 'hover',
-      html: true
-      content: scope.tmpl
-      placement: 'bottom'
-      container: attrs['id']
-      animation: false
-    .on 'mouseenter', () ->
+    # element.popover
+    #   trigger: 'hover',
+    #   html: true
+    #   content: scope.tmpl
+    #   placement: 'bottom'
+    #   container: attrs['id']
+    #   animation: false
+    
+    # .on 'mouseenter', () ->
       # element.parent().children().on 'mouseleave', () ->
       #   element.popover 'hide'
     # .on 'mouseleave', () ->
