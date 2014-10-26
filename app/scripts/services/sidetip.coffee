@@ -2,5 +2,5 @@
 
 angular.module 'app'
   .factory 'Sidetip', () ->
-    @tmpl = "<h1>foo</h1>"
+    @tmpl = "<h1></h1>"
     return @
