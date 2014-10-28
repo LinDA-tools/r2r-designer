@@ -4,7 +4,6 @@
     <div class="col-md-4">
       <p align="left">
         <select class="form-control" ng-model="table" ng-options="table for table in rdb.selectedTables()">
-          <option>--</option>
         </select>
       </p>
     </div>
@@ -17,7 +16,7 @@
     </div>
   </div>
 
-  <table class="table table-scrollable" ng-show="table != ''">
+  <table class="table table-scrollable" ng-show="table && table != ''">
     <!-- table and columns -->
     <tr>
       <th><div class="btn btn-sm btn-block">Table <a>{{table}}</a></div></th>
