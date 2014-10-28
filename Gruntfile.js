@@ -397,7 +397,12 @@ module.exports = function (grunt) {
       app: {
         cwd: 'app',
         src: 'partials/**.html',
-        dest: 'dist/app.templates.js'
+        dest: '.tmp/scripts/app.templates.js'
+      },
+      dist: {
+        cwd: 'app',
+        src: 'partials/**.html',
+        dest: 'dist/scripts/app.templates.js'
       }
     }
   });
@@ -411,6 +416,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'bowerInstall',
+      'ngtemplates:app',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -435,6 +441,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'bowerInstall',
     'useminPrepare',
+    'ngtemplates:dist',
     'concurrent:dist',
     'autoprefixer',
     'concat',
