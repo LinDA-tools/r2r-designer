@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'app'
-  .controller 'refineCtrl', ($scope, _, Rdb, Rdf) ->
+  .controller 'RefineCtrl', ($scope, _, Rdb, Rdf) ->
 
     $scope.rdb = Rdb
     $scope.rdf = Rdf
@@ -10,12 +10,9 @@ angular.module 'app'
     $scope.columns = []
 
     $scope.selectedColumns = []
-    $scope.subjectTemplate = ''
     $scope.cursorpos = 0
 
-    $scope.propertyLiteralSelection = {}
-    $scope.propertyLiteralType = {}
-    $scope.propertyLiteralTypeSelections = ['Plain Literal', 'Typed Literal', 'Blank Node']
+    $scope.propertyLiteralTypeOptions = ['Plain Literal', 'Typed Literal', 'Blank Node']
 
     $scope.$watch 'rdb.selectedTables()', (val) ->
       if val?
@@ -29,11 +26,11 @@ angular.module 'app'
 
     $scope.insert = (column) ->
       if ($scope.isSelected column)
-        oldVal = $scope.subjectTemplate
-        $scope.subjectTemplate = oldVal.replace '{' + column + '}', ''
+        oldVal = $scope.rdf.subjectTemplate
+        $scope.rdf.subjectTemplate = oldVal.replace '{' + column + '}', ''
         $scope.selectedColumns = _.without $scope.selectedColumns, column
       else
-        oldVal = $scope.subjectTemplate
-        $scope.subjectTemplate = (oldVal.slice 0, $scope.cursorpos) + '{' + column + '}' + (oldVal.slice $scope.cursorpos, oldVal.length)
+        oldVal = $scope.rdf.subjectTemplate
+        $scope.rdf.subjectTemplate = (oldVal.slice 0, $scope.cursorpos) + '{' + column + '}' + (oldVal.slice $scope.cursorpos, oldVal.length)
         $scope.selectedColumns.push column
 

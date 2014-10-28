@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'app'
-  .controller 'reconcileCtrl', ($scope, _, Oracle, Rdb, Rdf) ->
+  .controller 'ReconcileCtrl', ($scope, _, Oracle, Rdb, Rdf) ->
 
     $scope.rdb = Rdb
     $scope.rdf = Rdf
