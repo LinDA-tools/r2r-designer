@@ -1,4 +1,4 @@
-<div ng-controller="refineCtrl">
+<div ng-controller="RefineCtrl">
 
   <div class="row">
     <label for="baseUriInput" class="col-md-2 control-label">Base URI</label>
@@ -32,7 +32,7 @@
         Subject URI:
       </div>
       <div class="col-md-10">
-        <textarea rows="1" cols="60" content="subjectTemplate" cursor cursorpos="cursorpos" ng-model="subjectTemplate"></textarea>
+        <textarea rows="1" cols="60" content="rdf.subjectTemplate" cursor cursorpos="cursorpos" ng-model="rdf.subjectTemplate"></textarea>
       </div>
     </div>
 
@@ -56,10 +56,10 @@
         <b><em>{{prop.prefixedName[0]}}</em></b>
       </div>
       <div class="col-md-4">
-        <select class="form-control" ng-model="propertyLiteralSelection[prop.prefixedName[0]]" ng-options="selection for selection in propertyLiteralTypeSelections" />
+        <select class="form-control" ng-model="rdf.propertyLiteralSelection[prop.prefixedName[0]]" ng-options="selection for selection in propertyLiteralTypeOptions" />
       </div>
       <div class="col-md-4">
-        <input class="form-control" ng-model="propertyLiteralType[prop.prefixedName[0]]" ng-show="propertyLiteralSelection[prop.prefixedName[0]] == 'Typed Literal'"></input>
+        <input class="form-control" ng-model="rdf.propertyLiteralTypes[prop.prefixedName[0]]" ng-show="rdf.propertyLiteralSelection[prop.prefixedName[0]] == 'Typed Literal'"></input>
       </div>
     </div>
   </div>

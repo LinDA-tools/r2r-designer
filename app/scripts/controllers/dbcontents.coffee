@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'app'
-  .controller 'dbContentsCtrl', ($scope, Rdb) ->
+  .controller 'DbContentsCtrl', ($scope, Rdb) ->
 
     $scope.rdb = Rdb
 
