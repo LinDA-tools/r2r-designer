@@ -10,6 +10,11 @@ app = angular.module('app', [
   'underscore'
 ])
 
+###
+all route starting on /step/ will be given an explaining wizard div 
+(at this point green, on the right)
+###
+
 app.config ($routeProvider) ->
 #app.config '$routeProvider', ($routeProvider) ->
   $routeProvider

@@ -61,7 +61,6 @@ angular.module 'app'
 		#fires every time the url changes
 		$scope.$on '$routeChangeSuccess', () ->
 			$scope.adjustStep()
-			console.log("adjusted step");
 
 		$scope.getCurrentURL = () ->
 			#$scope.adjustStep()
