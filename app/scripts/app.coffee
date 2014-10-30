@@ -24,7 +24,7 @@ app.config ($routeProvider) ->
       controller: 'RdbCtrl'
     .when '/step/triples',
       templateUrl: 'partials/triples.html'
-      controller: 'TriplesCtrl'
+      controller: 'RdbCtrl'
     .when '/start',
       templateUrl: 'partials/start.html'
       controller: 'StartCtrl'
