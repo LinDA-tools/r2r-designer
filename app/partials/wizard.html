@@ -1,5 +1,6 @@
 <div class="wizard"> 
   <div class="row">
+
     <div class="col-md-2">
       <div class="navigation">
         <ul class="nav nav-list">
@@ -8,8 +9,17 @@
       </div>
     </div>
 
-    <div class="col-md-10">
+    <div class="col-md-8">
       <div class="steps" ng-transclude />
     </div>
+
+    <div class="col-md-2">
+      <div style="position:fixed;margin-top:3em;margin-left:2em;margin-right:2em">
+        <div ng-bind-html="sidetip.tooltip"></div>
+        <hr />
+        <div ng-bind-html="sidetip.tmpl"></div>
+      </div>
+    </div>
+
   </div>
 </div>

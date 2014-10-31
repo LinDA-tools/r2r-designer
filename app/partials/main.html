@@ -1,4 +1,4 @@
-<div class="main container" ng-controller="MainCtrl">
+<div class="main container" ng-controller="MainCtrl" style="min-height:128em">
 
   <div class="header">
     <ul class="nav nav-pills pull-right">
@@ -11,33 +11,39 @@
 
   <wizard>
     <step name="welcome"
-      heading="Transforming Relational Data to Linked Data">
+      heading="Transforming Relational Data to Linked Data"
+      description="foo"
+      sidetip="sidetip">
     </step>
 
     <step name="datasource configuration"
-      heading="Datasource Configuration">
+      heading="Datasource Configuration"
+      description="bar"
+      sidetip="sidetip">
       <div ng-include src="'partials/config.html'"></div>
     </step>
 
     <step name="database contents"
-          heading="Database Contents"
-          sidetip="sidetip">
+      heading="Database Contents"
+      sidetip="sidetip">
       <div ng-include src="'partials/dbcontents.html'"></div>
     </step>
 
     <step name="reconciliation"
-          heading="Reconcile Database Structure"
-          sidetip="sidetip">
+      heading="Reconcile Database Structure"
+      sidetip="sidetip">
       <div ng-include src="'partials/reconcile.html'"></div>
     </step>
 
     <step name="revising"
-      heading="Revise Output RDF">
+      heading="Revise Output RDF"
+      sidetip="sidetip">
       <div ng-include src="'partials/refine.html'"></div>
     </step>
 
     <step name="publishing"
-      heading="Publish as SPARQL endpoint">
+      heading="Publish as SPARQL endpoint"
+      sidetip="sidetip">
       <div ng-include src="'partials/publish.html'"></div>
     </step>
   </wizard>

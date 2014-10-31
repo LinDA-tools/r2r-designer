@@ -416,7 +416,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'bowerInstall',
-      'ngtemplates:app',
+      // 'ngtemplates:app',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
