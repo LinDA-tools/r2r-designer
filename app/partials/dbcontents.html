@@ -17,7 +17,7 @@
                 class="btn btn-default btn-sm table-btn"
                 ng-class="{disabled: !rdb.isSelectedTable(table), active: rdb.isSelectedColumn(table, column)}"
                 ng-click="rdb.toggleSelectColumn(table, column)"
-                columntip> 
+                columntip table="{{table}}" column="{{column}}"> 
             {{column}}
         </button>
       </td>

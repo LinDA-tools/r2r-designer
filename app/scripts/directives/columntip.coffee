@@ -4,20 +4,22 @@ app = angular.module('app')
 
 app.directive 'columntip', () ->
   restrict: 'A'
+  scope:
+    table: '@'
+    column: '@'
   controller: ($scope, Rdb) ->
     $scope.rdb = Rdb
-    $scope.getData = () ->
-      d = $scope.rdb.getColumn 'products', 'ProductName'
-      console.log d
+    $scope.getData = () -> $scope.rdb.getColumn $scope.table, $scope.column
+
   link: (scope, element, attrs, ctrl) ->
-    element.bind 'mouseover', () ->
-      tmpl = """
-        <h1>foo</h1> 
-      """
+    element.bind 'mouseenter', () ->
       
-      data = scope.getData()
-      console.log data
-      scope.$emit 'changeSidetip', tmpl
+      scope.getData().success (data) ->
+        tmpl = _.foldl (_.take data, 20), ((x, y) -> (x + "<br />").concat(y))
+        console.log _.size data
+        if (_.size data) > 20
+          tmpl += '<br />...'
+        scope.$emit 'changeSidetip', tmpl
 
     element.bind 'mouseleave', () ->
       scope.$emit 'changeSidetip', ''

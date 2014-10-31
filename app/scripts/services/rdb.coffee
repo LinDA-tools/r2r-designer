@@ -79,10 +79,8 @@ angular.module 'app'
                tableColumns = res.data
 
       getColumn: (table, column) ->
-        $http.get dbAdapter + '/column', {},
+        $http.get dbAdapter + '/column',
           params:
             table: table
             name: column
-        # .then (res) ->
-        #   tableColumns = res.data
     }

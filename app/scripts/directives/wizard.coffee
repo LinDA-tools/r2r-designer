@@ -10,10 +10,9 @@ app.directive 'wizard', () ->
   controller: ($scope, $document, $timeout) ->
     $scope.steps = []
     
-    # $scope.$on 'changeSidetip', (event, data) ->
-    #   console.log 'changeSidetip'
-    #   $scope.sidetip.tmpl = data
-    #   $scope.$apply()
+    $scope.$on 'changeSidetip', (event, data) ->
+      $timeout () ->
+        $scope.sidetip.tmpl = data
 
     @addStep = (step) ->
       $scope.steps.push step

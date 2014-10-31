@@ -28,12 +28,10 @@ angular.module 'app'
       $scope.checking = true
       $scope.rdb.checkDatabase $scope.rdb.datasource
         .success (data) ->
-          console.log 'success: ' + data
           $scope.checking = false
           $scope.checked = true
           $scope.success = (data == "true")
         .error (data) ->
-          console.log 'error: ' + data
           $scope.checking = false
           $scope.checked = true
           $scope.success = (data == "false")
