@@ -2,7 +2,7 @@
 
 app = angular.module('app')
 
-app.directive 'badge', ($timeout) ->
+app.directive 'rdfBadge', ($timeout) ->
   restrict: 'A'
   replace: true
   scope:
@@ -15,8 +15,7 @@ app.directive 'badge', ($timeout) ->
     vocabTitle: '@'
     vocabDescr: '@'
     score: '@'
-    tmpl: '@'
-  templateUrl: 'partials/badge.html'
+  templateUrl: 'partials/rdfbadge.html'
   controller: ($scope) ->
     definition =
       if $scope.definition and !(_.isEmpty $scope.definition)
@@ -75,30 +74,8 @@ app.directive 'badge', ($timeout) ->
     <span class="score">score: #{$scope.score}</span>
     """
   link: (scope, element, attrs) ->
-    # element.popover
-    #   trigger: 'hover',
-    #   html: true
-    #   content: scope.tmpl
-    #   placement: 'bottom'
-    #   container: attrs['id']
-    #   animation: false
-    
-    # .on 'mouseenter', () ->
-      # element.parent().children().on 'mouseleave', () ->
-      #   element.popover 'hide'
-    # .on 'mouseleave', () ->
-    #   console.log 'leave'
-    #   element.popover 'hide'
-    #   console.log attrs
-    #   setTimeout () ->
-    #     console.log 'timeout'
-    #     console.log element.parent().children()
-    #     if !($ '.popover:hover').length
-    #       element.popover 'hide'
-    #   , 50
-     
-      # setTimeout () ->
-      #   console.log 'timeout'
-      #   if !($ '.popover:hover').length
-      #     element.popover("hide")
-      # , 50
+    element.bind 'mouseenter', () ->
+      scope.$emit 'changeSidetip', scope.tmpl
+
+    element.bind 'mouseleave', () ->
+      scope.$emit 'changeSidetip', ''

@@ -35,7 +35,7 @@
         <div class="list-group">
           <a href="" class="list-group-item"
              ng-repeat="i in suggestions[table].table.recommend" ng-click="selectClass(table, i)" ng-class="{active: isSelectedClass(table, i)}">
-            <div badge
+            <div rdf-badge
               uri="{{i.uri[0]}}"
               label="{{i.label[0]}}"
               comment="{{i.comment[0]}}"
@@ -55,7 +55,7 @@
         <div class="list-group">
           <a href="" class="list-group-item" 
              ng-repeat="i in getColumnSuggestions(table, column)" ng-click="selectProperty(table, column, i)" ng-class="{active: isSelectedProperty(table, column, i)}">
-            <div badge
+            <div rdf-badge
               uri="{{i.uri[0]}}"
               label="{{i.label[0]}}"
               comment="{{i.comment[0]}}"
