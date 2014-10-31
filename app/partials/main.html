@@ -28,9 +28,10 @@
     <p><em>Subname</em></p>
     <p><em>Username/Password</em> are your access credentials</p>"
       heading="Datasource Configuration">
-      <div ng-include src="'partials/config.html'"></div>
       <p>In this step, you configure the access data and credentials for your database.</p>
       <p>If a SPARQL endpoint is to be set up, your access data credentials will be stored in its configuration and be used throughout its lifetime.</p>
+
+      <div ng-include src="'partials/config.html'"></div>
     </step>
 
     <step name="database contents"
@@ -38,8 +39,8 @@
           description="
           <p>Deselecting a table also deselects all its columns, although they remain visually highlighted in case of a subsequent reactivation.</p>"
           sidetip="sidetip">
-      <div ng-include src="'partials/dbcontents.html'"></div>
       <p>In this step, you select which tables and which columns are to be taken into account in the transformation. Whenever a selected column is a Foreign Key, the referenced table and its Primary Key column(s) should also be selected.</p>
+      <div ng-include src="'partials/dbcontents.html'"></div>
     </step>
 
     <step name="reconciliation"
@@ -47,10 +48,10 @@
           description="<p>These specifications constitute the central part of the transformation. Types and properties should be selected with care, so as to get best possible precision of the transformation.</p><p>The <em>oracle<em> is a web service that gets the table names and column headers in question, matches them against its database of vocabularies, and returns ranked results.</p>
 "
           sidetip="sidetip">
-      <div ng-include src="'partials/reconcile.html'"></div>
       <p>In this step, you specify the translations of table names to types, and of column headers to properties. You first select a table, ask the oracle, and then select from its ranked answers.</p>
       <p>You will have to go through all those tables and columns that were selected for transformation in the previous step (“Database Contents”).</p>
 
+      <div ng-include src="'partials/reconcile.html'"></div>
     </step>
 
     <step name="revising"
@@ -60,17 +61,18 @@
 <li>the URIs should comprise (at least) the content of those column(s) that constitute the Primary Key of the table</li></p><p>Beyond global uniqueness, you should strive for long term stability of the generated URIs, since they may be referred to by others.</p>
 ">
 
-      <div ng-include src="'partials/refine.html'"></div>
       <p>In this step, you specify the URIs that will be generated for each row of every selected table. Typically, they are made up of your web address and the content of the column(s) that constitute the Primary Key, intervened by fixed separators.</p>
+
+      <div ng-include src="'partials/refine.html'"></div>
     </step>
 
     <step name="publishing"
     description="<p>A SPARQL endpoint is a service that processes queries against a RDF triple store. Here, the triple store is hypothetical, the queries are translated to SQL, your database is queried, and the results are translated according to your mapping specification.</p>"
       heading="Publish as SPARQL endpoint">
-      <div ng-include src="'partials/publish.html'"></div>
       <p>In this step, you choose whether you dump the current state of the database to an RDF triple store, or establish a SPARQL endpoint that performs the specified transformations dynamically on request.</p>
       <p>In either case, you will have to provide the respective technical information, such as file paths and the like.</p>
 
+      <div ng-include src="'partials/publish.html'"></div>
     </step>
   </wizard>
 
