@@ -10,14 +10,14 @@ app.directive 'columntip', () ->
       d = $scope.rdb.getColumn 'products', 'ProductName'
       console.log d
   link: (scope, element, attrs, ctrl) ->
-    element.bind 'mouseenter', () ->
+    element.bind 'mouseover', () ->
       tmpl = """
-      
+        <h1>foo</h1> 
       """
       
       data = scope.getData()
       console.log data
-
       scope.$emit 'changeSidetip', tmpl
+
     element.bind 'mouseleave', () ->
       scope.$emit 'changeSidetip', ''

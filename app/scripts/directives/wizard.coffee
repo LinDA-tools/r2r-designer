@@ -9,10 +9,11 @@ app.directive 'wizard', () ->
     attribute.template || 'partials/wizard.html'
   controller: ($scope, $document, $timeout) ->
     $scope.steps = []
-    $scope.sidetip = { tmpl: '' }
-    $scope.$on 'changeSidetip', (event, data) ->
-      $scope.sidetip.tmpl = data
-      $scope.$apply()
+    
+    # $scope.$on 'changeSidetip', (event, data) ->
+    #   console.log 'changeSidetip'
+    #   $scope.sidetip.tmpl = data
+    #   $scope.$apply()
 
     @addStep = (step) ->
       $scope.steps.push step
@@ -31,6 +32,7 @@ app.directive 'wizard', () ->
           $scope.currentStep.treated = true
         step.selected = true
         $scope.currentStep = step
+        $scope.sidetip.tooltip = $scope.currentStep.description
 
     @fnStep = (current, fn) ->
       next = @getStep current
@@ -61,6 +63,7 @@ app.directive 'step', () ->
   scope:
     name: '@'
     heading: '@'
+    description: '@'
     sidetip: '='
   transclude: true
   templateUrl: 'partials/step.html'
@@ -68,6 +71,7 @@ app.directive 'step', () ->
     ctrl.addStep
       name: scope.name
       heading: scope.heading
+      description: scope.description
       selected: scope.selected
 
     scope.isSelected = () -> ctrl.getStep(scope.name).selected
