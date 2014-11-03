@@ -25,6 +25,8 @@
       <p>The transformation of your relational data is essentially limited to what is called "Direct Mapping", i.e., the structure of the database will be preserved in the result. 
         However, the generated URIs will be configurable, and certain metadata can be added.</p>
       <p>Please have your database address and credentials handy, and possibly also the access to the server where the SPARQL endpoint is to be launched.</p>
+
+      <br />
     </step>
 
     <step name="2. datasource config"
@@ -38,6 +40,7 @@
       <p>In this step, you configure the access data and credentials for your database.</p>
       <p>If a SPARQL endpoint is to be set up, your access data credentials will be stored in its configuration and be used throughout its lifetime.</p>
 
+      <br />
       <div ng-include src="'partials/config.html'"></div>
     </step>
 
@@ -50,6 +53,7 @@
       <p>In this step, you select which tables and which columns are to be taken into account in the transformation. 
         Whenever a selected column is a Foreign Key, the referenced table and its Primary Key column(s) should also be selected.</p>
 
+      <br />
       <div ng-include src="'partials/dbcontents.html'"></div>
     </step>
 
@@ -62,6 +66,7 @@
       <p>In this step, you specify the translations of table names to types, and of column headers to properties. You first select a table, ask the oracle, and then select from its ranked answers.</p>
       <p>You will have to go through all those tables and columns that were selected for transformation in the previous step (“Database Contents”).</p>
 
+      <br />
       <div ng-include src="'partials/reconcile.html'"></div>
     </step>
 
@@ -75,6 +80,7 @@
 
       <p>In this step, you specify the URIs that will be generated for each row of every selected table. Typically, they are made up of your web address and the content of the column(s) that constitute the Primary Key, intervened by fixed separators.</p>
 
+      <br />
       <div ng-include src="'partials/refine.html'"></div>
     </step>
 
@@ -86,6 +92,7 @@
       <p>In this step, you choose whether you dump the current state of the database to an RDF triple store, or establish a SPARQL endpoint that performs the specified transformations dynamically on request.</p>
       <p>In either case, you will have to provide the respective technical information, such as file paths and the like.</p>
 
+      <br />
       <div ng-include src="'partials/publish.html'"></div>
     </step>
 
@@ -95,10 +102,11 @@
       sidetip="sidetip">
 
       <p>You are finished with this process!</p>
-      <p>Now you can go back to the LinDA Workbench and proceed to <a href="/visualizations">visualize</a> or to <a href="/analytics">analyze</a> the output RDF dataset.
+      <p>Now you can go back to the LinDA Workbench and proceed to <a href="/visualizations">visualize</a> or to <a href="/analytics">analyze</a> the output RDF dataset.</p>
 
+      <br />
     </step>
   </wizard>
 
-  <p align="center" style="font-size: 20px">❦</p>
+  <p align="center" style="font-size: 20px;margin-top: 10em">❦</p>
 </div>

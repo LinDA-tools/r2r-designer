@@ -1,14 +1,17 @@
 'use strict'
 
 angular.module 'app'
-  .controller 'PublishCtrl', ($scope, _, Rdb, Rdf, Sml) ->
+  .controller 'PublishCtrl', ($scope, $timeout, _, Rdb, Rdf, Sml) ->
 
     $scope.rdb = Rdb
     $scope.rdf = Rdf
     $scope.sml = Sml
 
+    $scope.publishing = false
+    $scope.success = false
+
     $scope.publish = () ->
-      console.log 'publishing'
+      $scope.publishing = true
       mapping =
         tables: $scope.rdb.selectedTables()
         columns: $scope.rdb.selectedColumns()
@@ -19,4 +22,8 @@ angular.module 'app'
         literals: $scope.rdf.propertyLiteralSelection
         literalTypes: $scope.rdf.propertyLiteralTypes
 
-      console.log $scope.sml.toSml mapping
+      $timeout () ->
+        console.log 'publishing'
+        $scope.publishing = false
+        $scope.success = true
+      # console.log $scope.sml.toSml mapping

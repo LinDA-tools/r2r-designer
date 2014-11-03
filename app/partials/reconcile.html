@@ -34,7 +34,7 @@
       <td>
         <div class="list-group">
           <a href="" class="list-group-item"
-             ng-repeat="i in suggestions[table].table.recommend" ng-click="selectClass(table, i)" ng-class="{active: isSelectedClass(table, i)}">
+             ng-repeat="i in rdf.suggestions[table].table.recommend" ng-click="selectClass(table, i)" ng-class="{active: isSelectedClass(table, i)}">
             <div rdf-badge
               uri="{{i.uri[0]}}"
               label="{{i.label[0]}}"

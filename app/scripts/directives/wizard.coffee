@@ -5,8 +5,7 @@ app = angular.module 'app'
 app.directive 'wizard', () ->
   restrict: 'EA'
   transclude: true
-  templateUrl: (element, attribute) ->
-    attribute.template || 'partials/wizard.html'
+  templateUrl: 'partials/wizard.html'
   controller: ($scope, $document, $timeout) ->
     $scope.steps = []
     

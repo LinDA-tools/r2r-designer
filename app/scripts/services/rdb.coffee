@@ -11,10 +11,10 @@ angular.module 'app'
     selectedTables = []
     selectedColumns = {}
     
-    tables = ["products","employees"]
-    tableColumns = {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
-    selectedTables = ["products","employees"]
-    selectedColumns = {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
+    # tables = ["products","employees"]
+    # tableColumns = {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
+    # selectedTables = ["products","employees"]
+    # selectedColumns = {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
 
     {
       # datasource: {}
