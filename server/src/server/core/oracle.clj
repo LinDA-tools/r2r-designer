@@ -43,8 +43,11 @@
 
 (defn get-description [c entity]
   (let [kb (add-namespaces @(:kb c))]
-    (let [result (sparql-query kb (format "select distinct * where { <%s> <http://purl.org/dc/terms/description> ?x. } limit 1" entity))]
-      (map '?/x result))))
+    (let [result1 (sparql-query kb (format "select distinct * where { <%s> <http://purl.org/dc/terms/description> ?x. } limit 1" entity))
+          entity2 (if (and entity (.endsWith entity "#")) (subs entity 0 (dec (count entity)))) 
+          result2 (if entity2 (sparql-query kb (format "select distinct * where { <%s> <http://purl.org/dc/terms/description> ?x. } limit 1" entity2)) [])
+          merged (concat result1 result2)]
+      (map '?/x merged))))
 
 (defn get-definition [c entity]
   (let [kb (add-namespaces @(:kb c))]

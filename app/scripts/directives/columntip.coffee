@@ -16,7 +16,6 @@ app.directive 'columntip', () ->
       
       scope.getData().success (data) ->
         tmpl = _.foldl (_.take data, 20), ((x, y) -> (x + "<br />").concat(y))
-        console.log _.size data
         if (_.size data) > 20
           tmpl += '<br />...'
         scope.$emit 'changeSidetip', tmpl
