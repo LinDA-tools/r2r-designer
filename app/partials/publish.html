@@ -1,13 +1,12 @@
 <div ng-controller="PublishCtrl">
-  <div class="row">
-    <button class="btn btn-default">Download RDF dump</button>
-    <button class="btn btn-default">Download mapping file</button>
-  </div>
-  <div class="row">
-    <button class="btn btn-primary" ng-click="publish()">Publish</button>
-    &nbsp;
-    <i class="fa fa-spinner fa-spin fa-lg" ng-show="publishing"></i>
-    <i class="fa fa-check fa-lg" ng-show="success" style="color: #449d44"></i>
-    <!-- <i class="fa fa&#45;times fa&#45;lg" ng&#45;show="!success &#38;&#38; !publishing" style="color: #c9302c"></i> -->
-  </div>
+  <button class="btn btn-default">Download RDF dump</button>
+  <button class="btn btn-default">Download mapping file</button>
+
+  <br />
+
+  <button class="btn btn-primary" ng-click="publish()">Publish</button>
+  &nbsp;
+  <i class="fa fa-spinner fa-spin fa-lg" ng-show="publishing"></i>
+  <i class="fa fa-check fa-lg" ng-show="success" style="color: #449d44"></i>
+  <!-- <i class="fa fa&#45;times fa&#45;lg" ng&#45;show="!success &#38;&#38; !publishing" style="color: #c9302c"></i> -->
 </div>

@@ -59,7 +59,7 @@
         <select class="form-control" ng-model="rdf.propertyLiteralSelection[prop.prefixedName[0]]" ng-options="selection for selection in propertyLiteralTypeOptions" />
       </div>
       <div class="col-md-4">
-        <input class="form-control" ng-model="rdf.propertyLiteralTypes[prop.prefixedName[0]]" ng-show="rdf.propertyLiteralSelection[prop.prefixedName[0]] == 'Typed Literal'"></input>
+        <select class="form-control" ng-model="rdf.propertyLiteralTypes[prop.prefixedName[0]]" ng-options="type for type in propertyLiteralTypes" ng-show="rdf.propertyLiteralSelection[prop.prefixedName[0]] == 'Typed Literal'"></input>
       </div>
     </div>
   </div>
