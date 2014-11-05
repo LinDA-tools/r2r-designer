@@ -50,7 +50,7 @@ To start the web service for the R2R designer, run:
 
 ## License
 
-Copyright &copy; 2014 Robert Danitz
+Copyright &copy; 2014 Fraunhofer Gesellschaft e.&nbsp;V. 
 
 Distributed under the MIT License.
 
