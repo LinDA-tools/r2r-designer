@@ -1,0 +1,28 @@
+<div ng-controller="CsvConfigCtrl"> 
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <div class="row">
+        <div id="csvFile" class="col-md-12">
+          <input type="file" ng-file-select="onFileSelect($files)" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10">
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{progress.value}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress.value}}%">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div align="right">
+            <!-- <i class="fa fa&#45;spinner fa&#45;spin fa&#45;lg" ng&#45;show="checking"></i> -->
+            <!-- <i class="fa fa&#45;check fa&#45;lg" ng&#45;show="success &#38;&#38; checked &#38;&#38; !checking" style="color: #449d44"></i> -->
+            <!-- <i class="fa fa&#45;times fa&#45;lg" ng&#45;show="!success &#38;&#38; checked &#38;&#38; !checking" style="color: #c9302c"></i> -->
+            <button type="button" class="btn btn-primary" ng-click="submit()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

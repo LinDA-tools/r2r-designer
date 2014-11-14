@@ -19,8 +19,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ng-include="'partials/main.html'">
-    </div>
+    <div ng-view></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <!--  <script> -->
@@ -63,6 +62,8 @@
     <script src="bower_components/jsedn/jsedn.js"></script>
     <script src="bower_components/angular-scroll/angular-scroll.min.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
+    <script src="bower_components/ng-file-upload-shim/angular-file-upload-shim.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -70,9 +71,10 @@
         <script src="scripts/app.js"></script>
         <!-- <script src="scripts/app.templates.js"></script> -->
         <script src="scripts/services/jsedn.js"></script>
-        <script src="scripts/services/rdb.js"></script>
-        <script src="scripts/services/rdf.js"></script>
         <script src="scripts/services/underscore.js"></script>
+        <script src="scripts/services/rdb.js"></script>
+        <script src="scripts/services/csv.js"></script>
+        <script src="scripts/services/rdf.js"></script>
         <script src="scripts/services/oracle.js"></script>
         <script src="scripts/services/sml.js"></script>
         <script src="scripts/directives/wizard.js"></script>
@@ -82,8 +84,11 @@
         <script src="scripts/directives/rdfbadge.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/config.js"></script>
+        <script src="scripts/controllers/csvconfig.js"></script>
         <script src="scripts/controllers/dbcontents.js"></script>
+        <script src="scripts/controllers/csvcontents.js"></script>
         <script src="scripts/controllers/reconcile.js"></script>
+        <script src="scripts/controllers/csvreconcile.js"></script>
         <script src="scripts/controllers/refine.js"></script>
         <script src="scripts/controllers/publish.js"></script>
         <script src="scripts/filters/score.js"></script>

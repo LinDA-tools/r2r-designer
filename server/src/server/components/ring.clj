@@ -30,4 +30,5 @@
               :server (atom nil) 
               :app-fn app-fn
               :db-api "/api/v1/db"
+              :csv-api "/api/v1/csv"
               :oracle-api "/api/v1/oracle"}))

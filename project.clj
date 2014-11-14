@@ -18,7 +18,9 @@
     [edu.ucdenver.ccp/kr-sesame-core "1.4.12"]
     [com.taoensso/timbre "3.2.1"]
     [org.postgresql/postgresql "9.3-1101-jdbc41"]
-    [com.zaxxer/HikariCP-java6 "2.1.0"]]
+    [com.zaxxer/HikariCP-java6 "2.1.0"]
+    [org.clojure/data.csv "0.1.2"] 
+    ]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler server.handler/app}
   :source-paths ["server/src"]
@@ -38,6 +40,6 @@
       ;; :main dev
       }
     }
-  :aot [server.system]
-  :main server.system
+  ;; :aot [server.system]
+  ;; :main server.system
   )
