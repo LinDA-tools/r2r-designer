@@ -26,4 +26,5 @@ angular.module 'app'
         console.log 'publishing'
         $scope.publishing = false
         $scope.success = true
-      # console.log $scope.sml.toSml mapping
+        $scope.mapping = $scope.sml.toSml mapping
+        console.log $scope.mapping

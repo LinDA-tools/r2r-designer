@@ -76,6 +76,24 @@ angular.module 'app'
 
       return _.foldl properties, ((x, y) -> (x + "\n").concat(y))
 
+    namespacePrefixes = (mapping) ->
+      baseUris = [
+        'Prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>'
+        'Prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>'
+        'Prefix xsd: <http://www.w3.org/2001/XMLSchema#>'
+      ]
+
+      suggestions = (_.flatten (_.values mapping.classes).concat (_.map (_.values mapping.properties), _.values))
+
+      suggestedUris = (_.without (_.map suggestions, (i) ->
+        if i['vocabulary.prefix']? and i['vocabulary.uri']?
+          return """Prefix #{_.first i['vocabulary.prefix']}: <#{_.first i['vocabulary.uri']}>"""
+        else
+          return null
+      ), null)
+
+      return (_.foldl (baseUris.concat suggestedUris), ((x, y) -> (x + '\n').concat y))
+
     {
       toSml: (mapping) ->
         table = 'products'
@@ -83,9 +101,7 @@ angular.module 'app'
         lookup = newLookup()
 
         return """
-Prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-Prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-Prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+#{namespacePrefixes mapping}
 Prefix tns: <#{mapping.baseUri}>
 
 Create View #{table} As

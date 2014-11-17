@@ -6,15 +6,15 @@ angular.module 'app'
     host = 'http://localhost:3000'
     dbAdapter = host + '/api/v1/db'
 
-    tables = []
-    tableColumns = {}
-    selectedTables = []
-    selectedColumns = {}
+    # tables = []
+    # tableColumns = {}
+    # selectedTables = []
+    # selectedColumns = {}
     
-    # tables = ["products","employees"]
-    # tableColumns = {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
-    # selectedTables = ["products","employees"]
-    # selectedColumns = {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
+    tables = ["products","employees"]
+    tableColumns = {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
+    selectedTables = ["products","employees"]
+    selectedColumns = {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
 
     {
       # datasource: {}
