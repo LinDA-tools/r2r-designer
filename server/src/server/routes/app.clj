@@ -8,7 +8,8 @@
     [compojure.handler :as handler]
     [compojure.route :as route]
     [server.routes.db :refer [db-routes-fn]]
-    [server.routes.oracle :refer [oracle-routes-fn]]))
+    [server.routes.oracle :refer [oracle-routes-fn]]
+    [server.routes.transform :refer [transform-routes-fn]]))
 
 (timbre/refer-timbre)
 
@@ -47,6 +48,7 @@
 (defn app-fn [component]
   (-> (routes (db-routes-fn component) 
               (oracle-routes-fn component) 
+              (transform-routes-fn component) 
               app-routes)
       wrap-params
       (wrap-json-body {:keywords? true})

@@ -2,7 +2,8 @@
   (:require
     [clojure.java.shell :as sh]
     [clojure.java.io :as io]
-    [taoensso.timbre :as timbre]))
+    [taoensso.timbre :as timbre])
+  (:import java.io.File))
 
 (timbre/refer-timbre)
 
@@ -14,4 +15,7 @@
               "-d" (:name db-spec) 
               "-U" (:username db-spec) 
               (if (seq (:password db-spec)) "-W") (if (:password db-spec) (:password db-spec))]
-        out (:out (apply sh/sh (remove nil? (spy args))))] out) )
+        out (:out (apply sh/sh (remove nil? (spy args))))
+        f (File/createTempFile "dump" ".n3")]
+    (spit f out)
+    f))

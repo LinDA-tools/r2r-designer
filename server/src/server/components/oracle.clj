@@ -2,9 +2,7 @@
   (:require
     [com.stuartsierra.component :as c]
     [taoensso.timbre :as timbre]
-    [server.core.oracle :refer :all]
-    )
-  )
+    [server.core.oracle :refer :all]))
 
 (timbre/refer-timbre)
 
@@ -15,15 +13,12 @@
     (info "starting oracle ...")
     (reset! (:kb component) 
             (new-server (:endpoint component)))
-    component
-    )
+    component) 
 
   (stop [component]
     (info "stopping oracle ...")
     (reset! (:kb component) nil)
-    component
-    )
-  )
+    component))
   
 (defn new-oracle [endpoint]
   (map->Oracle {:endpoint endpoint
