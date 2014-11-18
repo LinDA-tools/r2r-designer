@@ -13,7 +13,7 @@ angular.module 'app'
     # suggestions: {}
 
     baseUri: 'http://mycompany.com/datasets/'
-    subjectTemplate: 'products/{ProductId}/{ProductName}'
+    subjectTemplate: 'products/{ProductID}/{ProductName}'
     propertyLiteralSelection: {
       'schema:productID': 'Typed Literal'
       'dicom:ProductName': 'Typed Literal'

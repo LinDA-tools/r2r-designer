@@ -15,7 +15,7 @@
               "-d" (:name db-spec) 
               "-U" (:username db-spec) 
               (if (seq (:password db-spec)) "-W") (if (:password db-spec) (:password db-spec))]
-        out (:out (apply sh/sh (remove nil? (spy args))))
+        out (:out (apply sh/sh (remove nil? args)))
         f (File/createTempFile "dump" ".n3")]
     (spit f out)
     f))

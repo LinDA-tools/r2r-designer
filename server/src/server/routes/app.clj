@@ -4,6 +4,7 @@
     [ring.middleware.cors :refer :all]
     [ring.middleware.params :refer :all]
     [ring.middleware.json :refer :all]
+    [ring.middleware.file-info :refer :all]
     [compojure.core :refer :all]
     [compojure.handler :as handler]
     [compojure.route :as route]
@@ -58,5 +59,6 @@
       allow-content-type
       allow-origin
       wrap-dir-index
+      wrap-file-info
       monitor
       ))

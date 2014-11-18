@@ -50,12 +50,12 @@ angular.module 'app'
             i
           else
             "'" + i + "'"
-        template = 'concat(' + template + ')'
+        template = """concat('#{mapping.baseUri}', #{template})"""
 
         if _.isEmpty mapping.baseUri
           return '?s = bNode(' + template + ')' # TODO!
         else
-          return '?s = uri(tns, ' + template + ')' # TODO!
+          return '?s = uri(' + template + ')' # TODO!
 
     propertyLiterals = (mapping, table, lookup) ->
       literals = mapping.literals

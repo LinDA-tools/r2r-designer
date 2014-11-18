@@ -31,4 +31,5 @@
               :app-fn app-fn
               :db-api "/api/v1/db"
               :oracle-api "/api/v1/oracle"
-              :transform-api "/api/v1/transform"}))
+              :transform-api "/api/v1/transform"
+              :file-store (atom {})}))
