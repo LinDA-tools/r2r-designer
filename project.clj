@@ -38,6 +38,6 @@
       ;; :main dev
       }
     }
-  :aot [server.system]
-  :main server.system
+  ;; :aot [server.system]
+  ;; :main server.system
   )

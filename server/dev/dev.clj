@@ -3,6 +3,7 @@
    not be included in a production build of the application."
   (:require
     [clojure.java.io :as io]
+    [clojure.java.shell :as sh]
     [clojure.java.javadoc :refer (javadoc)]
     [clojure.java.jdbc :as jdbc]
     [clojure.pprint :refer (pprint)]
@@ -30,6 +31,7 @@
     [server.components.ring :refer :all]
     [server.core.db :refer :all]
     [server.core.oracle :refer :all]
+    [server.core.sparqlify :refer :all]
     [server.routes.app :refer [app-fn]]
     [server.system :refer [new-system]]))
 
