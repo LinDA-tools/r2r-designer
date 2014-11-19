@@ -8,7 +8,7 @@
     return {
       restrict: 'EA',
       transclude: true,
-      templateUrl: 'partials/wizard.html',
+      templateUrl: '/static/r2r/partials/wizard.html',
       controller: function($scope, $document, $timeout) {
         $scope.steps = [];
         $scope.$on('changeSidetip', function(event, data) {
@@ -98,7 +98,7 @@
         sidetip: '='
       },
       transclude: true,
-      templateUrl: 'partials/step.html',
+      templateUrl: '/static/r2r/partials/step.html',
       link: function(scope, element, attrs, ctrl) {
         ctrl.addStep({
           name: scope.name,
