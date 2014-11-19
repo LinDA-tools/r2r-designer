@@ -2,4 +2,4 @@
 
 angular.module 'app'
   .factory 'Config', () ->
-    backend: 'http://localhost:3000'
+    backend: 'http://107.170.70.175:3000'
