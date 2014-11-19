@@ -118,7 +118,7 @@ angular.module('dist').run(['$templateCache', function($templateCache) {
     "      <p>If a SPARQL endpoint is to be set up, your access data credentials will be stored in its configuration and be used throughout its lifetime.</p>\n" +
     "\n" +
     "      <br />\n" +
-    "      <div ng-include src=\"'partials/config.html'\"></div>\n" +
+    "      <div ng-include src=\"'/static/r2r/partials/config.html'\"></div>\n" +
     "    </step>\n" +
     "\n" +
     "    <step name=\"3. database contents\"\n" +
@@ -131,7 +131,7 @@ angular.module('dist').run(['$templateCache', function($templateCache) {
     "        Whenever a selected column is a Foreign Key, the referenced table and its Primary Key column(s) should also be selected.</p>\n" +
     "\n" +
     "      <br />\n" +
-    "      <div ng-include src=\"'partials/dbcontents.html'\"></div>\n" +
+    "      <div ng-include src=\"'/static/r2r/partials/dbcontents.html'\"></div>\n" +
     "    </step>\n" +
     "\n" +
     "    <step name=\"4. transforming\"\n" +
@@ -144,7 +144,7 @@ angular.module('dist').run(['$templateCache', function($templateCache) {
     "      <p>You will have to go through all those tables and columns that were selected for transformation in the previous step (“Database Contents”).</p>\n" +
     "\n" +
     "      <br />\n" +
-    "      <div ng-include src=\"'partials/reconcile.html'\"></div>\n" +
+    "      <div ng-include src=\"'/static/r2r/partials/reconcile.html'\"></div>\n" +
     "    </step>\n" +
     "\n" +
     "    <step name=\"5. revising\"\n" +
@@ -158,7 +158,7 @@ angular.module('dist').run(['$templateCache', function($templateCache) {
     "      <p>In this step, you specify the URIs that will be generated for each row of every selected table. Typically, they are made up of your web address and the content of the column(s) that constitute the Primary Key, intervened by fixed separators.</p>\n" +
     "\n" +
     "      <br />\n" +
-    "      <div ng-include src=\"'partials/refine.html'\"></div>\n" +
+    "      <div ng-include src=\"'/static/r2r/partials/refine.html'\"></div>\n" +
     "    </step>\n" +
     "\n" +
     "    <step name=\"6. publishing\"\n" +
@@ -170,7 +170,7 @@ angular.module('dist').run(['$templateCache', function($templateCache) {
     "      <p>In either case, you will have to provide the respective technical information, such as file paths and the like.</p>\n" +
     "\n" +
     "      <br />\n" +
-    "      <div ng-include src=\"'partials/publish.html'\"></div>\n" +
+    "      <div ng-include src=\"'/static/r2r/partials/publish.html'\"></div>\n" +
     "    </step>\n" +
     "\n" +
     "    <step name=\"7. finished\"\n" +

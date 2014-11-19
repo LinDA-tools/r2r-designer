@@ -5,7 +5,7 @@ app = angular.module 'app'
 app.directive 'wizard', () ->
   restrict: 'EA'
   transclude: true
-  templateUrl: 'partials/wizard.html'
+  templateUrl: '/static/r2r/partials/wizard.html'
   controller: ($scope, $document, $timeout) ->
     $scope.steps = []
     
@@ -64,7 +64,7 @@ app.directive 'step', () ->
     description: '@'
     sidetip: '='
   transclude: true
-  templateUrl: 'partials/step.html'
+  templateUrl: '/static/r2r/partials/step.html'
   link: (scope, element, attrs, ctrl) ->
     ctrl.addStep
       name: scope.name
