@@ -23,8 +23,8 @@ angular.module 'app'
         literalTypes: $scope.rdf.propertyLiteralTypes
 
       w = $window.open ''
-      $scope.mapping = $scope.sml.toSml mapping
-      $scope.transform.getDumpUrl $scope.mapping
+      $scope.currentMapping = $scope.sml.toSml currentMapping
+      $scope.transform.getDumpUrl $scope.currentMapping
         .then (url) ->
           w.location = url
 
@@ -38,11 +38,11 @@ angular.module 'app'
         properties: $scope.rdf.selectedProperties
         literals: $scope.rdf.propertyLiteralSelection
         literalTypes: $scope.rdf.propertyLiteralTypes
-
-      $scope.mapping = $scope.sml.toSml mapping
+      
+      $scope.currentMapping = $scope.sml.toSml currentMapping
       w = $window.open ''
       w.document.open()
-      w.document.write '<pre>' + $scope.mapping + '</pre>'
+      w.document.write '<pre>' + $scope.currentMapping + '</pre>'
       w.document.close()
 
     $scope.publish = () ->
@@ -59,5 +59,5 @@ angular.module 'app'
 
       $scope.publishing = false
       $scope.success = true
-      $scope.mapping = $scope.sml.toSml mapping
-      # $scope.transform.publish $scope.mapping
+      $scope.currentMapping = $scope.sml.toSml currentMapping
+      # $scope.transform.publish $scope.currentMapping
