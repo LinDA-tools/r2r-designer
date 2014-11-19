@@ -3,7 +3,6 @@
 angular.module 'app'
   .factory 'Rdf', ->
 
-
     baseUri: ''
     subjectTemplate: ''
     propertyLiteralSelection: {}

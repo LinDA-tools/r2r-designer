@@ -1,10 +1,9 @@
 'use strict'
 
 angular.module 'app'
-  .factory 'Rdb', ($http, _) ->
+  .factory 'Rdb', ($http, _, Config) ->
 
-    host = 'http://localhost:3000'
-    dbAdapter = host + '/api/v1/db'
+    dbAdapter = Config.backend + '/api/v1/db'
 
     tables = []
     tableColumns = {}

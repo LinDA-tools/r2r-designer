@@ -1,10 +1,9 @@
 'use strict'
 
 angular.module 'app'
-  .factory 'Oracle', ($http, _) ->
+  .factory 'Oracle', ($http, _, Config) ->
 
-    host = 'http://localhost:3000'
-    oracleApi = host + '/api/v1/oracle'
+    oracleApi = Config.backend + '/api/v1/oracle'
 
     zipColumnTags = (columns, tags) ->
       _.map columns, (i) -> { name: i, tag: tags[i] or i }
