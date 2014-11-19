@@ -64,7 +64,7 @@ angular.module 'app'
       columns = _.keys mapping.properties[table]
       columns = _.filter columns, (i) ->
         property = mapping.properties[table][i].prefixedName[0]
-        return (literals[property] and types[property])
+        return (literals[property] or ((litearls[property] == 'Typed Literal') and types[property]))
       
       properties = _.map columns, (i) ->
         property = mapping.properties[table][i].prefixedName[0]
@@ -73,8 +73,11 @@ angular.module 'app'
           when 'Plain Literal' then lookup[property] = getVar(i, lookup) + ' = plainLiteral(?' + i + ')'
           when 'Typed Literal' then lookup[property] = getVar(i, lookup) + ' = typedLiteral(?' + i + ', ' + types[property] + ')'
           else ''
-
-      return _.foldl properties, ((x, y) -> (x + "\n").concat(y))
+      
+      if _.isEmpty properties
+        return ''
+      else
+        return _.foldl properties, ((x, y) -> (x + '\n').concat(y))
 
     namespacePrefixes = (mapping) ->
       baseUris = [

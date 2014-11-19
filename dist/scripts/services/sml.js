@@ -102,7 +102,7 @@
       columns = _.filter(columns, function(i) {
         var property;
         property = mapping.properties[table][i].prefixedName[0];
-        return literals[property] && types[property];
+        return literals[property] || ((litearls[property] === 'Typed Literal') && types[property]);
       });
       properties = _.map(columns, function(i) {
         var property;
@@ -118,9 +118,13 @@
             return '';
         }
       });
-      return _.foldl(properties, (function(x, y) {
-        return (x + "\n").concat(y);
-      }));
+      if (_.isEmpty(properties)) {
+        return '';
+      } else {
+        return _.foldl(properties, (function(x, y) {
+          return (x + '\n').concat(y);
+        }));
+      }
     };
     namespacePrefixes = function(mapping) {
       var baseUris, suggestedUris, suggestions;

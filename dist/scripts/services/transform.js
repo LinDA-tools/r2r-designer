@@ -1,9 +1,8 @@
 (function() {
   'use strict';
-  angular.module('app').factory('Transform', function($http, _) {
-    var host, transformApi;
-    host = 'http://localhost:3000';
-    transformApi = host + '/api/v1/transform';
+  angular.module('app').factory('Transform', function($http, _, Config) {
+    var transformApi;
+    transformApi = Config.backend + '/api/v1/transform';
     return {
       getDumpUrl: function(mapping) {
         if (mapping != null) {

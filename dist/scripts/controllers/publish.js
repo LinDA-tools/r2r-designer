@@ -20,8 +20,8 @@
         literalTypes: $scope.rdf.propertyLiteralTypes
       };
       w = $window.open('');
-      $scope.mapping = $scope.sml.toSml(mapping);
-      return $scope.transform.getDumpUrl($scope.mapping).then(function(url) {
+      $scope.currentMapping = $scope.sml.toSml(currentMapping);
+      return $scope.transform.getDumpUrl($scope.currentMapping).then(function(url) {
         return w.location = url;
       });
     };
@@ -37,10 +37,10 @@
         literals: $scope.rdf.propertyLiteralSelection,
         literalTypes: $scope.rdf.propertyLiteralTypes
       };
-      $scope.mapping = $scope.sml.toSml(mapping);
+      $scope.currentMapping = $scope.sml.toSml(currentMapping);
       w = $window.open('');
       w.document.open();
-      w.document.write('<pre>' + $scope.mapping + '</pre>');
+      w.document.write('<pre>' + $scope.currentMapping + '</pre>');
       return w.document.close();
     };
     return $scope.publish = function() {
@@ -58,7 +58,7 @@
       };
       $scope.publishing = false;
       $scope.success = true;
-      return $scope.mapping = $scope.sml.toSml(mapping);
+      return $scope.currentMapping = $scope.sml.toSml(currentMapping);
     };
   });
 
