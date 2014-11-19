@@ -1,10 +1,9 @@
 'use strict'
 
 angular.module 'app'
-  .factory 'Transform', ($http, _) ->
+  .factory 'Transform', ($http, _, Config) ->
 
-    host = 'http://localhost:3000'
-    transformApi = host + '/api/v1/transform'
+    transformApi = Config.backend + '/api/v1/transform'
 
     {
       getDumpUrl: (mapping) ->
