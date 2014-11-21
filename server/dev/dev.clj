@@ -26,7 +26,7 @@
     [edu.ucdenver.ccp.kr.rdf :as rdf]
     [edu.ucdenver.ccp.kr.sparql :as sparql]
     [edu.ucdenver.ccp.kr.sesame.kb :as sesame]
-    [server.components.db :refer :all]
+    [server.components.datasource :refer :all]
     [server.components.oracle :refer :all]
     [server.components.sparqlify :refer :all]
     [server.components.ring :refer :all]

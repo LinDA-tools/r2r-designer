@@ -17,13 +17,14 @@
     [clj-http "0.9.2"]
     [edu.ucdenver.ccp/kr-sesame-core "1.4.12"]
     [com.taoensso/timbre "3.2.1"]
-    [org.postgresql/postgresql "9.3-1102-jdbc41"]
-    [com.zaxxer/HikariCP-java6 "2.2.5"]]
+    [org.postgresql/postgresql "9.3-1101-jdbc41"]
+    [com.zaxxer/HikariCP-java6 "2.1.0"]]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler server.handler/app}
   :source-paths ["server/src"]
   :test-paths ["server/test"]
-  :resource-paths ["server/resource" "server/lib/*"]
+  ;; :resource-paths ["server/resource" "server/lib/*"]
+  :resource-paths ["server/resource"]
   :profiles {
     :dev {
       :dependencies [
