@@ -24,7 +24,7 @@ angular.module 'app'
 
       w = $window.open ''
       $scope.currentMapping = $scope.sml.toSml mapping
-      $scope.transform.getDumpUrl $scope.currentMapping
+      $scope.transform.dump $scope.currentMapping
         .then (url) ->
           w.location = url
 

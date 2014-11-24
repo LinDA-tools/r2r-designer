@@ -6,7 +6,7 @@
 
 (timbre/refer-timbre)
 
-(defrecord Sparqlify []
+(defrecord Sparqlify [port]
   c/Lifecycle
 
   (start [component]
@@ -17,5 +17,5 @@
     (info "stopping sparqlify ...")
     component))
   
-(defn new-sparqlify []
-  (map->Sparqlify {}))
+(defn new-sparqlify [port]
+  (map->Sparqlify {:port port}))

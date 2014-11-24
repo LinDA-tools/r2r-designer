@@ -1,10 +1,9 @@
 (defproject r2r-designer.server "0.1.0-SNAPSHOT"
   :description "server component for the r2r-designer"
   :url "http://linda-project.eu"
-  :license {
-    :name "MIT"
-    :url "http://opensource.org/licenses/MIT"
-    }
+  :license { :name "MIT"
+             :url "http://opensource.org/licenses/MIT" }
+  :repositorties [["aksw-internal" "http://maven.aksw.org/repository/internal/"]]
   :dependencies [
     [org.clojure/clojure "1.6.0"]
     [org.clojure/java.jdbc "0.3.3"]
@@ -17,13 +16,13 @@
     [clj-http "0.9.2"]
     [edu.ucdenver.ccp/kr-sesame-core "1.4.12"]
     [com.taoensso/timbre "3.2.1"]
-    [org.postgresql/postgresql "9.3-1101-jdbc41"]
-    [com.zaxxer/HikariCP-java6 "2.1.0"]]
+    [org.postgresql/postgresql "9.3-1102-jdbc41"]
+    [com.zaxxer/HikariCP-java6 "2.2.5"]
+    [org.aksw.sparqlify/sparqlify-core "0.6.12" :exclusions [[postgresql/postgresql]]]]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler server.handler/app}
   :source-paths ["server/src"]
   :test-paths ["server/test"]
-  ;; :resource-paths ["server/resource" "server/lib/*"]
   :resource-paths ["server/resource"]
   :profiles {
     :dev {

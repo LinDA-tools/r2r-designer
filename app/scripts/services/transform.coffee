@@ -7,20 +7,13 @@ angular.module 'app'
     transformApi = host + '/api/v1/transform'
 
     {
-      getDumpUrl: (mapping) ->
+      dump: (mapping) ->
         if mapping?
-          $http.post transformApi, {
+          $http.post transformApi + '/dump', {
             mapping: mapping
           }
             .then (res) ->
-              transformApi + res.data
-
-      getMappingUrl: (mapping) ->
-        if mapping?
-          $http.post transformApi + '/mapping', {
-            mapping: mapping
-          }
-            .then (res) ->
+              console.log res
               transformApi + res.data
 
       publish: (mapping) ->

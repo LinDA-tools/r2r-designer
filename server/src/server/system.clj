@@ -8,12 +8,12 @@
     [server.components.logging :refer :all]
     [server.routes.app :refer [app-fn]]))
 
-(defn new-system [db-opts app-fn ring-opts oracle-sparql-endpoint log-config] 
+(defn new-system [db-opts app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-port] 
   (c/system-map
     :log (c/using (new-logger log-config) [])
     :datasource (c/using (new-datasource db-opts) [:log])
     :oracle (c/using (new-oracle oracle-sparql-endpoint) [:datasource :log])
-    :sparqlify (c/using (new-sparqlify) [:datasource :log])
+    :sparqlify (c/using (new-sparqlify sparqlify-port) [:datasource :log])
     :ring (c/using (new-ring app-fn ring-opts) [:datasource :oracle :sparqlify :log])))
 
 ;; configuration options

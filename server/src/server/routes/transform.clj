@@ -18,39 +18,32 @@
 (defn transform-routes-fn [c]
   (let [api (:transform-api c)]
     (defroutes transform-routes
-      (OPTIONS api request (preflight request))
-      (POST api request
+
+      (OPTIONS (str api "/dump") request (preflight request))
+      (POST (str api "/dump") request
+        (let [sparqlify (:sparqlify c)
+              file-store (:file-store c) 
+              mapping (spy (:mapping (:body request)))
+              f (spy (mapping-to-file mapping))
+              dump-file (spy (sparqlify-dump sparqlify (str f)))
+              -hash (spy (hash dump-file))]
+          (swap! file-store (fn [x] (assoc x -hash dump-file))) 
+          {:status 200 :body (str (:transformApi c) "/file/" -hash ".n3")}))
+
+      (OPTIONS (str api "/publish") request (preflight request))
+      (POST (str api "/publish") request
         (let [sparqlify (:sparqlify c)
               file-store (:file-store c) 
               mapping (:mapping (:body request))
-              mapping-file (if mapping (File/createTempFile "mapping" ".sml"))]
-          (when mapping-file 
-            (spit mapping-file mapping)
-            (let [dump-file (sparqlify-dump sparqlify (str mapping-file))]
-              (if dump-file
-                (let [id (hash (str dump-file))]
-                  (swap! file-store (fn [x] (assoc x (hash (str dump-file)) dump-file))) 
-                  {:status 200 :body (str (:transformApi c) "/file/" id)}) 
-                {:status 400 :body "mapping file is missing"})))))
+              f (mapping-to-file mapping)
+              endpoint (start-sparql-endpoint! sparqlify f)]
+          {:status 200 :body endpoint}))
 
-      ;; (OPTIONS (str api "/mapping") request (preflight request))
-      ;; (POST (str api "/mapping") request
-      ;;   (let [file-store (:file-store c) 
-      ;;         mapping (:mapping (:body request))
-      ;;         mapping-file (if mapping (File/createTempFile "mapping" ".sml"))]
-      ;;     (when mapping-file 
-      ;;       (spit mapping-file mapping)
-      ;;       (let [id (hash (str mapping-file))]
-      ;;         (swap! file-store (fn [x] (assoc x (hash (str mapping-file)) mapping-file))) 
-      ;;         {:status 200 :body (str (:transformApi c) "/file/" id)}))))
-
-      ;; TODO: possible access to arbitrary files on the system through known filename
+      ;; TODO: possible access to arbitrary files on the system through known filenames?
       (GET (str api "/file/:id") [id]
-        (let [sparqlify (:sparqlify c)
-              file-store (:file-store c)]
-          (let [f (get @file-store (Integer. id))]
-            (println id)
-            (println file-store)
-            (println f)
-            (if f (file-response (str f))))))
+        (let [-hash (second (re-find #"(.*)\.n3" id))
+              sparqlify (:sparqlify c)
+              file-store (:file-store c)
+              f (get @file-store (Integer. -hash))]
+          (if f (file-response (str f)))))
       )))

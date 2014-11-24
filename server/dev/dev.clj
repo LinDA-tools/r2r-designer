@@ -61,8 +61,9 @@
                    :open-browser? false
                    :join true
                    :auto-reload? true}
-        oracle-sparql-endpoint "http://lov.okfn.org/endpoint/lov_aggregator"]
-    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql-endpoint log-config)))))
+        oracle-sparql-endpoint "http://lov.okfn.org/endpoint/lov_aggregator"
+        sparqlify-port 7531]
+    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-port)))))
 
 (defn start
   "Starts the system running, updates the Var #'system."

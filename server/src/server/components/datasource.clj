@@ -24,4 +24,4 @@
 (defn new-datasource [opts]
   (map->Datasource {:spec (atom (select-keys opts [:driver :host :name :username :password]))
                     :pool (atom nil)
-                    :max-pool 100}))
+                    :max-pool 10}))
