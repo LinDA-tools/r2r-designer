@@ -14,7 +14,7 @@
     [ring-cors "0.1.4"]
     [ring/ring-json "0.3.1"]
     [clj-http "0.9.2"]
-    [edu.ucdenver.ccp/kr-sesame-core "1.4.12"]
+    [edu.ucdenver.ccp/kr-sesame-core "1.4.17"]
     [com.taoensso/timbre "3.2.1"]
     [org.postgresql/postgresql "9.3-1102-jdbc41"]
     [com.zaxxer/HikariCP-java6 "2.2.5"]

@@ -30,13 +30,14 @@
           (swap! file-store (fn [x] (assoc x -hash dump-file))) 
           {:status 200 :body (str (:transformApi c) "/file/" -hash ".n3")}))
 
-      (OPTIONS (str api "/publish") request (preflight request))
-      (POST (str api "/publish") request
+      (OPTIONS (str api "/publish/:to") request (preflight request))
+      (POST (str api "/publish/:to") [to :as r]
         (let [sparqlify (:sparqlify c)
               file-store (:file-store c) 
-              mapping (:mapping (:body request))
+              mapping (:mapping (:body r))
               f (mapping-to-file mapping)
-              endpoint (start-sparql-endpoint! sparqlify f)]
+              endpoint (start-sparql-endpoint! sparqlify (str f))]
+          (info to)
           {:status 200 :body endpoint}))
 
       ;; TODO: possible access to arbitrary files on the system through known filenames?

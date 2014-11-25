@@ -9,6 +9,7 @@ angular.module 'app'
     $scope.transform = Transform
 
     $scope.publishing = false
+    $scope.published = false
     $scope.success = false
 
     $scope.dump = () ->
@@ -45,7 +46,7 @@ angular.module 'app'
       w.document.write '<pre>' + $scope.currentMapping + '</pre>'
       w.document.close()
 
-    $scope.publish = () ->
+    $scope.publish = (to) ->
       $scope.publishing = true
       mapping =
         tables: $scope.rdb.selectedTables()
@@ -57,7 +58,16 @@ angular.module 'app'
         literals: $scope.rdf.propertyLiteralSelection
         literalTypes: $scope.rdf.propertyLiteralTypes
 
-      $scope.publishing = false
-      $scope.success = true
       $scope.currentMapping = $scope.sml.toSml mapping
-      # $scope.transform.publish $scope.currentMapping
+
+      $scope.transform.publish to, $scope.currentMapping
+        .success (data) ->
+          console.log 'success'
+          $scope.publishing = false
+          $scope.published = true
+          $scope.success = true
+        .error (data) ->
+          console.log 'error'
+          $scope.publishing = false
+          $scope.published = true
+          $scope.success = false

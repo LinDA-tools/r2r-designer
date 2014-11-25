@@ -1,5 +1,6 @@
 (ns server.core.sparqlify
   (:require
+    [com.stuartsierra.component :as c]
     [clojure.java.shell :as sh]
     [clojure.java.io :as io]
     [taoensso.timbre :as timbre])
@@ -17,8 +18,7 @@
     org.aksw.sparqlify.web.SparqlifyCliHelper
     org.apache.commons.cli.GnuParser
     org.apache.commons.cli.Options
-    org.apache.jena.riot.out.NTriplesWriter
-    ))
+    org.apache.jena.riot.out.NTriplesWriter))
 
 (timbre/refer-timbre)
 
@@ -44,23 +44,18 @@
 (defn config-sparqlify [c mapping-file]
   ;; (init-sparqlify!)
   (let [pool @(:pool (:datasource c))
-        config (mapping-to-config mapping-file)
-        ;; ers (SparqlifyUtils/createExprRewriteSystem)
-        ;; typeSystem (.getTypeSystem ers)
-        ;; typeAliases (MapReader/readFromResource "/type-map.h2.tsv")
-        ]
-    ;; (with-open [conn (.getConnection pool)]
-    ;;   (let [schemaProvider (SchemaProviderImpl. conn typeSystem typeAliases)
-    ;;         syntaxBridge (SyntaxBridge. schemaProvider)
-    ;;         mappingOps (SparqlifyUtils/createDefaultMappingOps ers)
-    ;;         opMappingRewriter (OpMappingRewriterImpl. mappingOps)
-    ;;         candidateViewSelector (CandidateViewSelectorImpl. mappingOps (ViewDefinitionNormalizerImpl.))]))
+        config (mapping-to-config mapping-file)]
     (SparqlifyUtils/createDefaultSparqlifyEngine pool config nil nil)))
 
-(defn start-sparql-endpoint! [c mapping-file]
-  (let [port (:port c)
-        qef (config-sparqlify c mapping-file)]
-    (org.aksw.sparqlify.web.Main/createSparqlEndpoint qef port)))
+(defn start-sparql-endpoint! [sparqlify mapping-file]
+  (let [port (:port sparqlify)
+        qef (config-sparqlify sparqlify mapping-file)
+        server (org.aksw.sparqlify.web.Main/createSparqlEndpoint qef port)]
+    (info "publishing new SPARQL endpoint")
+    (if sparqlify (c/stop sparqlify))
+    (reset! (:server sparqlify) server)
+    (c/start sparqlify)
+    (str (:host sparqlify) ":" (:port sparqlify) "/sparql")))
 
 (defn sparqlify-dump [c mapping-file]
   (let [qef (config-sparqlify c mapping-file)

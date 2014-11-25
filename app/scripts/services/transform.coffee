@@ -16,11 +16,8 @@ angular.module 'app'
               console.log res
               transformApi + res.data
 
-      publish: (mapping) ->
-        if mapping?
-          $http.post transformApi, {
-            mapping: mapping
-          }
-            .then (res) ->
-              res.data
+      publish: (to, mapping) ->
+        if to? and mapping?
+          api = transformApi + '/publish/' + to
+          $http.post api, { mapping: mapping }
     }

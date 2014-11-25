@@ -8,12 +8,12 @@
     [server.components.logging :refer :all]
     [server.routes.app :refer [app-fn]]))
 
-(defn new-system [db-opts app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-port] 
+(defn new-system [db-opts app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-opts] 
   (c/system-map
     :log (c/using (new-logger log-config) [])
     :datasource (c/using (new-datasource db-opts) [:log])
     :oracle (c/using (new-oracle oracle-sparql-endpoint) [:datasource :log])
-    :sparqlify (c/using (new-sparqlify sparqlify-port) [:datasource :log])
+    :sparqlify (c/using (new-sparqlify sparqlify-opts) [:datasource :log])
     :ring (c/using (new-ring app-fn ring-opts) [:datasource :oracle :sparqlify :log])))
 
 ;; configuration options
@@ -34,6 +34,9 @@
 
 (def oracle-sparql-endpoint "http://dbpedia.org/sparql")
 
+(def sparqlify-opts {:host "http://localhost"
+                     :port 7531}) 
+
 ;; configure new system and start it
 (defn -main []
   (let [system (new-system 
@@ -41,5 +44,6 @@
                   #'app-fn 
                   ring-opts 
                   oracle-sparql-endpoint 
-                  log-config)]
+                  log-config
+                  sparqlify-opts)]
     (c/start system)))
