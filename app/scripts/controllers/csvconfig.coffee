@@ -7,14 +7,21 @@ angular.module 'app'
     $scope.file = ''
     $scope.progress =
       value: 0
-    $scope.submitting = false
+      submitting: false
+    $scope.success = false
+    $scope.submitted = false
 
     $scope.onFileSelect = ($files) ->
       $scope.file = $files[0]
       $scope.csv.file = $scope.file
 
     $scope.submit = () ->
-      $scope.submitting = true
       $scope.csv.submitCsvFile $scope.file, $scope.progress
-        .then (res) ->
-          $scope.submitting = false
+        .success () ->
+          $scope.submitted = true
+          $scope.success = true
+          $scope.progress.submitting = false
+        .error () ->
+          $scope.submitted = true
+          $scope.success = false
+          $scope.progress.submitting = false

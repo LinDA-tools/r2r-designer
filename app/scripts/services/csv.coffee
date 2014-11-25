@@ -22,12 +22,16 @@ angular.module 'app'
             selectedCsvColumns = [column]
 
       submitCsvFile: (file, progress) ->
+        progress.submitting = true
         $upload.upload
           url: csvAdapter + '/upload'
           method: 'POST'
           file: file
         .progress (evt) ->
+          console.log evt.loaded, "/", evt.total
           progress.value = parseInt 100.0 * evt.loaded / evt.total
+          if evt.loaded == evt.total
+            progress.submitting = false
 
       columns: () -> _.first csvData
       data: () -> _.drop csvData, 1
