@@ -5,5 +5,5 @@ angular.module 'app'
 
     $scope.csv = Csv
 
-    $scope.$watch 'csv.file.name', (val) ->
+    $scope.$watch 'csv.uploads()', (val) ->
       $scope.csv.getCsvData()

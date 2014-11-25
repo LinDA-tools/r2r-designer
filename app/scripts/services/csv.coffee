@@ -8,8 +8,11 @@ angular.module 'app'
 
     csvData = []
     selectedCsvColumns = []
+    uploads = 0
 
     {
+      uploads: () -> uploads
+
       isSelectedCsvColumn: (column) -> _.contains selectedCsvColumns, column
 
       toggleSelectedCsvColumn: (column) ->
@@ -32,6 +35,7 @@ angular.module 'app'
           progress.value = parseInt 100.0 * evt.loaded / evt.total
           if evt.loaded == evt.total
             progress.submitting = false
+            uploads++
 
       columns: () -> _.first csvData
       data: () -> _.drop csvData, 1

@@ -13,7 +13,6 @@ angular.module 'app'
 
     $scope.onFileSelect = ($files) ->
       $scope.file = $files[0]
-      $scope.csv.file = $scope.file
 
     $scope.submit = () ->
       $scope.csv.submitCsvFile $scope.file, $scope.progress
