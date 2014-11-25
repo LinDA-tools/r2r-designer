@@ -18,7 +18,9 @@
     [com.taoensso/timbre "3.2.1"]
     [org.postgresql/postgresql "9.3-1102-jdbc41"]
     [com.zaxxer/HikariCP-java6 "2.2.5"]
-    [org.aksw.sparqlify/sparqlify-core "0.6.12" :exclusions [[postgresql/postgresql]]]]
+    [org.aksw.sparqlify/sparqlify-core "0.6.12" :exclusions [[postgresql/postgresql]]]
+    [org.clojure/data.csv "0.1.2"] 
+    ]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler server.handler/app}
   :source-paths ["server/src"]

@@ -14,7 +14,8 @@
     :datasource (c/using (new-datasource db-opts) [:log])
     :oracle (c/using (new-oracle oracle-sparql-endpoint) [:datasource :log])
     :sparqlify (c/using (new-sparqlify sparqlify-opts) [:datasource :log])
-    :ring (c/using (new-ring app-fn ring-opts) [:datasource :oracle :sparqlify :log])))
+    :ring (c/using (new-ring app-fn ring-opts) [:datasource :oracle :sparqlify :log])
+    ))
 
 ;; configuration options
 

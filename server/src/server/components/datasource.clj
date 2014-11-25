@@ -6,16 +6,16 @@
 
 (timbre/refer-timbre)
 
-(defrecord Datasource [spec pool]
+(defrecord Datasource [spec pool csv-file]
   c/Lifecycle
 
   (start [c]
-    (info "starting database adapter ...")
+    (info "starting datasource adapter ...")
     (reset! (:pool c) (new-pool c))
     c)
 
   (stop [c]
-    (info "stopping database adapter ...")
+    (info "stopping datasource adapter ...")
     (when (:pool c) 
       (if @(:pool c) (.close @(:pool c)))
       (reset! (:pool c) nil))
@@ -24,4 +24,5 @@
 (defn new-datasource [opts]
   (map->Datasource {:spec (atom (select-keys opts [:driver :host :name :username :password]))
                     :pool (atom nil)
+                    :csv-file (atom nil)
                     :max-pool 10}))
