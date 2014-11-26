@@ -5,6 +5,7 @@ temp
 app/bower_components
 test/bower_components
 **/.*.swp
+dist
 /target
 /classes
 /checkouts
