@@ -1,12 +1,16 @@
 (ns server.system
   (:require
+    [taoensso.timbre :as timbre]
     [com.stuartsierra.component :as c]
     [server.components.datasource :refer :all]
     [server.components.oracle :refer :all]
     [server.components.sparqlify :refer :all]
     [server.components.ring :refer :all]
     [server.components.logging :refer :all]
-    [server.routes.app :refer [app-fn]]))
+    [server.routes.app :refer [app-fn]])
+  (:gen-class))
+
+(timbre/refer-timbre)
 
 (defn new-system [db-opts app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-opts] 
   (c/system-map
@@ -38,13 +42,29 @@
 (def sparqlify-opts {:host "http://localhost"
                      :port 7531}) 
 
+(def system (atom (new-system 
+                    db-opts 
+                    #'app-fn 
+                    ring-opts 
+                    oracle-sparql-endpoint 
+                    log-config 
+                    sparqlify-opts)))
+
+(def app (app-fn @system))
+ 
+(defn init 
+  "called when web app is initialized"
+  []
+  (info "init r2r-designer/server.system")
+  (when @system (c/start @system)))
+
+(defn destroy 
+  "called when web app is destroyed"
+  []
+  (info "destroy r2r-designer/server.system")
+  (when @system (c/stop @system)))
+
 ;; configure new system and start it
 (defn -main []
-  (let [system (new-system 
-                  db-opts 
-                  #'app-fn 
-                  ring-opts 
-                  oracle-sparql-endpoint 
-                  log-config
-                  sparqlify-opts)]
-    (c/start system)))
+  (info "calling server.system/-main")
+  (init))

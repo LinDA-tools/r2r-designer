@@ -21,8 +21,10 @@
     [org.aksw.sparqlify/sparqlify-core "0.6.12" :exclusions [[postgresql/postgresql]]]
     [org.clojure/data.csv "0.1.2"] 
     ]
-  :plugins [[lein-ring "0.8.10"]]
-  :ring {:handler server.handler/app}
+  :plugins [[lein-ring "0.8.13"]]
+  :ring {:init server.system/init
+         :destroy server.system/destroy
+         :handler server.system/app}
   :source-paths ["server/src"]
   :test-paths ["server/test"]
   :resource-paths ["server/resource"]
@@ -35,11 +37,17 @@
         [ring/ring-devel "1.3.0"]
         ]
       :source-paths ["server/dev"]
+      :resource-paths [".tmp"]
+      }
+    :uberwar {
+      :aot :all
+      :main server.system
       :resource-paths ["dist"]
-      ;; :aot [dev]
-      ;; :main dev
+    }
+    :uberjar {
+      :aot :all
+      :main server.system
+      :resource-paths ["dist"]
       }
     }
-  ;; :aot [server.system]
-  ;; :main server.system
   )
