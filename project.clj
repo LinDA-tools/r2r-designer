@@ -23,7 +23,7 @@
   :ring {:handler server.handler/app}
   :source-paths ["server/src"]
   :test-paths ["server/test"]
-  :resource-paths ["server/resource"]
+  :resource-paths ["server/resource" "dist"]
   :profiles {
     :dev {
       :dependencies [
@@ -33,11 +33,9 @@
         [ring/ring-devel "1.3.0"]
         ]
       :source-paths ["server/dev"]
-      :resource-paths [".tmp" "app"]
-      ;; :aot [dev]
-      ;; :main dev
+      :resource-paths []
       }
     }
-  ;; :aot [server.system]
-  ;; :main server.system
+  :aot [server.system]
+  :main server.system
   )
