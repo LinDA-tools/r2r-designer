@@ -37,7 +37,7 @@
         [ring/ring-devel "1.3.0"]
         ]
       :source-paths ["server/dev"]
-      :resource-paths [".tmp"]
+      :resource-paths [".tmp" "app"]
       }
     :uberwar {
       :aot :all
