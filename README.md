@@ -1,3 +1,4 @@
+This branch integrates the r2r-designer with the Linda workbench
 r2r-designer
 ============
 
