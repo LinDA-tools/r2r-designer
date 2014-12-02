@@ -7,11 +7,13 @@ angular.module 'app'
     csvAdapter = host + '/api/v1/csv'
 
     csvData = []
+    csvFile = ''
     selectedCsvColumns = []
     uploads = 0
 
     {
       uploads: () -> uploads
+      csvFile: () -> csvFile
 
       isSelectedCsvColumn: (column) -> _.contains selectedCsvColumns, column
 
@@ -25,13 +27,14 @@ angular.module 'app'
             selectedCsvColumns = [column]
 
       submitCsvFile: (file, progress) ->
+        console.log file.name
+        csvFile = file.name
         progress.submitting = true
         $upload.upload
           url: csvAdapter + '/upload'
           method: 'POST'
           file: file
         .progress (evt) ->
-          console.log evt.loaded, "/", evt.total
           progress.value = parseInt 100.0 * evt.loaded / evt.total
           if evt.loaded == evt.total
             progress.submitting = false
