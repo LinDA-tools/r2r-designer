@@ -1,48 +1,61 @@
 'use strict'
 
 angular.module 'app'
-  .factory 'Csv', ($http, $upload, _) ->
+  .factory 'Csv', ($http, $upload, _, Config) ->
 
-    host = 'http://localhost:3000'
-    csvAdapter = host + '/api/v1/csv'
+    csvAdapter = Config.backend + '/api/v1/csv'
 
     csvData = []
-    csvFile = ''
-    selectedCsvColumns = []
     uploads = 0
-
+    
+    # tables = []
+    # tableColumns = {}
+    # selectedTables = []
+    # selectedColumns = {}
+    
+    tables = ['env_ac_ainah_r2_1_Data.csv']
+    tableColumns = {'env_ac_ainah_r2_1_Data.csv':[]}
+    selectedTables = ['env_ac_ainah_r2_1_Data.csv']
+    selectedColumns = {'env_ac_ainah_r2_1_Data.csv':['TIME', 'UNIT', 'Value']}
+    
     {
+      # csvFile: null
+      csvFile:
+        name: 'env_ac_ainah_r2_1_Data.csv'
       uploads: () -> uploads
-      csvFile: () -> csvFile
 
-      isSelectedCsvColumn: (column) -> _.contains selectedCsvColumns, column
+      tables: () -> tables
+      tableColumns: () -> tableColumns
+      selectedTables: () -> selectedTables
+      selectedColumns: () -> selectedColumns
+      data: () -> _.drop csvData, 1
+      
+      isSelectedColumn: (table, column) -> _.contains selectedColumns[table], column
 
-      toggleSelectedCsvColumn: (column) ->
-        if _.contains selectedCsvColumns, column
-          selectedCsvColumns = _.without selectedCsvColumns, column
-        else
-          if selectedCsvColumns?
-            selectedCsvColumns.push column
+      toggleSelectedColumn: (table, column) ->
+        if tableColumns[table]?
+          if _.contains selectedColumns[table], column
+            selectedColumns[table] = _.without selectedColumns[table], column
           else
-            selectedCsvColumns = [column]
+            if selectedColumns[table]?
+              selectedColumns[table].push column
+            else
+              selectedColumns[table] = [column]
 
       submitCsvFile: (file, progress) ->
-        console.log file.name
-        csvFile = file.name
         progress.submitting = true
         $upload.upload
           url: csvAdapter + '/upload'
           method: 'POST'
           file: file
+          fileName: file.name
         .progress (evt) ->
           progress.value = parseInt 100.0 * evt.loaded / evt.total
           if evt.loaded == evt.total
             progress.submitting = false
             uploads++
 
-      columns: () -> _.first csvData
-      data: () -> _.drop csvData, 1
-      selectedColumns: () -> selectedCsvColumns
+      getColumns: () -> _.first csvData
 
       getCsvData: () ->
         $http.get csvAdapter + '/data'

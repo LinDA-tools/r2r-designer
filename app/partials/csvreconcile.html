@@ -1,16 +1,16 @@
 <div ng-controller="CsvReconcileCtrl">
 
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <p align="left">
-        Content of <b>{{csv.file.name}}</b>:
+        For file: <b>{{csv.csvFile.name}}</b>
       </p>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-6">
       <p align="right">
         <i class="fa fa-spinner fa-spin" ng-show="loading"></i>&nbsp;
-        <button class="btn btn-primary" ng-click="ask('Observation', selectedCsvColumns())">Ask the Oracle!</button>
+        <button class="btn btn-primary" ng-click="ask(table, columns)">Ask the Oracle!</button>
       </p>
     </div>
   </div>
@@ -19,13 +19,13 @@
     <!-- table and columns -->
     <tr>
       <th><div class="btn btn-sm btn-block">Data subject</div></th>
-      <th ng-repeat="column in csv.selectedColumns()"><div class="btn btn-sm btn-block">Column <a>{{column}}</a></div></th>
+      <th ng-repeat="column in columns"><div class="btn btn-sm btn-block">Column <a>{{column}}</a></div></th>
     </tr>
 
     <!-- tags -->
     <tr>
-      <td><input type="text" class="table-input" placeholder="qb:Observation" ng-model="subjectTag" /></td>
-      <td ng-repeat="column in csv.selectedColumns()"><input type="text" class="table-input" placeholder="{{column}}" ng-model="columnTags[column]"/></td>
+      <td><input type="text" class="table-input" placeholder="{{table}}" ng-model="tableTag[table]" /></td>
+      <td ng-repeat="column in columns"><input type="text" class="table-input" placeholder="{{column}}" ng-model="columnTags[column]"/></td>
     </tr>
 
     <!-- suggestions -->
@@ -45,12 +45,12 @@
               vocab-uri="{{i['vocabulary.uri'][0]}}"
               vocab-title="{{i['vocabulary.title'][0]}}"
               vocab-descr="{{i['vocabulary.description'][0]}}"
-              score="{{i.score | scoreFilter}}"
-              />
+              score="{{i.score | scoreFilter}}">
+            </div>
           </a>
         </div>
       </td>
-      <td ng-repeat="column in csv.selectedColumns()">
+      <td ng-repeat="column in columns">
         <div class="list-group">
           <a href="" class="list-group-item" 
              ng-repeat="i in getColumnSuggestions(table, column)" ng-click="selectProperty(table, column, i)" ng-class="{active: isSelectedProperty(table, column, i)}">
@@ -65,8 +65,8 @@
               vocab-uri="{{i['vocabulary.uri'][0]}}"
               vocab-title="{{i['vocabulary.title'][0]}}"
               vocab-descr="{{i['vocabulary.description'][0]}}"
-              score="{{i.score | scoreFilter}}"
-              />
+              score="{{i.score | scoreFilter}}">
+            </div>
           </a>
         </div>
       </td>
