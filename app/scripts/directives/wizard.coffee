@@ -2,14 +2,16 @@
 
 app = angular.module 'app'
 
-app.directive 'wizard', ->
+app.directive 'wizard', () ->
   restrict: 'EA'
-  scope: {}
   transclude: true
-  templateUrl: (element, attribute) ->
-    attribute.template || 'partials/wizard.html'
+  templateUrl: 'partials/wizard.html'
   controller: ($scope, $document, $timeout) ->
     $scope.steps = []
+    
+    $scope.$on 'changeSidetip', (event, data) ->
+      $timeout () ->
+        $scope.sidetip.tmpl = data
 
     @addStep = (step) ->
       $scope.steps.push step
@@ -28,6 +30,7 @@ app.directive 'wizard', ->
           $scope.currentStep.treated = true
         step.selected = true
         $scope.currentStep = step
+        $scope.sidetip.tooltip = $scope.currentStep.description
 
     @fnStep = (current, fn) ->
       next = @getStep current
@@ -47,54 +50,53 @@ app.directive 'wizard', ->
     @isLast = (name) -> $scope.steps[$scope.steps.length - 1].name == name
 
     @scrollTo = (name, offs, duration) ->
-      section = angular.element document.getElementById name
-      $document.scrollTo section, offs || 30, duration || 750
+      section = (document.getElementById name)
+      $document.scrollTo section, offs || 90, duration || 750
 
     return
 
-app.directive 'step', ->
+app.directive 'step', () ->
   restrict: 'E'
   require: '^wizard'
   scope:
     name: '@'
     heading: '@'
     description: '@'
+    sidetip: '='
   transclude: true
-  templateUrl: (element, attributes) ->
-    attributes.template || 'partials/step.html'
-  link: (scope, element, attrs, wizard) ->
-
-    wizard.addStep
+  templateUrl: 'partials/step.html'
+  link: (scope, element, attrs, ctrl) ->
+    ctrl.addStep
       name: scope.name
       heading: scope.heading
       description: scope.description
       selected: scope.selected
 
-    scope.isSelected = -> wizard.getStep(scope.name).selected
-    scope.isTreated = -> wizard.getStep(scope.name).treated
-    scope.isFirst = -> wizard.isFirst scope.name
-    scope.isLast = -> wizard.isLast scope.name
+    scope.isSelected = () -> ctrl.getStep(scope.name).selected
+    scope.isTreated = () -> ctrl.getStep(scope.name).treated
+    scope.isFirst = () -> ctrl.isFirst scope.name
+    scope.isLast = () -> ctrl.isLast scope.name
 
 app.directive 'next', ->
   restrict: 'A'
   require: '^wizard'
-  link: (scope, element, attrs, wizard) ->
+  link: (scope, element, attrs, ctrl) ->
     element.bind 'click', ->
-      newStep = wizard.nextStep scope.name
-      wizard.scrollTo newStep
+      newStep = ctrl.nextStep scope.name
+      ctrl.scrollTo newStep
 
 app.directive 'prev', ->
   restrict: 'A'
   require: '^wizard'
-  link: (scope, element, attrs, wizard) ->
+  link: (scope, element, attrs, ctrl) ->
     element.bind 'click', ->
-      newStep = wizard.prevStep scope.name
-      wizard.scrollTo newStep
+      newStep = ctrl.prevStep scope.name
+      ctrl.scrollTo newStep
 
 app.directive 'goto', ->
   restrict: 'A'
   require: '^wizard'
-  link: (scope, element, attrs, wizard) ->
+  link: (scope, element, attrs, ctrl) ->
     element.bind 'click', ->
-      wizard.goTo attrs.goto
-      wizard.scrollTo attrs.goto
+      ctrl.goTo attrs.goto
+      ctrl.scrollTo attrs.goto

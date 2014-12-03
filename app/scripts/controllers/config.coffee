@@ -1,54 +1,44 @@
 'use strict'
 
-ModalInstanceCtrl = ($scope, $modalInstance, item, title) ->
-  $scope.title = title
-  $scope.selected = item
-
-  $scope.save = ->
-    $modalInstance.close($scope.selected)
-
-  $scope.cancel = ->
-    $modalInstance.dismiss 'cancel'
-
 angular.module 'app'
-  .controller 'ConfigCtrl', ($scope, $modal, R2rs, Config) ->
-    $scope.config = Config
-    $scope.datasource = $scope.config.datasources[0]
+  .controller 'ConfigCtrl', ($scope, Rdb) ->
 
-    $scope.$watch 'config.datasource', (value) ->
-      if value
-        R2rs.registerDatabase value
+    $scope.rdb = Rdb
 
-    $scope.newDatasource = ->
-      modalInstance = $modal.open
-        templateUrl: 'partials/config_datasource.html'
-        controller: ModalInstanceCtrl
-        resolve:
-          item: ->
-            'name' : ''
-            'subprotocol' : ''
-            'subname' : ''
-            'username' : ''
-            'password' : ''
-          title: ->
-            return 'Create new datasource ...'
+    $scope.checking = false
+    $scope.checked = false
+    $scope.success = false
 
-      modalInstance.result.then (item) ->
-        $scope.config.datasources.push item
-        $scope.config.datasource = item
+    $scope.$watch 'rdb.datasource.host', () ->
+      $scope.checked = false
 
-    $scope.editDatasource = ->
-      index = $scope.config.datasources.indexOf $scope.config.datasource
+    $scope.$watch 'rdb.datasource.driver', () ->
+      $scope.checked = false
 
-      modalInstance = $modal.open
-        templateUrl: 'partials/config_datasource.html'
-        controller: ModalInstanceCtrl
-        resolve:
-          item: ->
-            $scope.config.datasources[index]
-          title: ->
-            'Configure datasource ...'
+    $scope.$watch 'rdb.datasource.name', () ->
+      $scope.checked = false
 
-      modalInstance.result.then (item) ->
-        $scope.config.datasources[index] = item
-        $scope.config.datasource = item
+    $scope.$watch 'rdb.datasource.username', () ->
+      $scope.checked = false
+
+    $scope.$watch 'rdb.datasource.password', () ->
+      $scope.checked = false
+
+    $scope.test = () ->
+      $scope.checking = true
+      $scope.rdb.checkDatabase $scope.rdb.datasource
+        .success (data) ->
+          $scope.checking = false
+          $scope.checked = true
+          $scope.success = (data == "true")
+        .error (data) ->
+          $scope.checking = false
+          $scope.checked = true
+          $scope.success = (data == "false")
+
+    $scope.apply = () ->
+      $scope.checked = false
+      $scope.rdb.registerDatabase $scope.rdb.datasource
+        .then () ->
+          $scope.rdb.getTables()
+          $scope.rdb.getTableColumns()

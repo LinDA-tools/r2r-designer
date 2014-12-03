@@ -4,20 +4,23 @@
     [taoensso.timbre :as timbre]
     [clojure.set :refer :all]
     [ring.util.codec :as codec]
+    [ring.util.response :refer [response]]
     [clojure.data.json :as json]
     [server.core.db :as db]
-    [server.core.oracle :refer :all]))
+    [server.core.oracle :refer :all]
+    [server.routes :refer [preflight]]))
 
 (timbre/refer-timbre)
 
 (defn oracle-routes-fn [c]
   (let [api (:oracle-api c)]
     (defroutes oracle-routes
-      (POST (str api) [_ :as r]
+      (OPTIONS api request (preflight request))
+      (POST api request 
         (let [oracle (:oracle c)
-              table (:body r)
-              response (recommend oracle (:name table) (:columns table))]
-          (json/write-str response)))
+              data (:body request)
+              suggestions (recommend oracle (:table data) (:columns data))]
+          (response suggestions)))
 
       (GET (str api "/properties") [q :as r] 
         (let [oracle (:oracle c)

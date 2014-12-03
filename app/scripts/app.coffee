@@ -1,41 +1,22 @@
 'use strict'
 
-app = angular.module('app', [
+app = angular.module 'app', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
   'ngRoute',
   'ui.bootstrap',
   'duScroll',
-  'underscore'
-])
+  'underscore',
+  'angularFileUpload'
+]
 
 app.config ($routeProvider) ->
-#app.config '$routeProvider', ($routeProvider) ->
-  $routeProvider
-    .when '/',
-      templateUrl: 'partials/start.html'
-      controller: 'StartCtrl'
-    .when '/step/connection',
-      templateUrl: 'partials/config.html'
-      controller: 'ConfigCtrl'
-    .when '/step/database',
-      templateUrl: 'partials/rdb.html'
-      controller: 'RdbCtrl'
-    .when '/step/triples',
-      templateUrl: 'partials/triples.html'
-      controller: 'TriplesCtrl'
-    .when '/start',
-      templateUrl: 'partials/start.html'
-      controller: 'StartCtrl'
-    .when '/about',
-      templateUrl: 'partials/about.html'
-      controller: 'AboutCtrl'
-    .when '/contact',
-      templateUrl: 'partials/contact.html'
-      controller: 'ContactCtrl'
-    .when '/step/rdb',
-      templateUrl: 'partials/playground2.html'
-      controller: 'Playground2Ctrl'
-    .otherwise
-      redirectTo: '/'
+  $routeProvider.when '/csv',
+    templateUrl: 'partials/csvtrans.html'
+    controller: 'MainCtrl'
+  .when '/rdb',
+    templateUrl: 'partials/rdbtrans.html'
+    controller: 'MainCtrl'
+  .otherwise
+    redirectTo: '/csv'

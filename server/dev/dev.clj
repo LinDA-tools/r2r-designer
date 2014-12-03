@@ -3,6 +3,7 @@
    not be included in a production build of the application."
   (:require
     [clojure.java.io :as io]
+    [clojure.java.shell :as sh]
     [clojure.java.javadoc :refer (javadoc)]
     [clojure.java.jdbc :as jdbc]
     [clojure.pprint :refer (pprint)]
@@ -20,20 +21,22 @@
     [ring.middleware.file-info :refer :all]
     [ring.middleware.file :refer :all]
     [clj-http.client :as client]
-    [edu.ucdenver.ccp.kr.kb :refer :all]
-    [edu.ucdenver.ccp.kr.rdf :refer :all]
-    [edu.ucdenver.ccp.kr.sparql :refer :all]
-    [edu.ucdenver.ccp.kr.sesame.kb :as sesame]
     [taoensso.timbre :as timbre]
-    [server.components.db :refer :all]
+    [edu.ucdenver.ccp.kr.kb :as kb]
+    [edu.ucdenver.ccp.kr.rdf :as rdf]
+    [edu.ucdenver.ccp.kr.sparql :as sparql]
+    [edu.ucdenver.ccp.kr.sesame.kb :as sesame]
+    [clojure.data.csv :as data-csv]
+    [server.components.datasource :refer :all]
     [server.components.oracle :refer :all]
+    [server.components.sparqlify :refer :all]
     [server.components.ring :refer :all]
     [server.core.db :refer :all]
+    [server.core.csv :as csv]
     [server.core.oracle :refer :all]
+    [server.core.sparqlify :refer :all]
     [server.routes.app :refer [app-fn]]
-    [server.system :refer [new-system]]
-    )
-  )
+    [server.system :refer [new-system]]))
 
 (timbre/refer-timbre)
 
@@ -44,32 +47,31 @@
 
 (def log-config {
   :ns-whitelist []
-  :ns-blacklist []
-  })
+  :ns-blacklist []})
 
 (defn init
   "Creates and initializes the system under development in the Var
   #'system."
   []
-  (let [db-opts {:classname "org.postgresql.Driver"
-                 :subprotocol "postgresql" 
-                 :subname "mydb" 
-                 :username "postgres" 
-                 :password ""}
+  (let [db-opts {:driver "org.postgresql.ds.PGSimpleDataSource"
+                 :host "localhost"
+                 :name "mydb"
+                 :username "postgres"
+                 :password ""
+                 }
         ring-opts {:port 3000
                    :open-browser? false
                    :join true
                    :auto-reload? true}
-        oracle-sparql "http://dbpedia.org/sparql"]
-    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql log-config)))
-    )
-  )
+        oracle-sparql-endpoint "http://lov.okfn.org/endpoint/lov_aggregator"
+        sparqlify-opts {:host "http://localhost"
+                        :port 7531}]
+    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-opts)))))
 
 (defn start
   "Starts the system running, updates the Var #'system."
   []
-  (alter-var-root #'system c/start)
-  )
+  (alter-var-root #'system c/start))
 
 (defn stop
   "Stops the system if it is currently running, updates the Var
@@ -77,7 +79,7 @@
   []
   (alter-var-root #'system
     (fn [s] (when s (c/stop s))))
-  )
+  :stopped)
 
 (defn go
   "Initializes and starts the system running."
@@ -91,5 +93,3 @@
   []
   (stop)
   (refresh :after 'dev/go))
-
-;; (defn -main [& args] (dev/go))

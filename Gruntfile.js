@@ -54,7 +54,7 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= yeoman.app %>/{,*/}*.html',
+          '<%= yeoman.app %>/{,*/}*.html{.tpl}',
           '.tmp/styles/{,*/}*.css',
           '.tmp/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
@@ -394,6 +394,19 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: true
       }
+    },
+
+    ngtemplates: {
+      app: {
+        cwd: 'app',
+        src: 'partials/**.html',
+        dest: '.tmp/scripts/app.templates.js'
+      },
+      dist: {
+        cwd: 'app',
+        src: 'partials/**.html',
+        dest: 'dist/scripts/app.templates.js'
+      }
     }
   });
 
@@ -406,6 +419,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'bowerInstall',
+      // 'ngtemplates:app',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -430,6 +444,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'bowerInstall',
     'useminPrepare',
+    'ngtemplates:dist',
     'concurrent:dist',
     'autoprefixer',
     'concat',

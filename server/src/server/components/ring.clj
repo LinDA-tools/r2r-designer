@@ -3,9 +3,7 @@
     [com.stuartsierra.component :as c]
     [taoensso.timbre :as timbre]
     [server.routes.app :refer [app-fn]]
-    [ring.server.standalone :refer [serve]]
-    )
-  )
+    [ring.server.standalone :refer [serve]]))
 
 (timbre/refer-timbre)
 
@@ -30,4 +28,7 @@
               :server (atom nil) 
               :app-fn app-fn
               :db-api "/api/v1/db"
-              :oracle-api "/api/v1/oracle"}))
+              :csv-api "/api/v1/csv"
+              :oracle-api "/api/v1/oracle"
+              :transform-api "/api/v1/transform"
+              :file-store (atom {})}))
