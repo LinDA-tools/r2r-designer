@@ -19,4 +19,4 @@ app.config ($routeProvider) ->
     templateUrl: 'partials/rdbtrans.html'
     controller: 'MainCtrl'
   .otherwise
-    redirectTo: '/csv'
+    redirectTo: '/rdb'

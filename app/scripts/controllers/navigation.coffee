@@ -20,7 +20,7 @@ angular.module 'app'
 		$scope.GuideTexts = [
 			"<p>First, choose a database and enter connection details.</p><p>The chosen database must provide the tables that you want to transform and provide as semantic data / RDF triples.</p>"
 			"<p>In this step, select the tables and respective rows that you want to provide as semantic data.</p><p>Toggle the eye symbol <span class=\"glyphicon glyphicon-eye-open\"></span> to select or deselect tables or rows.</span></p>"
-			"Here..."
+			"In the previous step, you just selected database items that you want to convert to RDF triples. To give your data some meaning, we provide you with proposals concerning the type of real world entity that we think is discribed within your database. In case we are wrong, you may change the proposal values to such that fit your data better."
 			]
 
 		$scope.getGuideText = () ->
@@ -61,7 +61,6 @@ angular.module 'app'
 		#fires every time the url changes
 		$scope.$on '$routeChangeSuccess', () ->
 			$scope.adjustStep()
-			console.log("adjusted step");
 
 		$scope.getCurrentURL = () ->
 			#$scope.adjustStep()
