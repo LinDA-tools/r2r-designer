@@ -10,6 +10,10 @@ angular.module 'app'
 
     {
       ask: (table, tableTag, columns, columnTags) ->
+        console.log table
+        console.log tableTag
+        console.log columns
+        console.log columnTags
         if table? and columns?
           $http.post oracleApi, {
             table: {
@@ -19,5 +23,6 @@ angular.module 'app'
             columns: zipColumnTags columns, columnTags
           }
             .then (res) ->
+              console.log res
               res.data
     }
