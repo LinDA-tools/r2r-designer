@@ -1,4 +1,5 @@
 'use strict'
+
 angular.module 'app'
   .factory 'Rdb', ($http, _, Config) ->
 
