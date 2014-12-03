@@ -5,25 +5,13 @@ angular.module 'app'
 
     dbAdapter = Config.backend + '/api/v1/db'
 
-    # tables = []
-    # tableColumns = {}
-    # selectedTables = []
-    # selectedColumns = {}
+    tables = []
+    tableColumns = {}
+    selectedTables = []
+    selectedColumns = {}
     
-    tables = ["categories", "products","employees"]
-    tableColumns = {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
-    selectedTables = ["products","employees"]
-    selectedColumns = {"categories":["CategoryID","CategoryName","Description"],"products":["ProductID","ProductName"],"employees":["FirstName","LastName"]}
-
     {
-      # datasource: {}
-      datasource: {
-          'host' : 'localhost'
-          'driver' : 'org.postgresql.ds.PGSimpleDataSource'
-          'name' : 'mydb'
-          'username' : 'postgres'
-          'password' : ''
-        }
+      datasource: {}
       
       tables: () -> tables
       tableColumns: () -> tableColumns
