@@ -11,7 +11,7 @@
 
 (timbre/refer-timbre)
 
-(defn new-datasource [c]
+(defn new-pool [c]
   (let [max-pool (:max-pool c)
         spec @(:spec c)
         ds (HikariDataSource.)]
@@ -62,48 +62,48 @@
     (apply dissoc m keys-to-drop)))
 
 (defn get-tables [c]
-  (let [ds {:datasource @(:datasource c)}
+  (let [ds {:datasource @(:pool c)}
         result (jdbc/query ds "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'public'")
         tables (map :table_name result)]
     (debug tables)
     tables))
 
 (defn get-columns [c table]
-  (let [ds {:datasource @(:datasource c)}
+  (let [ds {:datasource @(:pool c)}
         result (jdbc/query ds (str "SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" table "'"))
         columns (map :column_name result)]
     (debug columns)
     columns))
 
 (defn get-table-columns [c]
-  (let [ds {:datasource @(:datasource c)}
+  (let [ds {:datasource @(:pool c)}
         tables (get-tables c)
         table-columns (apply merge (for [table tables] {table (get-columns c table)}))]
     table-columns))
 
 (defn query-column-names-map [c table]
-  (let [ds {:datasource @(:datasource c)}
+  (let [ds {:datasource @(:pool c)}
         columns (get-columns c table)
         result (apply merge (for [i columns] {(keyword (str/lower-case i)) i}))]
     (debug result)
     result))
 
 (defn query-columns [c table columns]
-  (let [ds {:datasource @(:datasource c)}
+  (let [ds {:datasource @(:pool c)}
         columns-joined (str/join ", " (map #(str "\"" % "\"") columns))
         result (jdbc/query ds (str "SELECT " columns-joined " FROM " table))]
     (debug result)
     result))
 
 (defn query-column [c table column]
-  (let [ds {:datasource @(:datasource c)}
+  (let [ds {:datasource @(:pool c)}
         result (jdbc/query ds (str "SELECT \"" column "\" FROM " table))
         values (map second (map first result))]
     (debug values)
     values))
 
 (defn query-table [c table]
-  (let [ds {:datasource @(:datasource c)}
+  (let [ds {:datasource @(:pool c)}
         result (take 20 (jdbc/query ds (str "SELECT * FROM " table)))
         filtered (map drop-bytes result)]
     (debug filtered)
@@ -130,7 +130,7 @@
   (str/join (for [i template] (if (keyword? i) (i row) i))))
 
 (defn query-subject-template [c table template-str]
-  (let [ds {:datasource @(:datasource c)}
+  (let [ds {:datasource @(:pool c)}
         template (parse-template-str template-str)
         columns (parse-columns template-str)
         data (query-columns c table columns)
@@ -139,7 +139,7 @@
     result))
 
 (defn property->column [c table template-str property column]
-  (let [ds {:datasource @(:datasource c)}
+  (let [ds {:datasource @(:pool c)}
         template (parse-template-str template-str)
         columns (parse-columns template-str)
         data (query-columns c table (conj columns column))

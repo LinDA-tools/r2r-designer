@@ -6,16 +6,23 @@
 
 (timbre/refer-timbre)
 
-(defrecord Sparqlify []
+(defrecord Sparqlify [host port server]
   c/Lifecycle
 
-  (start [component]
+  (start [c]
     (info "starting sparqlify ...")
-    component) 
+    (when (:server c) 
+      (if @(:server c) (.start @(:server c))))
+    c) 
 
-  (stop [component]
+  (stop [c]
     (info "stopping sparqlify ...")
-    component))
+    (when (:server c) 
+      (if @(:server c) (.stop @(:server c)))
+      (reset! (:server c) nil))
+    c))
   
-(defn new-sparqlify []
-  (map->Sparqlify {}))
+(defn new-sparqlify [opts]
+  (map->Sparqlify {:host (:host opts)
+                   :port (:port opts)
+                   :server (atom nil)}))

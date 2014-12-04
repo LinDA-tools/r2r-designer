@@ -11,7 +11,7 @@
 
 (defn db-routes-fn [component]
   (let [api (:db-api component)
-        db (:database component)]
+        db (:datasource component)]
     (defroutes db-routes
       (GET (str api "/tables") [] 
            (try 
@@ -48,7 +48,7 @@
 
       (OPTIONS (str api "/register") request (preflight request))
       (POST (str api "/register") [driver host name username password :as r]
-        (let [db (:database component)
+        (let [db (:datasource component)
               new-spec {:host host
                         :driver driver
                         :name name 

@@ -151,7 +151,7 @@
     merged))
 
 (defn recommend-for-column [c table column]
-  (let [data (db/query-column @(:spec (:database c)) table column)
+  (let [data (db/query-column @(:spec (:datasource c)) table column)
         sample-data (take (:sample c) data)
         result (recommend-types c sample-data (:limit c) (:threshold c) (:n c))]
     result))

@@ -50,8 +50,8 @@ app.directive 'wizard', () ->
     @isLast = (name) -> $scope.steps[$scope.steps.length - 1].name == name
 
     @scrollTo = (name, offs, duration) ->
-      section = angular.element (document.getElementById name)
-      $document.scrollTo section, offs || 30, duration || 750
+      section = (document.getElementById name)
+      $document.scrollTo section, offs || 90, duration || 750
 
     return
 

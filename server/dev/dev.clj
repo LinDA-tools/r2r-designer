@@ -26,11 +26,13 @@
     [edu.ucdenver.ccp.kr.rdf :as rdf]
     [edu.ucdenver.ccp.kr.sparql :as sparql]
     [edu.ucdenver.ccp.kr.sesame.kb :as sesame]
-    [server.components.db :refer :all]
+    [clojure.data.csv :as data-csv]
+    [server.components.datasource :refer :all]
     [server.components.oracle :refer :all]
     [server.components.sparqlify :refer :all]
     [server.components.ring :refer :all]
     [server.core.db :refer :all]
+    [server.core.csv :as csv]
     [server.core.oracle :refer :all]
     [server.core.sparqlify :refer :all]
     [server.routes.app :refer [app-fn]]
@@ -61,8 +63,10 @@
                    :open-browser? false
                    :join true
                    :auto-reload? true}
-        oracle-sparql-endpoint "http://lov.okfn.org/endpoint/lov_aggregator"]
-    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql-endpoint log-config)))))
+        oracle-sparql-endpoint "http://lov.okfn.org/endpoint/lov_aggregator"
+        sparqlify-opts {:host "http://localhost"
+                        :port 7531}]
+    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-opts)))))
 
 (defn start
   "Starts the system running, updates the Var #'system."
