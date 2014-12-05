@@ -1,9 +1,10 @@
 'use strict'
 
 angular.module 'app'
-  .controller 'PublishCtrl', ($scope, $timeout, $window, _, Rdb, Rdf, Sml, Transform) ->
+  .controller 'PublishCtrl', ($scope, $timeout, $window, _, Rdb, Csv, Rdf, Sml, Transform) ->
 
     $scope.rdb = Rdb
+    $scope.csv = Csv
     $scope.rdf = Rdf
     $scope.sml = Sml
     $scope.transform = Transform
@@ -12,8 +13,9 @@ angular.module 'app'
     $scope.published = false
     $scope.success = false
 
-    $scope.dump = () ->
+    $scope.dumpdb = (table) ->
       mapping =
+        source: 'rdb'
         tables: $scope.rdb.selectedTables()
         columns: $scope.rdb.selectedColumns()
         baseUri: $scope.rdf.baseUri
@@ -24,15 +26,52 @@ angular.module 'app'
         literalTypes: $scope.rdf.propertyLiteralTypes
 
       w = $window.open ''
-      $scope.currentMapping = $scope.sml.toSml mapping
-      $scope.transform.dump $scope.currentMapping
+      $scope.currentMapping = $scope.sml.toSml mapping, table
+      $scope.transform.dumpdb $scope.currentMapping
         .then (url) ->
           w.location = url
 
-    $scope.mapping = () ->
+    $scope.dumpcsv = (table) ->
       mapping =
+        source: 'csv'
+        tables: $scope.csv.selectedTables()
+        columns: $scope.csv.selectedColumns()
+        baseUri: $scope.rdf.baseUri
+        subjectTemplate: $scope.rdf.subjectTemplate
+        classes: $scope.rdf.selectedClasses
+        properties: $scope.rdf.selectedProperties
+        literals: $scope.rdf.propertyLiteralSelection
+        literalTypes: $scope.rdf.propertyLiteralTypes
+
+      w = $window.open ''
+      $scope.currentMapping = $scope.sml.toSml mapping, table
+      $scope.transform.dumpcsv $scope.currentMapping
+        .then (url) ->
+          w.location = url
+
+    $scope.mappingdb = (table) ->
+      mapping =
+        source: 'rdb'
         tables: $scope.rdb.selectedTables()
         columns: $scope.rdb.selectedColumns()
+        baseUri: $scope.rdf.baseUri
+        subjectTemplate: $scope.rdf.subjectTemplate
+        classes: $scope.rdf.selectedClasses
+        properties: $scope.rdf.selectedProperties
+        literals: $scope.rdf.propertyLiteralSelection
+        literalTypes: $scope.rdf.propertyLiteralTypes
+      
+      $scope.currentMapping = $scope.sml.toSml mapping, table
+      w = $window.open ''
+      w.document.open()
+      w.document.write '<pre>' + $scope.currentMapping + '</pre>'
+      w.document.close()
+
+    $scope.mappingcsv = () ->
+      mapping =
+        source: 'csv'
+        tables: $scope.csv.selectedTables()
+        columns: $scope.csv.selectedColumns()
         baseUri: $scope.rdf.baseUri
         subjectTemplate: $scope.rdf.subjectTemplate
         classes: $scope.rdf.selectedClasses

@@ -7,9 +7,18 @@ angular.module 'app'
     transformApi = host + '/api/v1/transform'
 
     {
-      dump: (mapping) ->
+      dumpdb: (mapping) ->
         if mapping?
-          $http.post transformApi + '/dump', {
+          $http.post transformApi + '/dump-db', {
+            mapping: mapping
+          }
+            .then (res) ->
+              console.log res
+              transformApi + res.data
+
+      dumpcsv: (mapping) ->
+        if mapping?
+          $http.post transformApi + '/dump-csv', {
             mapping: mapping
           }
             .then (res) ->

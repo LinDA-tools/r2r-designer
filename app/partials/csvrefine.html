@@ -1,4 +1,4 @@
-<div ng-controller="RefineCtrl">
+<div ng-controller="CsvRefineCtrl">
 
   <div class="row">
     <label for="baseUriInput" class="col-md-2 control-label">Base URI</label>
@@ -10,11 +10,9 @@
   <hr />
  
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <p align="left">
-        <select class="form-control" ng-model="table" ng-options="table for table in rdb.selectedTables()">
-          <option>--</option>
-        </select>
+        For file: <b>{{csv.csvFile.name}}</b>
       </p>
     </div>
   </div>

@@ -13,15 +13,15 @@ angular.module 'app'
     # selectedTables = []
     # selectedColumns = {}
     
-    tables = ['env_ac_ainah_r2_1_Data.csv']
-    tableColumns = {'env_ac_ainah_r2_1_Data.csv':[]}
-    selectedTables = ['env_ac_ainah_r2_1_Data.csv']
-    selectedColumns = {'env_ac_ainah_r2_1_Data.csv':['TIME', 'UNIT', 'Value']}
+    tables = ['data.csv']
+    tableColumns = {'data.csv':[]}
+    selectedTables = ['data.csv']
+    selectedColumns = {'data.csv':['TIME', 'UNIT', 'Value']}
     
     {
       # csvFile: null
       csvFile:
-        name: 'env_ac_ainah_r2_1_Data.csv'
+        name: 'data.csv'
       uploads: () -> uploads
 
       tables: () -> tables

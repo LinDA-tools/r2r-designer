@@ -6,6 +6,9 @@
     [taoensso.timbre :as timbre])
   (:import 
     java.io.File
+    org.apache.commons.cli.GnuParser
+    org.apache.commons.cli.Options
+    org.apache.jena.riot.out.NTriplesWriter
     org.aksw.jena_sparql_api.core.utils.QueryExecutionUtils
     org.aksw.commons.util.MapReader
     [org.aksw.sparqlify.config.v0_2.bridge SchemaProviderImpl SyntaxBridge]
@@ -16,9 +19,11 @@
     org.aksw.sparqlify.core.interfaces.OpMappingRewriter
     org.aksw.sparqlify.util.SparqlifyUtils
     org.aksw.sparqlify.web.SparqlifyCliHelper
-    org.apache.commons.cli.GnuParser
-    org.apache.commons.cli.Options
-    org.apache.jena.riot.out.NTriplesWriter))
+    org.aksw.sparqlify.web.SparqlFormatterUtils
+    org.aksw.sparqlify.csv.CsvParserConfig
+    org.aksw.sparqlify.csv.CsvMapperCliMain
+    org.aksw.sparqlify.csv.InputSupplierCSVReader 
+    ))
 
 (timbre/refer-timbre)
 
@@ -28,6 +33,7 @@
       (spit mapping-file mapping))
     mapping-file))
 
+;; needed?
 (defn init-sparqlify! []
   (RdfViewSystemOld/initSparqlifyFunctions))
 
@@ -40,7 +46,7 @@
     config))
 
 ;; sadly cannot easily kill sub-processes when invoking jar's through shell but ... common, seriously guys?
-;; rough rewrite of sparqlify-core's main; most of the config is not needed?
+;; rough rewrite of sparqlify-core's main; most of the config is not needed? some vars in main are never used
 (defn config-sparqlify [c mapping-file]
   ;; (init-sparqlify!)
   (let [pool @(:pool (:datasource c))
@@ -64,3 +70,17 @@
     (with-open [out (io/output-stream f)] 
       (NTriplesWriter/write out it))
     f))
+
+(defn sparqlify-csv [c mapping-file]
+  (let [csv-file @(:csv-file (:datasource c))]
+    (with-open [in (io/input-stream mapping-file)]
+      (let [template-config (CsvMapperCliMain/readTemplateConfig in nil)
+            view (first (.getDefinitions template-config)) ; pick only(?) view
+            f (File/createTempFile "dump" ".n3")
+            csv-config (CsvParserConfig.)]
+        (with-open [out (io/output-stream f)]
+          (let [csv-reader (InputSupplierCSVReader. csv-file csv-config)
+                results (CsvMapperCliMain/createResultSetFromCsv csv-reader true (int 100))
+                it (CsvMapperCliMain/createTripleIterator results view)]
+            (SparqlFormatterUtils/writeText out it)))
+        f))))
