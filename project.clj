@@ -3,7 +3,7 @@
   :url "http://linda-project.eu"
   :license { :name "MIT"
              :url "http://opensource.org/licenses/MIT" }
-  :repositorties [["aksw-internal" "http://maven.aksw.org/repository/internal/"]]
+  :repositories [["aksw-internal" "http://maven.aksw.org/repository/internal/"]]
   :dependencies [
     [org.clojure/clojure "1.6.0"]
     [org.clojure/java.jdbc "0.3.3"]
@@ -19,8 +19,7 @@
     [org.postgresql/postgresql "9.3-1102-jdbc41"]
     [com.zaxxer/HikariCP-java6 "2.2.5"]
     [org.aksw.sparqlify/sparqlify-core "0.6.12" :exclusions [[postgresql/postgresql]]]
-    [org.clojure/data.csv "0.1.2"] 
-    ]
+    [org.clojure/data.csv "0.1.2"]]
   :plugins [[lein-ring "0.8.13"]]
   :ring {:init server.system/init
          :destroy server.system/destroy
