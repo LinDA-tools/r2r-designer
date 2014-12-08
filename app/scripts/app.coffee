@@ -13,10 +13,10 @@ app = angular.module 'app', [
 
 app.config ($routeProvider) ->
   $routeProvider.when '/csv',
-    templateUrl: 'partials/csvtrans.html'
+    templateUrl: '/static/r2r/partials/csvtrans.html'
     controller: 'MainCtrl'
   .when '/rdb',
-    templateUrl: 'partials/rdbtrans.html'
+    templateUrl: '/static/r2r/partials/rdbtrans.html'
     controller: 'MainCtrl'
   .otherwise
     redirectTo: '/csv'

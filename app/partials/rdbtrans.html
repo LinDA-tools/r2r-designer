@@ -40,7 +40,7 @@
       <p>If a SPARQL endpoint is to be set up, your access data credentials will be stored in its configuration and be used throughout its lifetime.</p>
 
       <br />
-      <div ng-include src="'partials/rdbconfig.html'"></div>
+      <div ng-include src="'/static/r2r/partials/rdbconfig.html'"></div>
     </step>
 
     <step name="3. database contents"
@@ -53,7 +53,7 @@
         Whenever a selected column is a Foreign Key, the referenced table and its Primary Key column(s) should also be selected.</p>
 
       <br />
-      <div ng-include src="'partials/rdbcontents.html'"></div>
+      <div ng-include src="'/static/r2r/partials/rdbcontents.html'"></div>
     </step>
 
     <step name="4. transforming"
@@ -66,7 +66,7 @@
       <p>You will have to go through all those tables and columns that were selected for transformation in the previous step (“Database Contents”).</p>
 
       <br />
-      <div ng-include src="'partials/rdbreconcile.html'"></div>
+      <div ng-include src="'/static/r2r/partials/rdbreconcile.html'"></div>
     </step>
 
     <step name="5. revising"
