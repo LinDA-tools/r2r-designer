@@ -3,7 +3,7 @@
   :url "http://linda-project.eu"
   :license { :name "MIT"
              :url "http://opensource.org/licenses/MIT" }
-  :repositorties [["aksw-internal" "http://maven.aksw.org/repository/internal/"]]
+  :repositories [["aksw-internal" "http://maven.aksw.org/repository/internal/"]]
   :dependencies [
     [org.clojure/clojure "1.6.0"]
     [org.clojure/java.jdbc "0.3.3"]
