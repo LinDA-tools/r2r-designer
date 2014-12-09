@@ -56,10 +56,7 @@
   "called when web app is initialized"
   []
   (info "init r2r-designer/server.system")
-  (info "before: " @system)
-  (when @system (swap! system c/start))
-  (info "after: " @system)
-  )
+  (when @system (swap! system c/start)))
 
 (defn destroy 
   "called when web app is destroyed"

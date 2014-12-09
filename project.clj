@@ -27,7 +27,7 @@
          :handler server.system/app}
   :source-paths ["server/src"]
   :test-paths ["server/test"]
-  :resource-paths ["server/resource"]
+  :resource-paths ["server/resource" "dist"]
   :profiles {
     :dev {
       :dependencies [
