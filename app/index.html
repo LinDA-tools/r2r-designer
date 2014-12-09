@@ -5,7 +5,6 @@
 {% block css %}
   <link rel="stylesheet" href="/static/r2r/styles/main.css">
   <link rel="stylesheet" href="/static/r2r/bower_components/bootstrap-css-only/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/r2r/bower_components/font-awesome/css/font-awesome.min.css">
 {% endblock %}
 
 {% block content %}
@@ -58,19 +57,17 @@
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/json3/lib/json3.min.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/angular-scroll/angular-scroll.min.js"></script>
-    <script src="bower_components/underscore/underscore.js"></script>
-    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
-    <script src="bower_components/ng-file-upload-shim/angular-file-upload-shim.js"></script>
+    <script src="/static/r2r/bower_components/angular/angular.js"></script>
+    <script src="/static/r2r/bower_components/angular-resource/angular-resource.js"></script>
+    <script src="/static/r2r/bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="/static/r2r/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/static/r2r/bower_components/angular-route/angular-route.js"></script>
+    <script src="/static/r2r/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/static/r2r/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="/static/r2r/bower_components/angular-scroll/angular-scroll.min.js"></script>
+    <script src="/static/r2r/bower_components/underscore/underscore.js"></script>
+    <script src="/static/r2r/bower_components/ng-file-upload/angular-file-upload.js"></script>
+    <script src="/static/r2r/bower_components/ng-file-upload-shim/angular-file-upload-shim.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -78,7 +75,6 @@
         <script src="/static/r2r/scripts/app.js"></script>
         <script src="/static/r2r/scripts/app.templates.js"></script>
         <script src="/static/r2r/scripts/services/config.js"></script>
-        <script src="/static/r2r/scripts/services/jsedn.js"></script>
         <script src="/static/r2r/scripts/services/rdb.js"></script>
         <script src="/static/r2r/scripts/services/rdf.js"></script>
         <script src="/static/r2r/scripts/services/underscore.js"></script>
@@ -86,14 +82,14 @@
         <script src="/static/r2r/scripts/services/sml.js"></script>
         <script src="/static/r2r/scripts/services/transform.js"></script>
         <script src="/static/r2r/scripts/directives/wizard.js"></script>
-        <script src="/static/r2r/scripts/directives/popover.js"></script>
         <script src="/static/r2r/scripts/directives/columntip.js"></script>
         <script src="/static/r2r/scripts/directives/cursor.js"></script>
         <script src="/static/r2r/scripts/directives/rdfbadge.js"></script>
-        <script src="/static/r2r/scripts/controllers/main.js"></script>
-        <script src="/static/r2r/scripts/controllers/config.js"></script>
-        <script src="/static/r2r/scripts/controllers/dbcontents.js"></script>
-        <script src="/static/r2r/scripts/controllers/reconcile.js"></script>
+        <script src="/static/r2r/scripts/controllers/rdbtrans.js"></script>
+	<script src="/static/r2r/scripts/controllers/csvtrans.js"></script>
+        <script src="/static/r2r/scripts/controllers/rdbconfig.js"></script>
+        <script src="/static/r2r/scripts/controllers/rdbcontents.js"></script>
+        <script src="/static/r2r/scripts/controllers/rdbreconcile.js"></script>
         <script src="/static/r2r/scripts/controllers/refine.js"></script>
         <script src="/static/r2r/scripts/controllers/publish.js"></script>
         <script src="/static/r2r/scripts/filters/score.js"></script>
@@ -104,3 +100,5 @@
         <!-- endbuild -->
 
 {% endblock %}
+
+
