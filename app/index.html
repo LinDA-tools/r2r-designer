@@ -20,11 +20,14 @@
     <meta name="viewport" content="width=device-width">-->
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css({.tmp,app}) styles/main.css -->
-    <!--<link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="/static/r2r/bower_components/bootstrap-css-only/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/r2r/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/r2r/styles/main.css">
     <!-- endbuild -->
-  <!--</head>
-  <body ng-app="app">-->
+  </head>
+
+
+  <body ng-app="app">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -73,11 +76,11 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="/static/r2r/scripts/app.js"></script>
-        <script src="/static/r2r/scripts/app.templates.js"></script>
-        <script src="/static/r2r/scripts/services/config.js"></script>
-        <script src="/static/r2r/scripts/services/rdb.js"></script>
-        <script src="/static/r2r/scripts/services/rdf.js"></script>
+        <SCRIPT SRC="/static/r2r/scripts/services/config.js"></script>
         <script src="/static/r2r/scripts/services/underscore.js"></script>
+        <script src="/static/r2r/scripts/services/rdb.js"></script>
+        <script src="/static/r2r/scripts/services/csv.js"></script>
+        <script src="/static/r2r/scripts/services/rdf.js"></script>
         <script src="/static/r2r/scripts/services/oracle.js"></script>
         <script src="/static/r2r/scripts/services/sml.js"></script>
         <script src="/static/r2r/scripts/services/transform.js"></script>
@@ -85,18 +88,17 @@
         <script src="/static/r2r/scripts/directives/columntip.js"></script>
         <script src="/static/r2r/scripts/directives/cursor.js"></script>
         <script src="/static/r2r/scripts/directives/rdfbadge.js"></script>
-        <script src="/static/r2r/scripts/controllers/rdbtrans.js"></script>
-	<script src="/static/r2r/scripts/controllers/csvtrans.js"></script>
-        <script src="/static/r2r/scripts/controllers/rdbconfig.js"></script>
-        <script src="/static/r2r/scripts/controllers/rdbcontents.js"></script>
+        <script src="/static/r2r/scripts/controllers/main.js"></script>
+        <script src="/static/r2r/scripts/controllers/config.js"></script>
+        <script src="/static/r2r/scripts/controllers/csvconfig.js"></script>
+        <script src="/static/r2r/scripts/controllers/dbcontents.js"></script>
+        <script src="/static/r2r/scripts/controllers/csvcontents.js"></script>
         <script src="/static/r2r/scripts/controllers/rdbreconcile.js"></script>
-        <script src="/static/r2r/scripts/controllers/refine.js"></script>
+        <script src="/static/r2r/scripts/controllers/csvreconcile.js"></script>
+        <script src="/static/r2r/scripts/controllers/rdbrefine.js"></script>
+        <script src="/static/r2r/scripts/controllers/csvrefine.js"></script>
         <script src="/static/r2r/scripts/controllers/publish.js"></script>
         <script src="/static/r2r/scripts/filters/score.js"></script>
-        <script src="/static/r2r/scripts/services/csv.js"></script>
-        <script src="/static/r2r/scripts/controllers/csvconfig.js"></script>
-        <script src="/static/r2r/scripts/controllers/csvcontents.js"></script>
-        <script src="/static/r2r/scripts/controllers/csvreconcile.js"></script>
         <!-- endbuild -->
 
 {% endblock %}

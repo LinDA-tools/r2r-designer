@@ -5,6 +5,12 @@ $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/
 // endbower
 @import "../bower_components/font-awesome/scss/font-awesome.scss";
 
+/* scrollbars always visible*/
+html {
+     overflow: -moz-scrollbars-vertical;
+     overflow: scroll;
+}
+
 .browsehappy {
     margin: 0.2em 0;
     background: #ccc;
@@ -16,6 +22,7 @@ $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/
 body {
     padding-top: 20px;
     padding-bottom: 20px;
+    margin: 2em;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
