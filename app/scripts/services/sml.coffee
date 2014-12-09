@@ -97,9 +97,21 @@ angular.module 'app'
 
       return (_.foldl (baseUris.concat suggestedUris), ((x, y) -> (x + '\n').concat y))
 
+    createClause = (mapping, table) ->
+      if mapping.source == 'csv'
+        "Create View Template " + table + " As"
+      else
+        "Create View " + table + " As"
+
+    fromClause = (mapping, table) ->
+      if (mapping.source == 'rdb')
+        "From " + table
+      else
+        ""
+
     {
       toSml: (mapping) ->
-        table = 'products'
+        table = mapping.tables[0] # TODO!
 
         lookup = newLookup()
 
@@ -107,7 +119,7 @@ angular.module 'app'
 #{namespacePrefixes mapping}
 Prefix tns: <#{mapping.baseUri}>
 
-Create View #{table} As
+#{createClause mapping, table}
     Construct {
         ?s 
 #{toClasses mapping, table};
@@ -116,6 +128,6 @@ Create View #{table} As
     With
 #{subjectTemplate mapping, table}
 #{propertyLiterals mapping, table, lookup}
-    From #{table}
+#{fromClause mapping, table}
         """
     }

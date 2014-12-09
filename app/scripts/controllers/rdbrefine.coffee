@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'app'
-  .controller 'RefineCtrl', ($scope, _, Rdb, Rdf) ->
+  .controller 'RdbRefineCtrl', ($scope, _, Rdb, Rdf) ->
 
     $scope.rdb = Rdb
     $scope.rdf = Rdf
