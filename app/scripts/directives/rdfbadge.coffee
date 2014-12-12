@@ -15,7 +15,7 @@ app.directive 'rdfBadge', ($timeout) ->
     vocabTitle: '@'
     vocabDescr: '@'
     score: '@'
-  templateUrl: '/static/r2r/partials/rdfbadge.html'
+  templateUrl: 'partials/rdfbadge.html'
   controller: ($scope) ->
     definition =
       if $scope.definition and !(_.isEmpty $scope.definition)

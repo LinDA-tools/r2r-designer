@@ -322,7 +322,7 @@ module.exports = function (grunt) {
             // '*.{ico,png,txt}',
             // '.htaccess',
             '*.html',
-            'partials/{,*/}*.html',
+            // 'partials/{,*/}*.html',
             'images/{,*/}*.{webp}',
             'fonts/*',
             'bower_components/**'
@@ -405,11 +405,6 @@ module.exports = function (grunt) {
         cwd: 'app',
         src: 'partials/**.html',
         dest: '.tmp/scripts/app.templates.js'
-      },
-      dist: {
-        cwd: 'app',
-        src: 'partials/**.html',
-        dest: 'dist/scripts/app.templates.js'
       }
     }
   });
@@ -448,7 +443,7 @@ module.exports = function (grunt) {
     'clean:dist',
     // 'bowerInstall',
     // 'useminPrepare',
-    'ngtemplates:dist',
+    'ngtemplates:app',
     'concurrent:dist',
     'autoprefixer',
     // 'concat',
