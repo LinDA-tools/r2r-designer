@@ -49,6 +49,17 @@ angular.module 'app'
         .then (url) ->
           w.location = url
 
+    $scope.safe_tags_replace = (str) ->
+      tagsToReplace =
+        '&': '&amp;'
+        '<': '&lt;'
+        '>': '&gt;'
+
+      replaceTag = (tag) ->
+        tagsToReplace[tag] or tag
+
+      str.replace /[&<>]/g, replaceTag
+      
     $scope.mappingdb = (table) ->
       mapping =
         source: 'rdb'
@@ -64,7 +75,7 @@ angular.module 'app'
       $scope.currentMapping = $scope.sml.toSml mapping, table
       w = $window.open ''
       w.document.open()
-      w.document.write '<pre>' + $scope.currentMapping + '</pre>'
+      w.document.write '<pre>' + $scope.safe_tags_replace($scope.currentMapping) + '</pre>'
       w.document.close()
 
     $scope.mappingcsv = () ->
@@ -80,9 +91,10 @@ angular.module 'app'
         literalTypes: $scope.rdf.propertyLiteralTypes
       
       $scope.currentMapping = $scope.sml.toSml mapping
+      console.log $scope.currentMapping
       w = $window.open ''
       w.document.open()
-      w.document.write '<pre>' + $scope.currentMapping + '</pre>'
+      w.document.write '<pre>' + $scope.safe_tags_replace($scope.currentMapping) + '</pre>'
       w.document.close()
 
     $scope.publish = (to) ->

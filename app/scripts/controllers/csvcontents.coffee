@@ -6,9 +6,7 @@ angular.module 'app'
     $scope.csv = Csv
     $scope.table = ''
 
-    $scope.$watch 'csv.csvFile', (val) ->
+    $scope.$watch 'csv.csvFile()', (val) ->
       if val?
         $scope.table = val.name
-
-    $scope.$watch 'csv.uploads()', (val) ->
       $scope.csv.getCsvData()

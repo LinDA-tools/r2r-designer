@@ -1,5 +1,5 @@
 <div ng-controller="CsvRefineCtrl">
-
+  
   <div class="row">
     <label for="baseUriInput" class="col-md-2 control-label">Base URI</label>
     <div id="baseUriInput" class="col-md-8">
@@ -12,7 +12,7 @@
   <div class="row">
     <div class="col-md-6">
       <p align="left">
-        For file: <b>{{csv.csvFile.name}}</b>
+        For file: <b>{{csv.csvFile().name}}</b>
       </p>
     </div>
   </div>
@@ -54,10 +54,10 @@
         <b><em>{{prop.prefixedName[0]}}</em></b>
       </div>
       <div class="col-md-4">
-        <select class="form-control" ng-model="rdf.propertyLiteralSelection[prop.prefixedName[0]]" ng-options="selection for selection in propertyLiteralTypeOptions" />
+        <select class="form-control" ng-model="rdf.propertyLiteralSelection[prop.prefixedName[0]]" ng-options="selection for selection in propertyLiteralTypeOptions"></select>
       </div>
       <div class="col-md-4">
-        <select class="form-control" ng-model="rdf.propertyLiteralTypes[prop.prefixedName[0]]" ng-options="type for type in propertyLiteralTypes" ng-show="rdf.propertyLiteralSelection[prop.prefixedName[0]] == 'Typed Literal'"></input>
+        <select class="form-control" ng-model="rdf.propertyLiteralTypes[prop.prefixedName[0]]" ng-options="type for type in propertyLiteralTypes" ng-show="rdf.propertyLiteralSelection[prop.prefixedName[0]] == 'Typed Literal'"></select>
       </div>
     </div>
   </div>

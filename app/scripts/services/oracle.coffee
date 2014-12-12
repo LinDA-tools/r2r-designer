@@ -19,6 +19,5 @@ angular.module 'app'
             columns: zipColumnTags columns, columnTags
           }
             .then (res) ->
-              console.log res
               res.data
     }
