@@ -5,44 +5,41 @@ angular.module 'app'
 
     csvAdapter = Config.backend + '/api/v1/csv'
 
-    csvData = []
-    uploads = 0
-    
-    # tables = []
-    # tableColumns = {}
-    # selectedTables = []
-    # selectedColumns = {}
-    
-    tables = ['data.csv']
-    tableColumns = {'data.csv':[]}
-    selectedTables = ['data.csv']
-    selectedColumns = {'data.csv':['TIME', 'UNIT', 'Value']}
+    csvData = {}
+    tables = []
+    tableColumns = {}
+    selectedTables = []
+    selectedColumns = {}
+    csvFile = {}
     
     {
-      # csvFile: null
-      csvFile:
-        name: 'data.csv'
-      uploads: () -> uploads
-
+      csvFile: () -> csvFile
       tables: () -> tables
-      tableColumns: () -> tableColumns
+      columns: (table) ->
+        if table and csvData[table]?
+          _.first csvData[table]
+        else
+          []
+      data: (table) ->
+        if table and csvData[table]?
+          _.drop csvData[table], 1
+        else
+          []
       selectedTables: () -> selectedTables
       selectedColumns: () -> selectedColumns
-      data: () -> _.drop csvData, 1
-      
       isSelectedColumn: (table, column) -> _.contains selectedColumns[table], column
-
       toggleSelectedColumn: (table, column) ->
-        if tableColumns[table]?
-          if _.contains selectedColumns[table], column
-            selectedColumns[table] = _.without selectedColumns[table], column
+        if _.contains selectedColumns[table], column
+          selectedColumns[table] = _.without selectedColumns[table], column
+        else
+          if selectedColumns[table]?
+            selectedColumns[table].push column
           else
-            if selectedColumns[table]?
-              selectedColumns[table].push column
-            else
-              selectedColumns[table] = [column]
+            selectedColumns[table] = [column]
 
       submitCsvFile: (file, progress) ->
+        csvFile =
+          name: file.name
         progress.submitting = true
         $upload.upload
           url: csvAdapter + '/upload'
@@ -53,13 +50,13 @@ angular.module 'app'
           progress.value = parseInt 100.0 * evt.loaded / evt.total
           if evt.loaded == evt.total
             progress.submitting = false
-            uploads++
-
-      getColumns: () -> _.first csvData
 
       getCsvData: () ->
         $http.get csvAdapter + '/data'
              .then (res) ->
-               csvData = res.data
+               if csvFile.name?
+                 table = csvFile.name
+                 tables = [table]
+                 selectedTables = tables
+                 csvData[table] = res.data
     }
-

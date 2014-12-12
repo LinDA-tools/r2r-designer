@@ -9,13 +9,13 @@ angular.module 'app'
     $scope.table = ''
     $scope.columns = []
 
-    $scope.$watch 'csv.csvFile', (val) ->
+    $scope.$watch 'csv.csvFile()', (val) ->
       if val?
         $scope.table = val.name
 
-    $scope.$watch 'table', (val) ->
+    $scope.$watch 'csv.selectedColumns()[table]', (val) ->
       if val?
-        $scope.columns = $scope.csv.selectedColumns()[val]
+        $scope.columns = $scope.csv.selectedColumns()[$scope.table]
 
     $scope.selectedColumns = []
     $scope.cursorpos = 0

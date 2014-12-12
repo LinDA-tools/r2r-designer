@@ -95,7 +95,13 @@ angular.module 'app'
           return null
       ), null)
 
-      return (_.foldl (baseUris.concat suggestedUris), ((x, y) -> (x + '\n').concat y))
+      baseUri =
+        if !_.isEmpty(mapping.baseUri)
+          ["""Prefix tns: <#{mapping.baseUri}>"""]
+        else
+          []
+
+      return (_.foldl (baseUris.concat suggestedUris, baseUri), ((x, y) -> (x + '\n').concat y))
 
     createClause = (mapping, table) ->
       if mapping.source == 'csv'
@@ -117,7 +123,6 @@ angular.module 'app'
 
         return """
 #{namespacePrefixes mapping}
-Prefix tns: <#{mapping.baseUri}>
 
 #{createClause mapping, table}
     Construct {

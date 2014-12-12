@@ -13,7 +13,6 @@ angular.module 'app'
             mapping: mapping
           }
             .then (res) ->
-              console.log res
               transformApi + res.data
 
       dumpcsv: (mapping) ->
@@ -22,7 +21,6 @@ angular.module 'app'
             mapping: mapping
           }
             .then (res) ->
-              console.log res
               transformApi + res.data
 
       publish: (to, mapping) ->
