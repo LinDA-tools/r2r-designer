@@ -25,7 +25,5 @@
           (try 
             (do
               (set-file ds file)
-              (info @(:csv-file ds))
-              {:status 200 :body "uploaded"}  
-              ) 
+              {:status 200 :body "uploaded"}) 
             (catch Exception _ {:status 400 :body "error"})))))))

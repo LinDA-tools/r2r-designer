@@ -87,15 +87,28 @@ angular.module 'app'
 
     $scope.publish = (to) ->
       $scope.publishing = true
-      mapping =
-        tables: $scope.rdb.selectedTables()
-        columns: $scope.rdb.selectedColumns()
-        baseUri: $scope.rdf.baseUri
-        subjectTemplate: $scope.rdf.subjectTemplate
-        classes: $scope.rdf.selectedClasses
-        properties: $scope.rdf.selectedProperties
-        literals: $scope.rdf.propertyLiteralSelection
-        literalTypes: $scope.rdf.propertyLiteralTypes
+      if to == 'openrdf'
+        mapping =
+          source: 'csv'
+          tables: $scope.csv.selectedTables()
+          columns: $scope.csv.selectedColumns()
+          baseUri: $scope.rdf.baseUri
+          subjectTemplate: $scope.rdf.subjectTemplate
+          classes: $scope.rdf.selectedClasses
+          properties: $scope.rdf.selectedProperties
+          literals: $scope.rdf.propertyLiteralSelection
+          literalTypes: $scope.rdf.propertyLiteralTypes
+      else
+        mapping =
+          source: 'rdb'
+          tables: $scope.rdb.selectedTables()
+          columns: $scope.rdb.selectedColumns()
+          baseUri: $scope.rdf.baseUri
+          subjectTemplate: $scope.rdf.subjectTemplate
+          classes: $scope.rdf.selectedClasses
+          properties: $scope.rdf.selectedProperties
+          literals: $scope.rdf.propertyLiteralSelection
+          literalTypes: $scope.rdf.propertyLiteralTypes
 
       $scope.currentMapping = $scope.sml.toSml mapping
 

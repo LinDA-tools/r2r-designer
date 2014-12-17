@@ -17,6 +17,8 @@ angular.module 'app'
         new_entry
 
     toClasses = (mapping, table) ->
+      if !mapping.classes[table]?
+        return '\n'
       classes = ('a ' + c.prefixedName[0] for c in mapping.classes[table])
       if _.isEmpty classes
         return '\n'
