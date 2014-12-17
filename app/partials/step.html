@@ -1,10 +1,16 @@
 <section id="{{name}}">
-  <div ng-class="{treated: !isSelected() && isTreated()}" ng-show="isSelected() || isTreated()">
+  <!--div ng-class="{treated: !isSelected() && isTreated()}" ng-show="isSelected() || isTreated()"-->
+  <div ng-class="{treated: !isSelected()}" ng-show="isSelected()">
     <div class="row">
       <h3>{{heading}}</h3>
     </div>
 
-    <div class="row">
+      <div>
+    <div ng-bind-html="sidetip.tooltip" class="tooltip"></div>
+    <div ng-bind-html="sidetip.tmpl" class="sidetip"></div>
+  </div>
+
+    <div>
       <div>
         <fieldset ng-disabled="!isSelected()">
           <p><div ng-transclude /></p>
@@ -17,7 +23,5 @@
       </div>
     </div>
 
-    <!-- <hr /> -->
-    <p style="margin-bottom:5em"><p>
   </div>
 </section>

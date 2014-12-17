@@ -20,9 +20,11 @@ html {
 
 /* Space out content a bit */
 body {
+/*
     padding-top: 20px;
     padding-bottom: 20px;
     margin: 2em;
+    */
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -40,10 +42,11 @@ body {
 
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
-    margin-top: 0;
+/*  margin-top: 0;
     margin-bottom: 0;
     line-height: 40px;
     padding-bottom: 19px;
+    */
 }
 
 /* Custom page footer */
@@ -168,7 +171,7 @@ body {
 }
 
 .wizard {
-  // margin-bottom: 512px;
+
 }
 
 // .table-btn {
@@ -183,3 +186,18 @@ body {
   max-width: 400px;
   width: auto;
 }
+
+#main_container{
+  margin:1em 1em 1em 1em;
+}
+
+#content_container{
+  margin:1em;
+}
+
+.sidetip,
+.tooltip{
+  background-color:#ddd;
+  color:red;
+}
+

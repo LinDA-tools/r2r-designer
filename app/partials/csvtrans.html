@@ -1,16 +1,16 @@
-<div class="main container" style="min-height:128em">
+<div id="main_container" style="min-height:128em">
 
-  <div class="header">
+  <!--div class="header">
     <ul class="nav nav-pills pull-right">
       <li class="active"><a ng-href="#">Home</a></li>
       <li><a ng-href="#">About</a></li>
       <li><a ng-href="#">Contact</a></li>
     </ul>
     <h3 class="text-muted">R2R Mapping Designer</h3>
-  </div>
+  </div-->
  
   <wizard>
-    <step name="1. welcome" 
+    <step name="welcome" 
       heading="Welcome" 
       description=""  
      sidetip="sidetip">
@@ -19,7 +19,7 @@
      <br /> 
     </step>
 
-    <step name="2. datasource config"
+    <step name="datasource config"
       heading="Data Source Configuration"
       description=""
       sidetip="sidetip">
@@ -35,7 +35,7 @@
       <div ng-include src="'partials/csvconfig.html'"></div>
     </step>
 
-    <step name="3. contents of CSV file"
+    <step name="CSV contents"
       heading="Select Columns"
       description="<p>Current restriction: The column separator character has indeed to be a comma; semicolons or other characters are not processed (yet).</p>"
       sidetip="sidetip">
@@ -46,7 +46,7 @@
       <div ng-include src="'partials/csvcontents.html'"></div>
     </step>
 
-    <step name="4. transforming"
+    <step name="transforming"
       heading="Translate CSV file content"
       description="<p>These specifications constitute the central part of the transformation. Types and properties should be selected with care, so as to get best possible precision of the transformation.</p><p>The <em>oracle</em> is a web service that gets the column headers in question, matches them against its database of vocabularies, and returns ranked results.</p>"
       sidetip="sidetip">
@@ -60,7 +60,7 @@
       <div ng-include src="'partials/csvreconcile.html'"></div>
     </step>
 
-    <step name="5. revising"
+    <step name="revising"
       heading="Revise Output RDF"
       description="<p>These URIs need to be globally unique, so
 <ul><li>the web address the URIs point to should be a site that you control</li>
@@ -74,7 +74,7 @@
       <div ng-include src="'partials/csvrefine.html'"></div>
     </step>
 
-    <step name="6. publishing"
+    <step name="publishing"
       heading="Publish"
       description="<p>A SPARQL endpoint is a service that processes queries against a RDF triple store. Here, the triple store is hypothetical, the queries are translated to SQL, your database is queried, and the results are translated according to your mapping specification.</p>"
       sidetip="sidetip">
@@ -86,7 +86,7 @@
       <div ng-include src="'partials/csvpublish.html'"></div>
     </step>
 
-    <step name="7. finished"
+    <step name="finished"
       heading="Finished"
       description=""
       sidetip="sidetip">
@@ -97,6 +97,4 @@
       <br />
     </step>
   </wizard>
-
-  <p align="center" style="font-size: 20px;margin-top: 10em">❦</p>
 </div>

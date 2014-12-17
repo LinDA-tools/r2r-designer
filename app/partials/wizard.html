@@ -1,25 +1,33 @@
 <div class="wizard"> 
-  <div class="row">
-
-    <div class="col-md-2">
-      <div class="navigation">
+    <!--div class="col-md-2">
+      <!--div class="navigation">
         <ul class="nav nav-list">
           <li ng-class="{disabled: !(step.selected || step.treated), active: step.selected}" ng-repeat="step in steps"><a href goto="{{step.name}}">{{step.name}}</a></li>
         </ul>
       </div>
-    </div>
+    </div-->
+  <nav>
+  <ul class="pagination">
+    <li><a href prev><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+    <li ng-repeat="step in steps"><a href goto="{{step.name}}" >{{step.name}}</a></li>
+    <li><a href next><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+  </ul>
+</nav>
 
-    <div class="col-md-8">
-      <div class="steps" ng-transclude></div>
-    </div>
-
-    <div class="col-md-2">
-      <div style="position:fixed;margin-top:2em;margin-left:2em;margin-right:2em">
-        <div ng-bind-html="sidetip.tooltip"></div>
-        <hr />
-        <div ng-bind-html="sidetip.tmpl"></div>
-      </div>
-    </div>
-
+      <!--div class="col-md-2"-->
+<div id="content_container">
+  <div>
+    <div ng-bind-html="sidetip.tooltip" class="tooltip"></div>
+    <div ng-bind-html="sidetip.tmpl" class="sidetip"></div>
   </div>
+
+
+    
+  <div>
+    <div class="steps" ng-transclude></div>
+  </div>
+</div>
+
+
+
 </div>

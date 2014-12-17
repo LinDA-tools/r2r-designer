@@ -14,13 +14,17 @@
       </th>
     </tr>
 
-    <tr ng-repeat="data in csv.data(table)">
+    <tr ng-repeat="data in csv.data(table)| limitTo: showAllItems ? numItemsMaximized : numItemsReduced">
       <td ng-repeat="i in data">
         <div ng-class="{treated: !csv.isSelectedColumn(table, csv.columns(table)[$index])}">
           {{i}}
         </div>
       </td>
     </tr>
+    <a ng-click="showAllItems = !showAllItems">
+      <span ng-if="showAllItems">reduce view...</span>
+      <span ng-if="!showAllItems">show more...</span>
+    </a>
   </table>
   <hr />
 </div>

@@ -5,6 +5,9 @@ angular.module 'app'
 
     $scope.csv = Csv
     $scope.table = ''
+    $scope.numItemsReduced = 10
+    $scope.numItemsMaximized = 100
+    $scope.showAllItems = no
 
     $scope.$watch 'csv.csvFile()', (val) ->
       if val?
