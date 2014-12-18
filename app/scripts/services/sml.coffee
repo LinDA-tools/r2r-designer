@@ -23,7 +23,7 @@ angular.module 'app'
       if _.isEmpty classes
         return '\n'
       else
-        return _.foldl classes, ((x, y) -> (x + ";\n").concat(y))
+        return _.foldl classes, ((x, y) -> x.concat(y + ";\n"))
 
     toProperties = (mapping, table, lookup) ->
       columns = _.keys mapping.properties[table]
