@@ -9,6 +9,7 @@
     [clojure.data.json :as json]
     [server.core.db :as db]
     [server.core.sparqlify :refer :all]
+    [server.core.openrdf :refer :all]
     [server.routes :refer [preflight]])
   (:import java.io.File)) 
 
@@ -19,36 +20,45 @@
   (let [api (:transform-api c)]
     (defroutes transform-routes
 
-      (OPTIONS (str api "/dump-db") request (preflight request))
-      (POST (str api "/dump-db") request
+      (OPTIONS (str api "/dump-db") r (preflight r))
+      (POST (str api "/dump-db") r
         (let [sparqlify (:sparqlify c)
               file-store (:file-store c) 
-              mapping (spy (:mapping (:body request)))
+              mapping (spy (:mapping (:body r)))
               f (spy (mapping-to-file mapping))
               dump-file (spy (sparqlify-dump sparqlify (str f)))
               -hash (spy (hash dump-file))]
           (swap! file-store (fn [x] (assoc x -hash dump-file))) 
           {:status 200 :body (str (:transformApi c) "/file/" -hash ".n3")}))
 
-      (OPTIONS (str api "/dump-csv") request (preflight request))
-      (POST (str api "/dump-csv") request
-        (let [sparqlify (:sparqlify c)
-              file-store (:file-store c) 
-              mapping (spy (:mapping (:body request)))
-              f (spy (mapping-to-file mapping))
-              dump-file (spy (sparqlify-csv sparqlify (str f)))
-              -hash (spy (hash dump-file))]
-          (swap! file-store (fn [x] (assoc x -hash dump-file))) 
-          {:status 200 :body (str (:transformApi c) "/file/" -hash ".n3")}))
-
-      (OPTIONS (str api "/publish/:to") request (preflight request))
-      (POST (str api "/publish/:to") [to :as r]
+      (OPTIONS (str api "/dump-csv") r (preflight r))
+      (POST (str api "/dump-csv") r
         (let [sparqlify (:sparqlify c)
               file-store (:file-store c) 
               mapping (:mapping (:body r))
               f (mapping-to-file mapping)
+              dump-file (sparqlify-csv sparqlify (str f))
+              -hash (hash dump-file)]
+          (swap! file-store (fn [x] (assoc x -hash dump-file))) 
+          {:status 200 :body (str (:transformApi c) "/file/" -hash ".n3")}))
+
+      (OPTIONS (str api "/publish/openrdf") r (preflight r))
+      (POST (str api "/publish/openrdf") r 
+        (let [sparqlify (:sparqlify c)
+              openrdf (:openrdf c)
+              file-store (:file-store c) 
+              mapping (:mapping (:body r))
+              f (mapping-to-file mapping)
+              dump-file (sparqlify-csv sparqlify (str f))
+              endpoint (upload! openrdf dump-file)]
+          {:status 200 :body endpoint}))
+      
+      (OPTIONS (str api "/publish/sparqlify") r (preflight r))
+      (POST (str api "/publish/sparqlify") r 
+        (let [sparqlify (:sparqlify c)
+              mapping (:mapping (:body r))
+              f (mapping-to-file mapping)
               endpoint (start-sparql-endpoint! sparqlify (str f))]
-          (info to)
           {:status 200 :body endpoint}))
 
       ;; TODO: possible access to arbitrary files on the system through known filenames?

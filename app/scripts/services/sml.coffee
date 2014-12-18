@@ -17,6 +17,8 @@ angular.module 'app'
         new_entry
 
     toClasses = (mapping, table) ->
+      if !mapping.classes[table]?
+        return '\n'
       classes = ('a ' + c.prefixedName[0] for c in mapping.classes[table])
       if _.isEmpty classes
         return '\n'
@@ -37,9 +39,9 @@ angular.module 'app'
     subjectTemplate = (mapping, table) ->
       if _.isEmpty mapping.subjectTemplate
         if _.isEmpty mapping.baseUri
-          return """?s = uri(tns:#{table})\n""" # TODO: independently refer to primary key column
-        else
           return """?s = bNode(concat('#{table}', '_')\n""" # TODO: independently refer to primary key column
+        else
+          return """?s = bNode(concat('#{mapping.baseUri}', '_')\n""" # TODO: independently refer to primary key column
       else
         template = mapping.subjectTemplate
         template = template.replace /{[^}]*}/g, (i) -> ';$;' + (columnToVar i) + ';$;'
@@ -127,7 +129,7 @@ angular.module 'app'
 #{createClause mapping, table}
     Construct {
         ?s 
-#{toClasses mapping, table};
+#{toClasses mapping, table}
 #{toProperties mapping, table, lookup}.
     }
     With
