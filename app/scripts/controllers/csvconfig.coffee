@@ -20,7 +20,6 @@ angular.module 'app'
           $scope.submitted = true
           $scope.success = true
           $scope.progress.submitting = false
-          $scope.csv.csvFile = $scope.file # for sharing between controllers
         .error () ->
           $scope.submitted = true
           $scope.success = false

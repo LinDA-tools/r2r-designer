@@ -1,9 +1,9 @@
 <div ng-controller="CsvReconcileCtrl">
-
+  
   <div class="row">
     <div class="col-md-6">
       <p align="left">
-        For file: <b>{{csv.csvFile.name}}</b>
+        For file: <b>{{csv.csvFile().name}}</b>
       </p>
     </div>
 
@@ -24,7 +24,7 @@
 
     <!-- tags -->
     <tr>
-      <td><input type="text" class="table-input" placeholder="{{table}}" ng-model="tableTag[table]" /></td>
+      <td><input type="text" class="table-input" ng-model="tableTag[table]" /></td>
       <td ng-repeat="column in columns"><input type="text" class="table-input" placeholder="{{column}}" ng-model="columnTags[column]"/></td>
     </tr>
 
