@@ -10,7 +10,7 @@
 (timbre/refer-timbre)
 
 (defn separator [file]
-  (let [first-line (re-find #".*\n" (slurp file))
+  (let [first-line (re-find #".*[\n\r]" (slurp file))
         tabs (count (filter #(= \tab %) first-line))
         commata (count (filter #(= \, %) first-line))]
     (if (> tabs commata)

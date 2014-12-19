@@ -70,8 +70,7 @@
                         :port 7531}
         openrdf-opts {:host "http://localhost:8080/openrdf-sesame"
                       :repo "r2r"
-                      :base-uri "http://mycompany.com"}
-        ]
+                      :base-uri "http://mycompany.com"}]
     (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-opts openrdf-opts)))))
 
 (defn start
