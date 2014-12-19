@@ -46,8 +46,7 @@
 
 (def openrdf-opts {:host "http://localhost:8080/openrdf-sesame"
                    :repo "r2r"
-                   :base-uri "http://mycompany.com"
-                   })
+                   :base-uri "http://mycompany.com"})
 
 (def system (atom (new-system 
                     db-opts 
