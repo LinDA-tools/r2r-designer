@@ -39,7 +39,7 @@
                 :join true 
                 :auto-reload? true})
 
-(def oracle-sparql-endpoint "http://dbpedia.org/sparql")
+(def oracle-sparql-endpoint "http://lov.okfn.org/endpoint/lov_aggregator")
 
 (def sparqlify-opts {:host "http://localhost"
                      :port 7531}) 
