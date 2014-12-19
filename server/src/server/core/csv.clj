@@ -17,5 +17,5 @@
 (defn get-data [c]
   (let [file @(:csv-file c)]
     (if file
-      (with-open [r (io/reader file)] (doall (take 20 (csv/read-csv r))))
+      (with-open [r (io/reader file)] (doall (take 10 (csv/read-csv r))))
       [])))
