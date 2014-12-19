@@ -9,13 +9,23 @@
 
 (timbre/refer-timbre)
 
+(defn separator [file]
+  (let [first-line (re-find #".*\n" (slurp file))
+        tabs (count (filter #(= \tab %) first-line))
+        commata (count (filter #(= \, %) first-line))]
+    (if (> tabs commata)
+      \tab
+      \,)))
+
 (defn set-file [c file]
-  (reset! (:csv-file c) file))
+  (reset! (:csv-file c) file)
+  (reset! (:separator c) (separator file)))
 
 (defn transpose [m] (apply mapv vector m))
 
 (defn get-data [c]
-  (let [file @(:csv-file c)]
+  (let [file @(:csv-file c)
+        separator @(:separator c)]
     (if file
-      (with-open [r (io/reader file)] (doall (take 10 (csv/read-csv r))))
+      (with-open [r (io/reader file)] (doall (take 10 (csv/read-csv r :separator separator))))
       [])))
