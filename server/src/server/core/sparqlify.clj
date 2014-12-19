@@ -60,7 +60,7 @@
 (defn sparqlify-dump [c mapping-file]
   (let [qef (config-sparqlify c mapping-file)
         it (QueryExecutionUtils/createIteratorDumpTriples qef)
-        f (File/createTempFile "dump" ".n3")]
+        f (File/createTempFile "dump" ".nt")]
     (with-open [out (io/output-stream f)] 
       (NTriplesWriter/write out it))
     f))
@@ -70,7 +70,7 @@
     (with-open [in (io/input-stream mapping-file)]
       (let [template-config (CsvMapperCliMain/readTemplateConfig in nil)
             view (first (.getDefinitions template-config)) ; pick only(?) view
-            f (File/createTempFile "dump" ".n3")
+            f (File/createTempFile "dump" ".nt")
             csv-config (CsvParserConfig.)]
         (with-open [out (io/output-stream f)]
           (let [csv-reader (InputSupplierCSVReader. csv-file csv-config)
