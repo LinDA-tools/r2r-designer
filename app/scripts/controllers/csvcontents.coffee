@@ -9,4 +9,4 @@ angular.module 'app'
     $scope.$watch 'csv.csvFile()', (val) ->
       if val?
         $scope.table = val.name
-      $scope.csv.getCsvData()
+    #   $scope.csv.getCsvData()

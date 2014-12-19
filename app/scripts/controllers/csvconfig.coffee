@@ -17,6 +17,7 @@ angular.module 'app'
     $scope.submit = () ->
       $scope.csv.submitCsvFile $scope.file, $scope.progress
         .success () ->
+          $scope.csv.getCsvData()
           $scope.submitted = true
           $scope.success = true
           $scope.progress.submitting = false

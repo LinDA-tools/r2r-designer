@@ -19,10 +19,13 @@
     (when (:pool c) 
       (if @(:pool c) (.close @(:pool c)))
       (reset! (:pool c) nil))
+    (reset! (:csv-file c) nil)
+    (reset! (:separator c) nil)
     c))
   
 (defn new-datasource [opts]
   (map->Datasource {:spec (atom (select-keys opts [:driver :host :name :username :password]))
                     :pool (atom nil)
                     :csv-file (atom nil)
+                    :separator (atom nil)
                     :max-pool 10}))
