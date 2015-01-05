@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .controller 'CsvConfigCtrl', ($scope, Csv) ->
 
     $scope.csv = Csv

@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .controller 'RdbRefineCtrl', ($scope, _, Rdb, Rdf) ->
 
     $scope.rdb = Rdb

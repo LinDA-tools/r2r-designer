@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .controller 'PublishCtrl', ($scope, $timeout, $window, _, Rdb, Csv, Rdf, Sml, Transform) ->
 
     $scope.rdb = Rdb

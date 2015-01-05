@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .factory 'Oracle', ($http, _, Config) ->
 
     oracleApi = Config.backend + '/api/v1/oracle'

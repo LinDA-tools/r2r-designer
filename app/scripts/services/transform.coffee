@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .factory 'Transform', ($http, _) ->
 
     host = 'http://localhost:3000'

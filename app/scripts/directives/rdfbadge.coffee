@@ -1,6 +1,6 @@
 'use strict'
 
-app = angular.module('app')
+app = angular.module 'r2rDesignerApp'
 
 app.directive 'rdfBadge', ($timeout) ->
   restrict: 'A'

@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .controller 'ReconcileCtrl', ($scope, _, Oracle, Rdb, Rdf) ->
 
     $scope.rdb = Rdb

@@ -1,0 +1,26 @@
+<div class="main container" style="min-height:128em">
+
+  <div class="header">
+    <ul class="nav nav-pills pull-right">
+      <li class="active"><a ng-href="#">Home</a></li>
+      <li><a ng-href="#">About</a></li>
+      <li><a ng-href="#">Contact</a></li>
+    </ul>
+    <h3 class="text-muted">R2R Mapping Designer</h3>
+  </div>
+ 
+  <wizard>
+    <step ng-repeat="i in steps"
+          name="{{steps[$index].name}}" 
+          heading="{{steps[$index].heading}}" 
+          description="{{steps[$index].description}}" 
+          sidetip="sidetip">
+      <div ng-bind-html="'{{steps[$index].content}}'"></div>
+      <br /> 
+      <ng-include src="template($index)"></ng-include>
+    </step>
+  </wizard>
+
+  <p align="center" style="font-size: 20px;margin-top: 10em">❦</p>
+</div>
+
