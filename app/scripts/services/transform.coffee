@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .factory 'Transform', ($http, _) ->
 
     host = 'http://localhost:3000'
@@ -13,7 +13,6 @@ angular.module 'app'
             mapping: mapping
           }
             .then (res) ->
-              console.log res
               transformApi + res.data
 
       dumpcsv: (mapping) ->
@@ -22,7 +21,6 @@ angular.module 'app'
             mapping: mapping
           }
             .then (res) ->
-              console.log res
               transformApi + res.data
 
       publish: (to, mapping) ->

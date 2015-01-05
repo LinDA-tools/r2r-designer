@@ -10,13 +10,7 @@
     org.apache.commons.cli.Options
     org.apache.jena.riot.out.NTriplesWriter
     org.aksw.jena_sparql_api.core.utils.QueryExecutionUtils
-    org.aksw.commons.util.MapReader
-    [org.aksw.sparqlify.config.v0_2.bridge SchemaProviderImpl SyntaxBridge]
-    org.aksw.sparqlify.core.RdfViewSystemOld
-    org.aksw.sparqlify.core.algorithms.CandidateViewSelectorImpl
-    org.aksw.sparqlify.core.algorithms.OpMappingRewriterImpl
-    org.aksw.sparqlify.core.algorithms.ViewDefinitionNormalizerImpl
-    org.aksw.sparqlify.core.interfaces.OpMappingRewriter
+    ;; org.aksw.sparqlify.core.RdfViewSystemOld
     org.aksw.sparqlify.util.SparqlifyUtils
     org.aksw.sparqlify.web.SparqlifyCliHelper
     org.aksw.sparqlify.web.SparqlFormatterUtils
@@ -34,8 +28,8 @@
     mapping-file))
 
 ;; needed?
-(defn init-sparqlify! []
-  (RdfViewSystemOld/initSparqlifyFunctions))
+;; (defn init-sparqlify! []
+;;   (RdfViewSystemOld/initSparqlifyFunctions))
 
 ;; pseudo-parse pseudo-options into config [...]
 (defn mapping-to-config [mapping-file]
@@ -66,7 +60,7 @@
 (defn sparqlify-dump [c mapping-file]
   (let [qef (config-sparqlify c mapping-file)
         it (QueryExecutionUtils/createIteratorDumpTriples qef)
-        f (File/createTempFile "dump" ".n3")]
+        f (File/createTempFile "dump" ".nt")]
     (with-open [out (io/output-stream f)] 
       (NTriplesWriter/write out it))
     f))
@@ -76,7 +70,7 @@
     (with-open [in (io/input-stream mapping-file)]
       (let [template-config (CsvMapperCliMain/readTemplateConfig in nil)
             view (first (.getDefinitions template-config)) ; pick only(?) view
-            f (File/createTempFile "dump" ".n3")
+            f (File/createTempFile "dump" ".nt")
             csv-config (CsvParserConfig.)]
         (with-open [out (io/output-stream f)]
           (let [csv-reader (InputSupplierCSVReader. csv-file csv-config)

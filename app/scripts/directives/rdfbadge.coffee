@@ -1,6 +1,6 @@
 'use strict'
 
-app = angular.module('app')
+app = angular.module 'r2rDesignerApp'
 
 app.directive 'rdfBadge', ($timeout) ->
   restrict: 'A'
@@ -77,5 +77,5 @@ app.directive 'rdfBadge', ($timeout) ->
     element.bind 'mouseenter', () ->
       scope.$emit 'changeSidetip', scope.tmpl
 
-    element.bind 'mouseleave', () ->
-      scope.$emit 'changeSidetip', ''
+    # element.bind 'mouseleave', () ->
+    #   scope.$emit 'changeSidetip', ''

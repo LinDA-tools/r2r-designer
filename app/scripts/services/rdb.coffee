@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .factory 'Rdb', ($http, _, Config) ->
 
     dbAdapter = Config.backend + '/api/v1/db'
@@ -11,7 +11,12 @@ angular.module 'app'
     selectedColumns = {}
     
     {
-      datasource: {}
+      datasource:
+        host: 'localhost'
+        driver: 'org.postgresql.ds.PGSimpleDataSource'
+        name: 'mydb'
+        username: 'postgres'
+        password: ''
       
       tables: () -> tables
       tableColumns: () -> tableColumns

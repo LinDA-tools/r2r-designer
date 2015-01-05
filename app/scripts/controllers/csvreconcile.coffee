@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .controller 'CsvReconcileCtrl', ($scope, _, Oracle, Csv, Rdf) ->
 
     $scope.csv = Csv
@@ -10,24 +10,27 @@ angular.module 'app'
 
     $scope.table = ''
     $scope.tableTag = {}
-
     $scope.columns = []
     $scope.columnTags = {}
 
-    $scope.$watch 'csv.csvFile', (val) ->
+    $scope.$watch 'csv.csvFile()', (val) ->
       if val?
         $scope.table = val.name
 
-    $scope.$watch 'table', (val) ->
+    $scope.$watch 'csv.selectedColumns()[table]', (val) ->
       if val?
-        $scope.columns = $scope.csv.selectedColumns()[val]
+        $scope.columns = $scope.csv.selectedColumns()[$scope.table]
 
     $scope.ask = (table, columns) ->
-      $scope.loading = true
-      Oracle.ask table, $scope.tableTag[table], columns, $scope.columnTags
-        .then (promise) ->
-          $scope.loading = false
-          $scope.rdf.suggestions[table] = promise
+      if table? and columns?
+        $scope.loading = true
+        Oracle.ask table, $scope.tableTag[table], columns, $scope.columnTags
+          .success (data) ->
+            $scope.loading = false
+            $scope.rdf.suggestions[table] = data
+          .error () ->
+            console.log "error: could not connect to server"
+            $scope.loading = false
 
     $scope.getColumnSuggestions = (table, column) ->
       if $scope.rdf.suggestions? and $scope.rdf.suggestions[table] and $scope.rdf.suggestions[table].columns?

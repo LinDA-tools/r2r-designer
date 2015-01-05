@@ -1,14 +1,12 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .controller 'CsvContentsCtrl', ($scope, Csv) ->
 
     $scope.csv = Csv
     $scope.table = ''
 
-    $scope.$watch 'csv.csvFile', (val) ->
+    $scope.$watch 'csv.csvFile()', (val) ->
       if val?
         $scope.table = val.name
-
-    $scope.$watch 'csv.uploads()', (val) ->
-      $scope.csv.getCsvData()
+    #   $scope.csv.getCsvData()

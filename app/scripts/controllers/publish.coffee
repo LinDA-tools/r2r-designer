@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .controller 'PublishCtrl', ($scope, $timeout, $window, _, Rdb, Csv, Rdf, Sml, Transform) ->
 
     $scope.rdb = Rdb
@@ -49,6 +49,17 @@ angular.module 'app'
         .then (url) ->
           w.location = url
 
+    $scope.safe_tags_replace = (str) ->
+      tagsToReplace =
+        '&': '&amp;'
+        '<': '&lt;'
+        '>': '&gt;'
+
+      replaceTag = (tag) ->
+        tagsToReplace[tag] or tag
+
+      str.replace /[&<>]/g, replaceTag
+      
     $scope.mappingdb = (table) ->
       mapping =
         source: 'rdb'
@@ -64,7 +75,7 @@ angular.module 'app'
       $scope.currentMapping = $scope.sml.toSml mapping, table
       w = $window.open ''
       w.document.open()
-      w.document.write '<pre>' + $scope.currentMapping + '</pre>'
+      w.document.write '<pre>' + $scope.safe_tags_replace($scope.currentMapping) + '</pre>'
       w.document.close()
 
     $scope.mappingcsv = () ->
@@ -80,22 +91,36 @@ angular.module 'app'
         literalTypes: $scope.rdf.propertyLiteralTypes
       
       $scope.currentMapping = $scope.sml.toSml mapping
+      console.log $scope.currentMapping
       w = $window.open ''
       w.document.open()
-      w.document.write '<pre>' + $scope.currentMapping + '</pre>'
+      w.document.write '<pre>' + $scope.safe_tags_replace($scope.currentMapping) + '</pre>'
       w.document.close()
 
     $scope.publish = (to) ->
       $scope.publishing = true
-      mapping =
-        tables: $scope.rdb.selectedTables()
-        columns: $scope.rdb.selectedColumns()
-        baseUri: $scope.rdf.baseUri
-        subjectTemplate: $scope.rdf.subjectTemplate
-        classes: $scope.rdf.selectedClasses
-        properties: $scope.rdf.selectedProperties
-        literals: $scope.rdf.propertyLiteralSelection
-        literalTypes: $scope.rdf.propertyLiteralTypes
+      if to == 'openrdf'
+        mapping =
+          source: 'csv'
+          tables: $scope.csv.selectedTables()
+          columns: $scope.csv.selectedColumns()
+          baseUri: $scope.rdf.baseUri
+          subjectTemplate: $scope.rdf.subjectTemplate
+          classes: $scope.rdf.selectedClasses
+          properties: $scope.rdf.selectedProperties
+          literals: $scope.rdf.propertyLiteralSelection
+          literalTypes: $scope.rdf.propertyLiteralTypes
+      else
+        mapping =
+          source: 'rdb'
+          tables: $scope.rdb.selectedTables()
+          columns: $scope.rdb.selectedColumns()
+          baseUri: $scope.rdf.baseUri
+          subjectTemplate: $scope.rdf.subjectTemplate
+          classes: $scope.rdf.selectedClasses
+          properties: $scope.rdf.selectedProperties
+          literals: $scope.rdf.propertyLiteralSelection
+          literalTypes: $scope.rdf.propertyLiteralTypes
 
       $scope.currentMapping = $scope.sml.toSml mapping
 

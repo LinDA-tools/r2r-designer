@@ -11,7 +11,7 @@
     <div class="col-md-8">
       <p align="right">
         <i class="fa fa-spinner fa-spin" ng-show="loading"></i>&nbsp;
-        <button class="btn btn-primary" ng-click="ask(table, columns)" ng-class="{disabled: table == ''}">Ask the Oracle!</button>
+        <button class="btn btn-primary" ng-click="ask(table, columns)" ng-class="{disabled: !table || table == ''}">Ask the Oracle!</button>
       </p>
     </div>
   </div>

@@ -1,6 +1,6 @@
 'use strict'
 
-app = angular.module 'app', [
+app = angular.module 'r2rDesignerApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
@@ -13,10 +13,10 @@ app = angular.module 'app', [
 
 app.config ($routeProvider) ->
   $routeProvider.when '/csv',
-    templateUrl: 'partials/csvtrans.html'
-    controller: 'MainCtrl'
+    templateUrl: 'partials/main.html'
+    controller: 'CsvCtrl'
   .when '/rdb',
-    templateUrl: 'partials/rdbtrans.html'
-    controller: 'MainCtrl'
+    templateUrl: 'partials/main.html'
+    controller: 'RdbCtrl'
   .otherwise
     redirectTo: '/csv'

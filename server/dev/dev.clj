@@ -30,11 +30,13 @@
     [server.components.datasource :refer :all]
     [server.components.oracle :refer :all]
     [server.components.sparqlify :refer :all]
+    [server.components.openrdf :refer :all]
     [server.components.ring :refer :all]
     [server.core.db :refer :all]
     [server.core.csv :as csv]
     [server.core.oracle :refer :all]
     [server.core.sparqlify :refer :all]
+    [server.core.openrdf :refer :all]
     [server.routes.app :refer [app-fn]]
     [server.system :refer [new-system]]))
 
@@ -65,8 +67,11 @@
                    :auto-reload? true}
         oracle-sparql-endpoint "http://lov.okfn.org/endpoint/lov_aggregator"
         sparqlify-opts {:host "http://localhost"
-                        :port 7531}]
-    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-opts)))))
+                        :port 7531}
+        openrdf-opts {:host "http://localhost:8080/openrdf-sesame"
+                      :repo "r2r"
+                      :base-uri "http://mycompany.com"}]
+    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-opts openrdf-opts)))))
 
 (defn start
   "Starts the system running, updates the Var #'system."

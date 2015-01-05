@@ -1,11 +1,11 @@
 <div ng-controller="PublishCtrl">
-  <button class="btn btn-default" ng-click="dumpdb()">Download RDF dump</button>
-  <button class="btn btn-default" ng-click="mappingdb()">Download mapping file</button>
+  <button class="btn btn-default" ng-class="{disabled: !table || table == ''}" ng-click="dumpdb()">Download RDF dump</button>
+  <button class="btn btn-default" ng-class="{disabled: !table || table == ''}" ng-click="mappingdb()">Download mapping file</button>
 
   <br />
 
   <div class="btn-group">
-    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    <button class="btn btn-primary dropdown-toggle" ng-class="{disabled: !table || table == ''}" data-toggle="dropdown" aria-expanded="false">
       Publish <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">

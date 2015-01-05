@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .factory 'Sml', (_) ->
 
     newLookup = () ->
@@ -17,11 +17,13 @@ angular.module 'app'
         new_entry
 
     toClasses = (mapping, table) ->
+      if !mapping.classes[table]?
+        return '\n'
       classes = ('a ' + c.prefixedName[0] for c in mapping.classes[table])
       if _.isEmpty classes
         return '\n'
       else
-        return _.foldl classes, ((x, y) -> (x + ";\n").concat(y))
+        return (_.foldl classes, ((x, y) -> (x + ';\n').concat(y))) + ';'
 
     toProperties = (mapping, table, lookup) ->
       columns = _.keys mapping.properties[table]
@@ -29,7 +31,7 @@ angular.module 'app'
       if _.isEmpty properties
         return '\n'
       else
-        return _.foldl properties, ((x, y) -> (x + ";\n").concat(y))
+        return _.foldl properties, ((x, y) -> (x + ';\n').concat(y))
 
     columnToVar = (column) ->
       '?' + column.substring(1, column.length-1)
@@ -37,9 +39,9 @@ angular.module 'app'
     subjectTemplate = (mapping, table) ->
       if _.isEmpty mapping.subjectTemplate
         if _.isEmpty mapping.baseUri
-          return """?s = uri(tns:#{table})\n""" # TODO: independently refer to primary key column
-        else
           return """?s = bNode(concat('#{table}', '_')\n""" # TODO: independently refer to primary key column
+        else
+          return """?s = bNode(concat('#{mapping.baseUri}', '_')\n""" # TODO: independently refer to primary key column
       else
         template = mapping.subjectTemplate
         template = template.replace /{[^}]*}/g, (i) -> ';$;' + (columnToVar i) + ';$;'
@@ -95,7 +97,13 @@ angular.module 'app'
           return null
       ), null)
 
-      return (_.foldl (baseUris.concat suggestedUris), ((x, y) -> (x + '\n').concat y))
+      baseUri =
+        if !_.isEmpty(mapping.baseUri)
+          ["""Prefix tns: <#{mapping.baseUri}>"""]
+        else
+          []
+
+      return (_.foldl (baseUris.concat suggestedUris, baseUri), ((x, y) -> (x + '\n').concat y))
 
     createClause = (mapping, table) ->
       if mapping.source == 'csv'
@@ -117,12 +125,11 @@ angular.module 'app'
 
         return """
 #{namespacePrefixes mapping}
-Prefix tns: <#{mapping.baseUri}>
 
 #{createClause mapping, table}
     Construct {
         ?s 
-#{toClasses mapping, table};
+#{toClasses mapping, table}
 #{toProperties mapping, table, lookup}.
     }
     With
