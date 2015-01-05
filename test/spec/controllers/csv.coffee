@@ -1,17 +1,17 @@
 'use strict'
 
-describe 'Controller: VocabCtrl', ->
+describe 'Controller: CsvCtrl', ->
 
   # load the controller's module
   beforeEach module 'r2rDesignerApp'
 
-  VocabCtrl = {}
+  CsvCtrl = {}
   scope = {}
 
   # Initialize the controller and a mock scope
   beforeEach inject ($controller, $rootScope) ->
     scope = $rootScope.$new()
-    VocabCtrl = $controller 'VocabCtrl', {
+    CsvCtrl = $controller 'CsvCtrl', {
       $scope: scope
     }
 
