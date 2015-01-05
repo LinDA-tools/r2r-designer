@@ -22,11 +22,15 @@ angular.module 'app'
         $scope.columns = $scope.csv.selectedColumns()[$scope.table]
 
     $scope.ask = (table, columns) ->
-      $scope.loading = true
-      Oracle.ask table, $scope.tableTag[table], columns, $scope.columnTags
-        .then (promise) ->
-          $scope.loading = false
-          $scope.rdf.suggestions[table] = promise
+      if table? and columns?
+        $scope.loading = true
+        Oracle.ask table, $scope.tableTag[table], columns, $scope.columnTags
+          .success (data) ->
+            $scope.loading = false
+            $scope.rdf.suggestions[table] = data
+          .error () ->
+            console.log "error: could not connect to server"
+            $scope.loading = false
 
     $scope.getColumnSuggestions = (table, column) ->
       if $scope.rdf.suggestions? and $scope.rdf.suggestions[table] and $scope.rdf.suggestions[table].columns?

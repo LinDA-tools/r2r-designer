@@ -11,8 +11,11 @@
  
   <div class="row">
     <div class="col-md-6">
-      <p align="left">
+      <p align="left" ng-show="csv.csvFile().name">
         For file: <b>{{csv.csvFile().name}}</b>
+      </p>
+      <p align="left" ng-show="!csv.csvFile().name">
+        No file selected!</b>
       </p>
     </div>
   </div>

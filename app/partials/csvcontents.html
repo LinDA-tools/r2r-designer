@@ -1,6 +1,11 @@
 <div ng-controller="CsvContentsCtrl">
 
-  Content of: <b>{{csv.csvFile().name}}</b>
+  <p align="left" ng-show="csv.csvFile().name">
+    Content of: <b>{{csv.csvFile().name}}</b>
+  </p>
+  <p align="left" ng-show="!csv.csvFile().name">
+    No file selected!</b>
+  </p>
 
   <div class="table-scrollable">
     <table class="table">

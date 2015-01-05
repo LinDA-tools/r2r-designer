@@ -1,11 +1,11 @@
 <div ng-controller="PublishCtrl">
-  <button class="btn btn-default" ng-click="dumpcsv()">Download RDF dump</button>
-  <button class="btn btn-default" ng-click="mappingcsv()">Download mapping file</button>
+  <button class="btn btn-default" ng-class="{disabled: !csv.csvFile().name != ''}" ng-click="dumpcsv()">Download RDF dump</button>
+  <button class="btn btn-default" ng-class="{disabled: !csv.csvFile().name != ''}" ng-click="mappingcsv()">Download mapping file</button>
 
   <br />
 
   <div class="btn-group">
-    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    <button class="btn btn-primary dropdown-toggle" ng-class="{disabled: !csv.csvFile().name != ''}" data-toggle="dropdown" aria-expanded="false">
       Publish <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">
