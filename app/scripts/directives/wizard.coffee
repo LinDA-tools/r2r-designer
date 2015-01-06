@@ -82,6 +82,7 @@ app.directive 'next', ->
   require: '^wizard'
   link: (scope, element, attrs, ctrl) ->
     element.bind 'click', ->
+      scope.$emit 'changeSidetip', ''
       newStep = ctrl.nextStep scope.name
       ctrl.scrollTo newStep
 
@@ -90,6 +91,7 @@ app.directive 'prev', ->
   require: '^wizard'
   link: (scope, element, attrs, ctrl) ->
     element.bind 'click', ->
+      scope.$emit 'changeSidetip', ''
       newStep = ctrl.prevStep scope.name
       ctrl.scrollTo newStep
 
@@ -98,5 +100,6 @@ app.directive 'goto', ->
   require: '^wizard'
   link: (scope, element, attrs, ctrl) ->
     element.bind 'click', ->
+      scope.$emit 'changeSidetip', ''
       ctrl.goTo attrs.goto
       ctrl.scrollTo attrs.goto

@@ -9,9 +9,6 @@
 ###
 angular.module 'r2rDesignerApp'
   .controller 'RdbCtrl', ($scope) ->
-    $scope.sidetip =
-      tooltip: ''
-      tmpl: ''
 
     $scope.template = (i) -> $scope.steps[i].partial
 
