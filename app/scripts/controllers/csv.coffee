@@ -41,7 +41,7 @@ angular.module 'r2rDesignerApp'
            </ul>
           </p>
         """
-        partial: 'partials/csvconfig.html'
+        partial: 'partials/csv/config.html'
       }
       {
         name: '3. contents of CSV file'
@@ -52,7 +52,7 @@ angular.module 'r2rDesignerApp'
           <p>The screen shows the column headers and the content of the first few rows. Unselected columns are greyed out. Clicking on the column header buttons toggles the selection state of the respective column.</p>
           <p>When the columns selection is finished, click “next”.</p>
         """
-        partial: 'partials/csvcontents.html'
+        partial: 'partials/csv/contents.html'
       }
       {
         name: '4. transforming'
@@ -66,7 +66,7 @@ angular.module 'r2rDesignerApp'
             </ul>
           <p>You will have to go through all columns that were selected for transformation in the previous step (“Columns”).</p>
         """
-        partial: 'partials/csvreconcile.html'
+        partial: 'partials/csv/transform.html'
       }
       {
         name: '6. publishing'
@@ -76,7 +76,7 @@ angular.module 'r2rDesignerApp'
           <p>In this step, you choose whether you dump the current state of the database to an RDF triple store, or establish a SPARQL endpoint that performs the specified transformations dynamically on request.</p>
           <p>In either case, you will have to provide the respective technical information, such as file paths and the like.</p>
         """
-        partial: 'partials/csvpublish.html'
+        partial: 'partials/csv/publish.html'
       }
       {
         name: '7. finished'

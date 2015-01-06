@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'r2rDesignerApp'
-  .controller 'PublishCtrl', ($scope, $timeout, $window, _, Rdb, Csv, Rdf, Sml, Transform) ->
+  .controller 'CsvPublishCtrl', ($scope, $timeout, $window, _, Rdb, Csv, Rdf, Sml, Transform) ->
 
     $scope.rdb = Rdb
     $scope.csv = Csv
@@ -135,3 +135,4 @@ angular.module 'r2rDesignerApp'
           $scope.publishing = false
           $scope.published = true
           $scope.success = false
+

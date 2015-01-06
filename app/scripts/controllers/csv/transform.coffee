@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'r2rDesignerApp'
-  .controller 'CsvReconcileCtrl', ($scope, _, Oracle, Csv, Rdf) ->
+  .controller 'CsvTransformCtrl', ($scope, _, Oracle, Csv, Rdf) ->
 
     $scope.csv = Csv
     $scope.rdf = Rdf

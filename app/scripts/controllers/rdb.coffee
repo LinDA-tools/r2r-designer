@@ -49,7 +49,7 @@ angular.module 'r2rDesignerApp'
           <p>In this step, you configure the access data and credentials for your database.</p>
           <p>If a SPARQL endpoint is to be set up, your access data credentials will be stored in its configuration and be used throughout its lifetime.</p>
         """
-        partial: 'partials/rdbconfig.html'
+        partial: 'partials/rdb/config.html'
       }
       {
         name: '3. database contents'
@@ -61,7 +61,7 @@ angular.module 'r2rDesignerApp'
           <p>In this step, you select which tables and which columns are to be taken into account in the transformation. 
              Whenever a selected column is a Foreign Key, the referenced table and its Primary Key column(s) should also be selected.</p>
         """
-        partial: 'partials/rdbcontents.html'
+        partial: 'partials/rdb/contents.html'
       }
       {
         name: '4. transforming'
@@ -74,7 +74,7 @@ angular.module 'r2rDesignerApp'
           <p>In this step, you specify the translations of table names to types, and of column headers to properties. You first select a table, ask the oracle, and then select from its ranked answers.</p>
           <p>You will have to go through all those tables and columns that were selected for transformation in the previous step (“Database Contents”).</p>
         """
-        partial: 'partials/rdbreconcile.html'
+        partial: 'partials/rdb/transform.html'
       }
       {
         name: '5. revising'
@@ -91,7 +91,7 @@ angular.module 'r2rDesignerApp'
         content: """
           <p>In this step, you specify the URIs that will be generated for each row of every selected table. Typically, they are made up of your web address and the content of the column(s) that constitute the Primary Key, intervened by fixed separators.</p>
         """
-        partial: 'partials/rdbrefine.html'
+        partial: 'partials/rdb/refine.html'
       }
       {
         name: '6. publishing'
@@ -103,7 +103,7 @@ angular.module 'r2rDesignerApp'
           <p>In this step, you choose whether you dump the current state of the database to an RDF triple store, or establish a SPARQL endpoint that performs the specified transformations dynamically on request.</p>
           <p>In either case, you will have to provide the respective technical information, such as file paths and the like.</p>
         """
-        partial: 'partials/rdbpublish.html'
+        partial: 'partials/rdb/publish.html'
       }
       {
         name: '7. finished'

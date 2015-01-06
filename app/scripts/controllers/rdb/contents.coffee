@@ -1,6 +1,6 @@
 'use strict'
 
 angular.module 'r2rDesignerApp'
-  .controller 'DbContentsCtrl', ($scope, Rdb) ->
+  .controller 'RdbContentsCtrl', ($scope, Rdb) ->
 
     $scope.rdb = Rdb
