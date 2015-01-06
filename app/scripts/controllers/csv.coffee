@@ -65,6 +65,23 @@ angular.module 'r2rDesignerApp'
         partial: 'partials/csv/transform.html'
       }
       {
+        name: '5. revising'
+        heading: 'Revise Output RDF'
+        description: """
+          <p>These URIs need to be globally unique, so
+            <ul>
+              <li>the web address the URIs point to should be a site that you control</li>
+              <li>the URIs should comprise (at least) the content of those column(s) that constitute the Primary Key of the table</li>
+            </ul>
+          </p>
+          <p>Beyond global uniqueness, you should strive for long term stability of the generated URIs, since they may be referred to by others.</p>
+        """
+        content: """
+          <p>In this step, you specify the URIs that will be generated for each row of every selected table. Typically, they are made up of your web address and the content of the column(s) that constitute the Primary Key, intervened by fixed separators.</p>
+        """
+        partial: 'partials/csv/revise.html'
+      }
+      {
         name: '6. publishing'
         heading: 'Publish'
         description: '<p>A SPARQL endpoint is a service that processes queries against a RDF triple store. Here, the triple store is hypothetical, the queries are translated to SQL, your database is queried, and the results are translated according to your mapping specification.</p>'

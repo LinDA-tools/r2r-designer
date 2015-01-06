@@ -1,21 +1,19 @@
 <div ng-controller="CsvTransformCtrl">
   
-  <div class="row">
-    <div class="col-md-6">
-      <p align="left" ng-show="csv.csvFile().name">
-        For file: <b>{{csv.csvFile().name}}</b>
-      </p>
-      <p align="left" ng-show="!csv.csvFile().name">
-        No file selected!</b>
-      </p>
-    </div>
+  <div class="col-md-6">
+    <p align="left" ng-show="csv.csvFile().name">
+      For file: <b>{{csv.csvFile().name}}</b>
+    </p>
+    <p align="left" ng-show="!csv.csvFile().name">
+      No file selected!</b>
+    </p>
+  </div>
 
-    <div class="col-md-6">
-      <p align="right">
-        <i class="fa fa-spinner fa-spin" ng-show="loading"></i>&nbsp;
-        <button class="btn btn-primary" ng-class="{disabled: !csv.csvFile().name != ''}" ng-click="ask(table, columns)">Ask the Oracle!</button>
-      </p>
-    </div>
+  <div class="col-md-6">
+    <p align="right">
+      <i class="fa fa-spinner fa-spin" ng-show="loading"></i>&nbsp;
+      <button class="btn btn-primary" ng-class="{disabled: !csv.csvFile().name != ''}" ng-click="ask(table, columns)">Ask the Oracle!</button>
+    </p>
   </div>
 
   <table class="table table-scrollable">
@@ -35,6 +33,7 @@
     <tr>
       <td>
         <div class="list-group">
+          <!-- TODO: better organizing; div inside link? -->
           <a href="" class="list-group-item"
              ng-repeat="i in rdf.suggestions[table].table.recommend" ng-click="selectClass(table, i)" ng-class="{active: isSelectedClass(table, i)}">
             <div rdf-badge
@@ -55,6 +54,7 @@
       </td>
       <td ng-repeat="column in columns">
         <div class="list-group">
+          <!-- TODO: see above -->
           <a href="" class="list-group-item" 
              ng-repeat="i in getColumnSuggestions(table, column)" ng-click="selectProperty(table, column, i)" ng-class="{active: isSelectedProperty(table, column, i)}">
             <div rdf-badge

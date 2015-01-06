@@ -88,7 +88,7 @@ angular.module 'r2rDesignerApp'
         content: """
           <p>In this step, you specify the URIs that will be generated for each row of every selected table. Typically, they are made up of your web address and the content of the column(s) that constitute the Primary Key, intervened by fixed separators.</p>
         """
-        partial: 'partials/rdb/refine.html'
+        partial: 'partials/rdb/revise.html'
       }
       {
         name: '6. publishing'

@@ -1,21 +1,13 @@
 'use strict'
 
 angular.module 'r2rDesignerApp'
-  .controller 'CsvRefineCtrl', ($scope, _, Csv, Rdf) ->
+  .controller 'RdbReviseCtrl', ($scope, _, Rdb, Rdf) ->
 
-    $scope.csv = Csv
+    $scope.rdb = Rdb
     $scope.rdf = Rdf
 
     $scope.table = ''
     $scope.columns = []
-
-    $scope.$watch 'csv.csvFile()', (val) ->
-      if val?
-        $scope.table = val.name
-
-    $scope.$watch 'csv.selectedColumns()[table]', (val) ->
-      if val?
-        $scope.columns = $scope.csv.selectedColumns()[$scope.table]
 
     $scope.selectedColumns = []
     $scope.cursorpos = 0
@@ -23,6 +15,14 @@ angular.module 'r2rDesignerApp'
     $scope.propertyLiteralTypeOptions = ['Plain Literal', 'Typed Literal', 'Blank Node']
     $scope.propertyLiteralTypes =
       ['xsd:anyURI', 'xsd:base64Binary', 'xsd:boolean', 'xsd:date', 'xsd:dateTime', 'xsd:decimal', 'xsd:double', 'xsd:duration', 'xsd:float', 'xsd:hexBinary', 'xsd:gDay', 'xsd:gMonth', 'xsd:gMonthDay', 'xsd:gYear', 'xsd:gYearMonth', 'xsd:NOTATION', 'xsd:QName', 'xsd:string', 'xsd:time']
+
+    $scope.$watch 'rdb.selectedTables()', (val) ->
+      if val?
+        $scope.table = _.first $scope.rdb.selectedTables()
+
+    $scope.$watch 'table', (val) ->
+      if val?
+        $scope.columns = $scope.rdb.selectedColumns()[val]
 
     $scope.isSelected = (column) -> _.contains $scope.selectedColumns, column
 

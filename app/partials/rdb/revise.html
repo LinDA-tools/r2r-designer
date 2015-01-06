@@ -1,5 +1,5 @@
-<div ng-controller="CsvRefineCtrl">
-  
+<div ng-controller="RdbReviseCtrl">
+
   <div class="row">
     <label for="baseUriInput" class="col-md-2 control-label">Base URI</label>
     <div id="baseUriInput" class="col-md-8">
@@ -10,12 +10,11 @@
   <hr />
  
   <div class="row">
-    <div class="col-md-6">
-      <p align="left" ng-show="csv.csvFile().name">
-        For file: <b>{{csv.csvFile().name}}</b>
-      </p>
-      <p align="left" ng-show="!csv.csvFile().name">
-        No file selected!</b>
+    <div class="col-md-4">
+      <p align="left">
+        <select class="form-control" ng-model="table" ng-options="table for table in rdb.selectedTables()">
+          <option>--</option>
+        </select>
       </p>
     </div>
   </div>
