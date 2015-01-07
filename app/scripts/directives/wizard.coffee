@@ -1,25 +1,25 @@
 'use strict'
 
-app = angular.module 'app'
+app = angular.module 'r2rDesignerApp'
 
 app.directive 'wizard', () ->
   restrict: 'EA'
   transclude: true
   templateUrl: 'partials/wizard.html'
   controller: ($scope, $document, $timeout) ->
-    $scope.steps = []
+    $scope.wizsteps = []
     
     $scope.$on 'changeSidetip', (event, data) ->
       $timeout () ->
         $scope.sidetip.tmpl = data
 
     @addStep = (step) ->
-      $scope.steps.push step
-      if $scope.steps.length == 1
+      $scope.wizsteps.push step
+      if $scope.wizsteps.length == 1
         @goTo step.name
 
     @getStep = (name) ->
-      (i for i in $scope.steps when i.name == name)[0]
+      (i for i in $scope.wizsteps when i.name == name)[0]
 
     @goTo = (name) ->
       getStep = @getStep
@@ -34,20 +34,20 @@ app.directive 'wizard', () ->
 
     @fnStep = (current, fn) ->
       next = @getStep current
-      index = $scope.steps.indexOf next
+      index = $scope.wizsteps.indexOf next
       newIndex = fn index
       if index != -1 and
          newIndex >= 0 and
-         newIndex < $scope.steps.length and
-         $scope.steps[newIndex]?
-        @goTo $scope.steps[newIndex].name
-      $scope.steps[newIndex].name
+         newIndex < $scope.wizsteps.length and
+         $scope.wizsteps[newIndex]?
+        @goTo $scope.wizsteps[newIndex].name
+      $scope.wizsteps[newIndex].name
 
     @nextStep = (current) -> @fnStep current, (x) -> ++x
     @prevStep = (current) -> @fnStep current, (x) -> --x
 
-    @isFirst = (name) -> $scope.steps[0].name == name
-    @isLast = (name) -> $scope.steps[$scope.steps.length - 1].name == name
+    @isFirst = (name) -> $scope.wizsteps[0].name == name
+    @isLast = (name) -> $scope.wizsteps[$scope.wizsteps.length - 1].name == name
 
     @scrollTo = (name, offs, duration) ->
       section = (document.getElementById name)
@@ -82,6 +82,7 @@ app.directive 'next', ->
   require: '^wizard'
   link: (scope, element, attrs, ctrl) ->
     element.bind 'click', ->
+      scope.$emit 'changeSidetip', ''
       newStep = ctrl.nextStep scope.name
       ctrl.scrollTo newStep
 
@@ -90,6 +91,7 @@ app.directive 'prev', ->
   require: '^wizard'
   link: (scope, element, attrs, ctrl) ->
     element.bind 'click', ->
+      scope.$emit 'changeSidetip', ''
       newStep = ctrl.prevStep scope.name
       ctrl.scrollTo newStep
 
@@ -98,5 +100,6 @@ app.directive 'goto', ->
   require: '^wizard'
   link: (scope, element, attrs, ctrl) ->
     element.bind 'click', ->
+      scope.$emit 'changeSidetip', ''
       ctrl.goTo attrs.goto
       ctrl.scrollTo attrs.goto

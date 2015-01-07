@@ -47,9 +47,8 @@
   development."
   nil)
 
-(def log-config {
-  :ns-whitelist []
-  :ns-blacklist []})
+(def log-config {:ns-whitelist []
+                 :ns-blacklist []})
 
 (defn init
   "Creates and initializes the system under development in the Var

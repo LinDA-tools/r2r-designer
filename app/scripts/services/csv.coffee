@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .factory 'Csv', ($http, $upload, _, Config) ->
 
     csvAdapter = Config.backend + '/api/v1/csv'
