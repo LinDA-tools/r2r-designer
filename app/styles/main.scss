@@ -1,8 +1,8 @@
-$icon-font-path: "/bower_components/bootstrap-css-only/fonts/";
+$icon-font-path: "../bower_components/bootstrap-css-only/fonts/";
 
 // bower:scss
 // endbower
-@import "../bower_components/font-awesome/scss/font-awesome.scss";
+@import "font-awesome/scss/font-awesome.scss";
 
 /* scrollbars always visible*/
 html {
