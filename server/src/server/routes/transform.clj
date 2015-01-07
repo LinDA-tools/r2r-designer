@@ -29,7 +29,7 @@
               dump-file (spy (sparqlify-dump sparqlify (str f)))
               -hash (spy (hash dump-file))]
           (swap! file-store (fn [x] (assoc x -hash dump-file))) 
-          {:status 200 :body (str (:transformApi c) "/file/" -hash ".n3")}))
+          {:status 200 :body (str (:transformApi c) "/file/" -hash ".nt")}))
 
       (OPTIONS (str api "/dump-csv") r (preflight r))
       (POST (str api "/dump-csv") r
@@ -40,7 +40,7 @@
               dump-file (sparqlify-csv sparqlify (str f))
               -hash (hash dump-file)]
           (swap! file-store (fn [x] (assoc x -hash dump-file))) 
-          {:status 200 :body (str (:transformApi c) "/file/" -hash ".n3")}))
+          {:status 200 :body (str (:transformApi c) "/file/" -hash ".nt")}))
 
       (OPTIONS (str api "/publish/openrdf") r (preflight r))
       (POST (str api "/publish/openrdf") r 
@@ -63,7 +63,7 @@
 
       ;; TODO: possible access to arbitrary files on the system through known filenames?
       (GET (str api "/file/:id") [id]
-        (let [-hash (second (re-find #"(.*)\.n3" id))
+        (let [-hash (second (re-find #"(.*)\.nt" id))
               sparqlify (:sparqlify c)
               file-store (:file-store c)
               f (get @file-store (Integer. -hash))]

@@ -21,8 +21,6 @@
   (reset! (:csv-file c) file)
   (reset! (:separator c) (separator file)))
 
-(defn transpose [m] (apply mapv vector m))
-
 (defn get-data [c]
   (let [file @(:csv-file c)
         separator @(:separator c)]

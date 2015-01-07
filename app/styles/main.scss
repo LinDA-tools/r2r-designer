@@ -1,9 +1,8 @@
-$icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
-// @import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+$icon-font-path: "../bower_components/bootstrap-css-only/fonts/";
 
 // bower:scss
 // endbower
-@import "../bower_components/font-awesome/scss/font-awesome.scss";
+@import "font-awesome/scss/font-awesome.scss";
 
 /* scrollbars always visible*/
 html {
@@ -20,17 +19,7 @@ html {
 
 /* Space out content a bit */
 body {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin: 2em;
-}
-
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-    padding-left: 15px;
-    padding-right: 15px;
+  padding: 2em;
 }
 
 /* Custom page header */
@@ -57,50 +46,34 @@ body {
     margin: 30px 0;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-    text-align: center;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-}
-
-/* Supporting marketing content */
-.marketing {
-    margin: 40px 0;
-}
-
-.marketing p + h4 {
-    margin-top: 28px;
-}
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 768px) {
   .container {
-      // max-width: 730px;
+      max-width: 730px;
   }
 
   /* Remove the padding we set earlier */
   .header,
-  .marketing,
   .footer {
       padding-left: 0;
       padding-right: 0;
   }
+  
   /* Space out the masthead */
   .header {
       margin-bottom: 30px;
   }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-      border-bottom: 0;
+
+  .navigation {
+    display: none;
   }
 }
 
-/* ========= */
+@media screen and (min-width: 768px) and (max-width: 1000px) {
+  .affix {
+    position: relative;
+  }
+}
+
 .main {
   font-family: "Lato", sans-serif;
 }
@@ -132,7 +105,12 @@ body {
 }
 
 .localName {
-  margin-right: 2em;
+  // margin-right: 2em;
+}
+
+.nodefinition {
+  font-style: italic;
+  color: #dddddd;
 }
 
 .score {
@@ -157,23 +135,25 @@ body {
 }
 
 .navigation {
-  position: fixed;
 }
 
-.active > a {
+.navigation > ul > li > a:hover {
+  background-color: transparent;
+}
+
+.navigation > ul > .active > a {
   color: #005580;
   -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);
      -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);
           box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);
 }
 
-.wizard {
-  // margin-bottom: 512px;
+.navigation > ul > li > a:hover {
+  color: #005580;
+  -webkit-box-shadow: inset 1px 0 0 #005580, inset 0 0 0 #005580;
+     -moz-box-shadow: inset 1px 0 0 #005580, inset 0 0 0 #005580;
+          box-shadow: inset 1px 0 0 #005580, inset 0 0 0 #005580;
 }
-
-// .table-btn {
-//   width: 10em;
-// }
 
 .table-input {
   width: 100%;
@@ -182,4 +162,18 @@ body {
 .popover {
   max-width: 400px;
   width: auto;
+}
+
+a { 
+-ms-word-break: break-all;
+
+  /* Be VERY careful with this, breaks normal words wh_erever */
+  word-break: break-all;
+
+  /* Non standard for webkit */
+  word-break: break-word;
+
+  -webkit-hyphens: auto;
+     -moz-hyphens: auto;
+          hyphens: auto;
 }

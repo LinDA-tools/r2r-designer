@@ -32,11 +32,11 @@ module.exports = function (grunt) {
         tasks: ['bowerInstall']
       },
       coffee: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
+        files: ['<%= yeoman.app %>/scripts/**/*.{coffee,litcoffee,coffee.md}'],
         tasks: ['newer:coffee:dist']
       },
       coffeeTest: {
-        files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
+        files: ['test/spec/**/*.{coffee,litcoffee,coffee.md}'],
         tasks: ['newer:coffee:test', 'karma']
       },
       compass: {
@@ -156,7 +156,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/scripts',
-          src: '{,*/}*.coffee',
+          src: '**/*.coffee',
           dest: '.tmp/scripts',
           ext: '.js'
         }]
@@ -165,7 +165,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: 'test/spec',
-          src: '{,*/}*.coffee',
+          src: '**/*.coffee',
           dest: '.tmp/spec',
           ext: '.js'
         }]
@@ -322,11 +322,23 @@ module.exports = function (grunt) {
             // '*.{ico,png,txt}',
             // '.htaccess',
             '*.html',
-            // 'partials/{,*/}*.html',
-            'images/{,*/}*.{webp}',
-            'fonts/*',
+            // 'partials/**/*.html',
+            // 'images/{,*/}*.{webp}',
+            // 'styles/fonts/*'
             'bower_components/**'
           ]
+        }, {
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
+          src: 'bower_components/bootstrap-css-only/fonts/*'
+        }, {
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
+          src: 'bower_components/font-awesome/fonts/*'
         }, {
           expand: true,
           cwd: '.tmp/images',
@@ -401,34 +413,12 @@ module.exports = function (grunt) {
     },
 
     ngtemplates: {
-      app: {
+      r2rDesignerApp: {
         cwd: 'app',
-        src: 'partials/**.html',
-        dest: '.tmp/scripts/app.templates.js'
+        src: 'partials/**/*.html',
+        dest: 'dist/scripts/app.templates.js'
       }
     }
-  });
-
-
-  grunt.registerTask('serve', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build', 'connect:dist:keepalive']);
-    }
-
-    grunt.task.run([
-      'clean:server',
-      'bowerInstall',
-      // 'ngtemplates:app',
-      'concurrent:server',
-      'autoprefixer',
-      'connect:livereload',
-      'watch'
-    ]);
-  });
-
-  grunt.registerTask('server', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
   });
 
   grunt.registerTask('test', [
@@ -443,7 +433,7 @@ module.exports = function (grunt) {
     'clean:dist',
     // 'bowerInstall',
     // 'useminPrepare',
-    'ngtemplates:app',
+    'ngtemplates:r2rDesignerApp',
     'concurrent:dist',
     'autoprefixer',
     // 'concat',

@@ -46,6 +46,7 @@
               result (test-db spec)]
           {:status 200 :body (str result)}))
 
+      ; TODO: password is sent in plain text!
       (OPTIONS (str api "/register") request (preflight request))
       (POST (str api "/register") [driver host name username password :as r]
         (let [db (:datasource component)

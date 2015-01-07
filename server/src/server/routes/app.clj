@@ -1,5 +1,6 @@
 (ns server.routes.app
   (:require
+    [clojure.stacktrace :as st]
     [taoensso.timbre :as timbre]
     [ring.middleware.cors :refer :all]
     [ring.middleware.params :refer :all]
@@ -49,6 +50,14 @@
         (debug response)
         response))))
 
+(defn wrap-exception [f]
+  (fn [request]
+    (try (f request)
+      (catch Exception e
+        (let [stacktrace (with-out-str (st/print-stack-trace e))]
+          {:status 500
+           :body stacktrace})))))
+
 (defn app-fn [component]
   (-> (routes (db-routes-fn component)
               (csv-routes-fn component)
@@ -61,6 +70,7 @@
       (wrap-json-response {:pretty true})
       ;; (wrap-cors :access-control-allow-origin [#"http://127.0.0.1:9000" #"http://localhost:9000"] 
       ;;            :access-control-allow-methods [:get :put :post :delete :options])
+      wrap-exception
       allow-content-type
       allow-origin
       wrap-dir-index
