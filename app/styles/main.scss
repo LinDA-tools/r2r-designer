@@ -47,10 +47,6 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  .container {
-      max-width: 730px;
-  }
-
   /* Remove the padding we set earlier */
   .header,
   .footer {
@@ -63,8 +59,8 @@ body {
       margin-bottom: 30px;
   }
 
-  .navigation {
-    display: none;
+  .affix {
+    position: relative;
   }
 }
 
@@ -75,6 +71,7 @@ body {
 }
 
 .main {
+  min-height: 128em;
   font-family: "Lato", sans-serif;
 }
 
@@ -162,6 +159,10 @@ body {
 .popover {
   max-width: 400px;
   width: auto;
+}
+
+.sidebar {
+  max-width: 20%;
 }
 
 a { 
