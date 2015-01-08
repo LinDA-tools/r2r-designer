@@ -65,7 +65,7 @@ angular.module 'r2rDesignerApp'
 
     columnToNum = (table, column) ->
       if table? and column?
-        _.indexOf Csv.columns(table), column
+        (_.indexOf Csv.columns(table), column) + 1
 
     propertyLiterals = (mapping, table, lookup) ->
       literals = mapping.literals

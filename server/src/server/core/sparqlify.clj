@@ -71,11 +71,10 @@
       (let [template-config (CsvMapperCliMain/readTemplateConfig in nil)
             view (first (.getDefinitions template-config)) ; pick only(?) view
             f (File/createTempFile "dump" ".nt")
-            csv-config (CsvParserConfig.)
+            csv-config (doto (CsvParserConfig.) (.setFieldSeparator @(:separator (:datasource c))))
             csv-reader (InputSupplierCSVReader. csv-file csv-config)
-            results (CsvMapperCliMain/createResultSetFromCsv csv-reader false (int 100))
+            results (CsvMapperCliMain/createResultSetFromCsv csv-reader true (int 100))
             it (CsvMapperCliMain/createTripleIterator results view)]
-        (doto it .next) ; skip header; semi-dirty hack
         (with-open [out (io/output-stream f)]
           (SparqlFormatterUtils/writeText out it))
         f))))
