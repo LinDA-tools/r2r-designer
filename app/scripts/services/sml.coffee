@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'r2rDesignerApp'
-  .factory 'Sml', (_) ->
+  .factory 'Sml', (_, Csv) ->
 
     newLookup = () ->
       index: 0
@@ -39,9 +39,9 @@ angular.module 'r2rDesignerApp'
     subjectTemplate = (mapping, table) ->
       if _.isEmpty mapping.subjectTemplate
         if _.isEmpty mapping.baseUri
-          return """?s = bNode(concat('#{table}', '_')\n""" # TODO: independently refer to primary key column
+          return """?s = bNode(concat('#{table}', '_'))\n""" # TODO: independently refer to primary key column
         else
-          return """?s = bNode(concat('#{mapping.baseUri}', '_')\n""" # TODO: independently refer to primary key column
+          return """?s = bNode(concat('#{mapping.baseUri}', '_'))\n""" # TODO: independently refer to primary key column
       else
         template = mapping.subjectTemplate
         template = template.replace /{[^}]*}/g, (i) -> ';$;' + (columnToVar i) + ';$;'
@@ -59,6 +59,14 @@ angular.module 'r2rDesignerApp'
         else
           return '?s = uri(' + template + ')' # TODO!
 
+    # columnsToNum = (table, selected) ->
+    #   if table? and selected?
+    #     _.map selected, (i) -> _.indexOf _.first csvData[table], i
+
+    columnToNum = (table, column) ->
+      if table? and column?
+        _.indexOf Csv.columns(table), column
+
     propertyLiterals = (mapping, table, lookup) ->
       literals = mapping.literals
       types = mapping.literalTypes
@@ -67,13 +75,13 @@ angular.module 'r2rDesignerApp'
       columns = _.filter columns, (i) ->
         property = mapping.properties[table][i].prefixedName[0]
         return (literals[property] or ((litearls[property] == 'Typed Literal') and types[property]))
-      
+     
       properties = _.map columns, (i) ->
         property = mapping.properties[table][i].prefixedName[0]
         switch literals[property]
-          when 'Blank Node' then lookup[property] = getVar(i, lookup) + ' = bNode(?' + i + ')'
-          when 'Plain Literal' then lookup[property] = getVar(i, lookup) + ' = plainLiteral(?' + i + ')'
-          when 'Typed Literal' then lookup[property] = getVar(i, lookup) + ' = typedLiteral(?' + i + ', ' + types[property] + ')'
+          when 'Blank Node' then lookup[property] = (getVar i, lookup) + ' = bNode(?' + (columnToNum table, i) + ')'
+          when 'Plain Literal' then lookup[property] = (getVar i, lookup) + ' = plainLiteral(?' + (columnToNum table, i) + ')'
+          when 'Typed Literal' then lookup[property] = (getVar i, lookup) + ' = typedLiteral(?' + (columnToNum table, i) + ', ' + types[property] + ')'
           else ''
       
       if _.isEmpty properties
@@ -107,19 +115,20 @@ angular.module 'r2rDesignerApp'
 
     createClause = (mapping, table) ->
       if mapping.source == 'csv'
-        "Create View Template " + table + " As"
+        "Create View Template " + (table.replace /[^\w]/g, '') + " As"
       else
-        "Create View " + table + " As"
+        "Create View " + (table.replace /[^\w]/g, '') + " As"
 
     fromClause = (mapping, table) ->
       if (mapping.source == 'rdb')
         "From " + table
       else
         ""
-
+      
     {
       toSml: (mapping) ->
-        table = mapping.tables[0] # TODO!
+        # TODO: will only process the first table!
+        table = mapping.tables[0]
 
         lookup = newLookup()
 

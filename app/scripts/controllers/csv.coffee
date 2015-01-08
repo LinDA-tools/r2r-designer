@@ -13,16 +13,16 @@ angular.module 'r2rDesignerApp'
     $scope.template = (i) -> $scope.steps[i].partial
 
     $scope.steps = [
-      {
-        name: '1. welcome'
-        heading: 'Welcome'
-        description: ''
-        content: """
-          <p>This wizard will guide you through the transformation of your CSV file to RDF, up to the dump of the result into an RDF triple store.</p>
-          <p>The transformation of your CSV data follows and preserves its tabular structure. However, the column properties will be configurable, and you will have to provide the pattern for the generated URIs.</p>
-        """
-        partial: ''
-      }
+      # {
+      #   name: '1. welcome'
+      #   heading: 'Welcome'
+      #   description: ''
+      #   content: """
+      #     <p>This wizard will guide you through the transformation of your CSV file to RDF, up to the dump of the result into an RDF triple store.</p>
+      #     <p>The transformation of your CSV data follows and preserves its tabular structure. However, the column properties will be configurable, and you will have to provide the pattern for the generated URIs.</p>
+      #   """
+      #   partial: ''
+      # }
       {
         name: '2. datasource config'
         heading: 'Data Source Configuration'
