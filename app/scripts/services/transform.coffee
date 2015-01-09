@@ -22,8 +22,10 @@ angular.module 'r2rDesignerApp'
             .then (res) ->
               transformApi + res.data
 
-      publish: (to, mapping) ->
-        if to? and mapping?
+      publish: (to, datasource, mapping) ->
+        if to? and datasource? and mapping?
           api = transformApi + '/publish/' + to
-          $http.post api, { mapping: mapping }
+          $http.post api,
+            datasource: datasource
+            mapping: mapping
     }

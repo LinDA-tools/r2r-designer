@@ -1,9 +1,8 @@
 'use strict'
 
 angular.module 'r2rDesignerApp'
-  .controller 'CsvPublishCtrl', ($scope, $timeout, $window, _, Rdb, Csv, Rdf, Sml, Transform) ->
+  .controller 'CsvPublishCtrl', ($scope, $timeout, $window, _, Csv, Rdf, Sml, Transform) ->
 
-    $scope.rdb = Rdb
     $scope.csv = Csv
     $scope.rdf = Rdf
     $scope.sml = Sml
@@ -13,25 +12,7 @@ angular.module 'r2rDesignerApp'
     $scope.published = false
     $scope.success = false
 
-    $scope.dumpdb = (table) ->
-      mapping =
-        source: 'rdb'
-        tables: $scope.rdb.selectedTables()
-        columns: $scope.rdb.selectedColumns()
-        baseUri: $scope.rdf.baseUri
-        subjectTemplate: $scope.rdf.subjectTemplate
-        classes: $scope.rdf.selectedClasses
-        properties: $scope.rdf.selectedProperties
-        literals: $scope.rdf.propertyLiteralSelection
-        literalTypes: $scope.rdf.propertyLiteralTypes
-
-      w = $window.open ''
-      $scope.currentMapping = $scope.sml.toSml mapping, table
-      $scope.transform.dumpdb $scope.currentMapping
-        .then (url) ->
-          w.location = url
-
-    $scope.dumpcsv = (table) ->
+    $scope.dump = () ->
       mapping =
         source: 'csv'
         tables: $scope.csv.selectedTables()
@@ -44,7 +25,7 @@ angular.module 'r2rDesignerApp'
         literalTypes: $scope.rdf.propertyLiteralTypes
 
       w = $window.open ''
-      $scope.currentMapping = $scope.sml.toSml mapping, table
+      $scope.currentMapping = $scope.sml.toSml mapping
       $scope.transform.dumpcsv $scope.currentMapping
         .then (url) ->
           w.location = url
@@ -60,25 +41,7 @@ angular.module 'r2rDesignerApp'
 
       str.replace /[&<>]/g, replaceTag
       
-    $scope.mappingdb = (table) ->
-      mapping =
-        source: 'rdb'
-        tables: $scope.rdb.selectedTables()
-        columns: $scope.rdb.selectedColumns()
-        baseUri: $scope.rdf.baseUri
-        subjectTemplate: $scope.rdf.subjectTemplate
-        classes: $scope.rdf.selectedClasses
-        properties: $scope.rdf.selectedProperties
-        literals: $scope.rdf.propertyLiteralSelection
-        literalTypes: $scope.rdf.propertyLiteralTypes
-      
-      $scope.currentMapping = $scope.sml.toSml mapping, table
-      w = $window.open ''
-      w.document.open()
-      w.document.write '<pre>' + $scope.safe_tags_replace($scope.currentMapping) + '</pre>'
-      w.document.close()
-
-    $scope.mappingcsv = () ->
+    $scope.mapping = () ->
       mapping =
         source: 'csv'
         tables: $scope.csv.selectedTables()
@@ -97,42 +60,34 @@ angular.module 'r2rDesignerApp'
       w.document.write '<pre>' + $scope.safe_tags_replace($scope.currentMapping) + '</pre>'
       w.document.close()
 
-    $scope.publish = (to) ->
+    $scope.publish = (datasource) ->
       $scope.publishing = true
-      if to == 'openrdf'
-        mapping =
-          source: 'csv'
-          tables: $scope.csv.selectedTables()
-          columns: $scope.csv.selectedColumns()
-          baseUri: $scope.rdf.baseUri
-          subjectTemplate: $scope.rdf.subjectTemplate
-          classes: $scope.rdf.selectedClasses
-          properties: $scope.rdf.selectedProperties
-          literals: $scope.rdf.propertyLiteralSelection
-          literalTypes: $scope.rdf.propertyLiteralTypes
-      else
-        mapping =
-          source: 'rdb'
-          tables: $scope.rdb.selectedTables()
-          columns: $scope.rdb.selectedColumns()
-          baseUri: $scope.rdf.baseUri
-          subjectTemplate: $scope.rdf.subjectTemplate
-          classes: $scope.rdf.selectedClasses
-          properties: $scope.rdf.selectedProperties
-          literals: $scope.rdf.propertyLiteralSelection
-          literalTypes: $scope.rdf.propertyLiteralTypes
+      mapping =
+        source: 'csv'
+        tables: $scope.csv.selectedTables()
+        columns: $scope.csv.selectedColumns()
+        baseUri: $scope.rdf.baseUri
+        subjectTemplate: $scope.rdf.subjectTemplate
+        classes: $scope.rdf.selectedClasses
+        properties: $scope.rdf.selectedProperties
+        literals: $scope.rdf.propertyLiteralSelection
+        literalTypes: $scope.rdf.propertyLiteralTypes
 
       $scope.currentMapping = $scope.sml.toSml mapping
 
-      $scope.transform.publish to, $scope.currentMapping
-        .success (data) ->
-          console.log 'success'
-          $scope.publishing = false
-          $scope.published = true
-          $scope.success = true
-        .error (data) ->
-          console.log 'error'
+      r = $scope.transform.publish 'linda', datasource, $scope.currentMapping
+      if r?
+        r.success (data) ->
+            $scope.publishing = false
+            $scope.published = true
+            $scope.success = true
+        r.error () ->
+          console.log 'error: could not connect to server'
           $scope.publishing = false
           $scope.published = true
           $scope.success = false
-
+      else
+        console.log 'error: invalid params'
+        $scope.publishing = false
+        $scope.published = true
+        $scope.success = false

@@ -9,7 +9,7 @@
     [clojure.data.json :as json]
     [server.core.db :as db]
     [server.core.sparqlify :refer :all]
-    [server.core.openrdf :refer :all]
+    [server.core.linda :refer :all]
     [server.routes :refer [preflight]])
   (:import java.io.File)) 
 
@@ -42,15 +42,16 @@
           (swap! file-store (fn [x] (assoc x -hash dump-file))) 
           {:status 200 :body (str (:transformApi c) "/file/" -hash ".nt")}))
 
-      (OPTIONS (str api "/publish/openrdf") r (preflight r))
-      (POST (str api "/publish/openrdf") r 
+      (OPTIONS (str api "/publish/linda") r (preflight r))
+      (POST (str api "/publish/linda") r 
         (let [sparqlify (:sparqlify c)
-              openrdf (:openrdf c)
+              linda (:linda c)
               file-store (:file-store c) 
+              datasource-name (:datasource (spy (:body r)))
               mapping (:mapping (:body r))
               f (mapping-to-file mapping)
               dump-file (sparqlify-csv sparqlify (str f))
-              endpoint (upload! openrdf dump-file)]
+              endpoint (upload! linda datasource-name dump-file)]
           {:status 200 :body endpoint}))
       
       (OPTIONS (str api "/publish/sparqlify") r (preflight r))

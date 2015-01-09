@@ -36,7 +36,8 @@
     [server.core.csv :as csv]
     [server.core.oracle :refer :all]
     [server.core.sparqlify :refer :all]
-    [server.core.openrdf :refer :all]
+    [server.core.openrdf :as openrdf]
+    [server.core.linda :as linda]
     [server.routes.app :refer [app-fn]]
     [server.system :refer [new-system]]))
 
@@ -69,8 +70,9 @@
                         :port 7531}
         openrdf-opts {:host "http://localhost:8080/openrdf-sesame"
                       :repo "r2r"
-                      :base-uri "http://mycompany.com"}]
-    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-opts openrdf-opts)))))
+                      :base-uri "http://mycompany.com"}
+        linda-opts {:host "http://localhost:8000/api"}]
+    (alter-var-root #'system (constantly (new-system db-opts #'app-fn ring-opts oracle-sparql-endpoint log-config sparqlify-opts openrdf-opts linda-opts)))))
 
 (defn start
   "Starts the system running, updates the Var #'system."

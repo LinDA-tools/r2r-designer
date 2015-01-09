@@ -1,6 +1,13 @@
 <div ng-controller="CsvPublishCtrl">
-  <button class="btn btn-default" ng-class="{disabled: !csv.csvFile().name != ''}" ng-click="dumpcsv()">Download RDF dump</button>
-  <button class="btn btn-default" ng-class="{disabled: !csv.csvFile().name != ''}" ng-click="mappingcsv()">Download mapping file</button>
+  <button class="btn btn-default" ng-class="{disabled: !csv.csvFile().name != ''}" ng-click="dump()">Download RDF dump</button>
+  <button class="btn btn-default" ng-class="{disabled: !csv.csvFile().name != ''}" ng-click="mapping()">Download mapping file</button>
+
+  <hr />
+
+  <form ng-class="{disabled: !csv.csvFile().name != ''}" >
+    <label for="datasourceInput" class="control-label">Data source name: </label>
+    <input id="datasourceInput" type="text" ng-model="datasource" spellcheck="false" size="60" />
+  </form>
 
   <br />
 
@@ -9,8 +16,7 @@
       Publish <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">
-      <li><a ng-click="publish('sparqlify')">as SPARQL Endpoint</a></li>
-      <li><a ng-click="publish('openrdf')">to OpenRDF</a></li>
+      <li><a ng-click="publish(datasource)">to Linda Workbench</a></li>
     </ul>
   </div>
 
