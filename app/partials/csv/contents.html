@@ -1,13 +1,16 @@
 <div ng-controller="CsvContentsCtrl">
 
-  <p align="left" ng-show="csv.csvFile().name">
-    Content of: <b>{{csv.csvFile().name}}</b>
-  </p>
-  <p align="left" ng-show="!csv.csvFile().name">
-    No file selected!</b>
-  </p>
+  <div ng-show="csv.csvFile().name">
+    <p>Content of: <b>{{csv.csvFile().name}}</b></p>
+    <input type="checkbox" ng-model="selectAll"></input>
+    <label>Select all</label>
+  </div>
 
-  <div class="table-scrollable">
+  <div ng-show="!csv.csvFile().name">
+    <p>No file selected!</p>
+  </div>
+
+  <div class="scrollable">
     <table class="table">
       <tr>
         <th ng-repeat="column in csv.columns(table)">

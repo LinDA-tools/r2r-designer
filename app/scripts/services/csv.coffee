@@ -16,7 +16,7 @@ angular.module 'r2rDesignerApp'
       csvFile: () -> csvFile
       tables: () -> tables
       columns: (table) ->
-        if table and csvData[table]?
+        if table? and csvData[table]?
           _.first csvData[table]
         else
           []
@@ -36,6 +36,14 @@ angular.module 'r2rDesignerApp'
             selectedColumns[table].push column
           else
             selectedColumns[table] = [column]
+
+      selectAllColumns: (table) ->
+        if table?
+          selectedColumns[table] = _.first csvData[table]
+      
+      deselectAllColumns: (table) ->
+        if table?
+          selectedColumns[table] = []
 
       submitCsvFile: (file, progress) ->
         csvFile =

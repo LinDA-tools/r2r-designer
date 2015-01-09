@@ -36,8 +36,8 @@
         (let [sparqlify (:sparqlify c)
               file-store (:file-store c) 
               mapping (:mapping (:body r))
-              f (mapping-to-file mapping)
-              dump-file (sparqlify-csv sparqlify (str f))
+              f (spy (mapping-to-file mapping))
+              dump-file (spy (sparqlify-csv sparqlify (str f)))
               -hash (hash dump-file)]
           (swap! file-store (fn [x] (assoc x -hash dump-file))) 
           {:status 200 :body (str (:transformApi c) "/file/" -hash ".nt")}))

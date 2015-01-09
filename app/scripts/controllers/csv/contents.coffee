@@ -9,4 +9,9 @@ angular.module 'r2rDesignerApp'
     $scope.$watch 'csv.csvFile()', (val) ->
       if val?
         $scope.table = val.name
-    #   $scope.csv.getCsvData()
+
+    $scope.$watch 'selectAll', (val) ->
+      if val
+        $scope.csv.selectAllColumns $scope.table
+      else
+        $scope.csv.deselectAllColumns $scope.table

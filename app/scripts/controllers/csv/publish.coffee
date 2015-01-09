@@ -22,7 +22,7 @@ angular.module 'r2rDesignerApp'
         classes: $scope.rdf.selectedClasses
         properties: $scope.rdf.selectedProperties
         literals: $scope.rdf.propertyLiteralSelection
-        literalTypes: $scope.rdf.propertyLiteralTypes
+        literalTypes: $scope.rdf.propertyLiteralTypeSelection
 
       w = $window.open ''
       $scope.currentMapping = $scope.sml.toSml mapping
@@ -40,7 +40,7 @@ angular.module 'r2rDesignerApp'
         tagsToReplace[tag] or tag
 
       str.replace /[&<>]/g, replaceTag
-      
+
     $scope.mapping = () ->
       mapping =
         source: 'csv'
@@ -51,10 +51,9 @@ angular.module 'r2rDesignerApp'
         classes: $scope.rdf.selectedClasses
         properties: $scope.rdf.selectedProperties
         literals: $scope.rdf.propertyLiteralSelection
-        literalTypes: $scope.rdf.propertyLiteralTypes
+        literalTypes: $scope.rdf.propertyLiteralTypeSelection
       
       $scope.currentMapping = $scope.sml.toSml mapping
-      console.log $scope.currentMapping
       w = $window.open ''
       w.document.open()
       w.document.write '<pre>' + $scope.safe_tags_replace($scope.currentMapping) + '</pre>'

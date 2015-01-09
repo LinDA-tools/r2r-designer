@@ -34,7 +34,9 @@ angular.module 'r2rDesignerApp'
 
     $scope.getColumnSuggestions = (table, column) ->
       if $scope.rdf.suggestions? and $scope.rdf.suggestions[table] and $scope.rdf.suggestions[table].columns?
-        (_.first (_.filter $scope.rdf.suggestions[table].columns, (i) -> i.name == column)).recommend
+        column = (_.first (_.filter $scope.rdf.suggestions[table].columns, (i) -> i.name == column))
+        if column?
+          column.recommend
 
     $scope.selectClass = (table, _class) ->
       if table? and _class?
@@ -53,6 +55,7 @@ angular.module 'r2rDesignerApp'
         else
           currentTable[column] = property
         $scope.rdf.selectedProperties[table] = currentTable
+        $scope.rdf.propertyLiteralSelection[property.prefixedName[0]] = $scope.rdf.propertyLiteralTypeOptions[0]
 
     $scope.isSelectedClass = (table, _class) ->
       _.contains $scope.rdf.selectedClasses[table], _class
