@@ -78,6 +78,13 @@ angular.module 'r2rDesignerApp'
      
       properties = _.map columns, (i) ->
         property = mapping.properties[table][i].prefixedName[0]
+        col = ''
+       
+        if mapping.source == 'csv'
+          col = columnToNum table, i
+        else
+          col = i
+        
         switch literals[property]
           when 'Blank Node' then lookup[property] = (getVar i, lookup) + ' = bNode(?' + (columnToNum table, i) + ')'
           when 'Plain Literal' then lookup[property] = (getVar i, lookup) + ' = plainLiteral(?' + (columnToNum table, i) + ')'
@@ -120,7 +127,7 @@ angular.module 'r2rDesignerApp'
         "Create View " + (table.replace /[^\w]/g, '') + " As"
 
     fromClause = (mapping, table) ->
-      if (mapping.source == 'rdb')
+      if mapping.source == 'rdb'
         "From " + table
       else
         ""
