@@ -70,8 +70,8 @@ angular.module 'r2rDesignerApp'
         classes: $scope.rdf.selectedClasses
         properties: $scope.rdf.selectedProperties
         literals: $scope.rdf.propertyLiteralSelection
-        literalTypes: $scope.rdf.propertyLiteralTypes
-
+        literalTypes: $scope.rdf.propertyLiteralTypeSelection
+        
       $scope.currentMapping = $scope.sml.toSml mapping
 
       r = $scope.transform.publish 'linda', datasource, $scope.currentMapping

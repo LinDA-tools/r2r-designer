@@ -65,7 +65,7 @@
                    :open-browser? false
                    :join true
                    :auto-reload? true}
-        oracle-sparql-endpoint "http://lov.okfn.org/endpoint/lov_aggregator"
+        oracle-sparql-endpoint "http://localhost:8080/openrdf-sesame"
         sparqlify-opts {:host "http://localhost"
                         :port 7531}
         openrdf-opts {:host "http://localhost:8080/openrdf-sesame"

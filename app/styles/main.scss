@@ -42,33 +42,28 @@ body {
     border-top: 1px solid #e5e5e5;
 }
 
-.container-narrow > hr {
-    margin: 30px 0;
-}
-
-@media screen and (max-width: 768px) {
-  /* Remove the padding we set earlier */
-  .header,
-  .footer {
-      padding-left: 0;
-      padding-right: 0;
-  }
-  
-  /* Space out the masthead */
-  .header {
-      margin-bottom: 30px;
-  }
-
-  .affix {
-    position: relative;
-  }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1000px) {
-  .affix {
-    position: relative;
-  }
-}
+// @media screen and (max-width: 768px) {
+//   /* Space out the masthead */
+//   .header {
+//       margin-bottom: 30px;
+//   }
+//
+//   .myaffix {
+//     position: relative;
+//   }
+// }
+//
+// @media screen and (min-width: 768px) and (max-width: 1024px) {
+//   .myaffix {
+//     position: relative;
+//   }
+// }
+//
+// @media screen and (min-width: 1024px) {
+//   .myaffix {
+//     position: relative;
+//   }
+// }
 
 .main {
   min-height: 128em;

@@ -16,7 +16,7 @@
   (open 
     (sesame/new-sesame-server
       :server endpoint
-      :repo-name "")))
+      :repo-name "lov")))
 
 (defn add-namespaces [kb]
   (update-namespaces kb
