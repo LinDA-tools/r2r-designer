@@ -23,15 +23,21 @@ angular.module 'r2rDesignerApp'
         $scope.columns = $scope.rdb.selectedColumns()[val]
 
     $scope.ask = (table, columns) ->
-      $scope.loading = true
-      Oracle.ask table, $scope.tableTag[table], columns, $scope.columnTags
-        .then (promise) ->
-          $scope.loading = false
-          $scope.rdf.suggestions[table] = promise
+      if table? and columns?
+        $scope.loading = true
+        Oracle.ask table, $scope.tableTag[table], columns, $scope.columnTags
+          .success (data) ->
+            $scope.loading = false
+            $scope.rdf.suggestions[table] = data
+          .error () ->
+            console.log "error: could not connect to server"
+            $scope.loading = false
 
     $scope.getColumnSuggestions = (table, column) ->
       if $scope.rdf.suggestions? and $scope.rdf.suggestions[table] and $scope.rdf.suggestions[table].columns?
-        (_.first (_.filter $scope.rdf.suggestions[table].columns, (i) -> i.name == column)).recommend
+        column = _.first (_.filter $scope.rdf.suggestions[table].columns, (i) -> i.name == column)
+        if column?
+          column.recommend
 
     $scope.selectClass = (table, _class) ->
       if table? and _class?
