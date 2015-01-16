@@ -33,31 +33,8 @@ angular.module 'r2rDesignerApp'
       else
         return _.foldl properties, ((x, y) -> (x + ';\n').concat(y))
 
-    columnToVar = (column) ->
-      '?' + column.substring(1, column.length-1)
-
-    subjectTemplate = (mapping, table) ->
-      if _.isEmpty mapping.subjectTemplate
-        if _.isEmpty mapping.baseUri
-          return """?s = bNode(concat('#{table}', '_'))\n""" # TODO: independently refer to primary key column
-        else
-          return """?s = bNode(concat('#{mapping.baseUri}', '_'))\n""" # TODO: independently refer to primary key column
-      else
-        template = mapping.subjectTemplate
-        template = template.replace /{[^}]*}/g, (i) -> ';$;' + (columnToVar i) + ';$;'
-        template = template.split ';$;'
-        template = _.filter template, (i) -> !(_.isEmpty i)
-        template = _.map template, (i) ->
-          if i[0] == '?'
-            i
-          else
-            "'" + i + "'"
-        template = """concat('#{mapping.baseUri}', #{template})"""
-
-        if _.isEmpty mapping.baseUri
-          return '?s = bNode(' + template + ')' # TODO!
-        else
-          return '?s = uri(' + template + ')' # TODO!
+    unwrapColumn = (column) ->
+      column.substring(1, column.length-1)
 
     # columnsToNum = (table, selected) ->
     #   if table? and selected?
@@ -66,6 +43,29 @@ angular.module 'r2rDesignerApp'
     columnToNum = (table, column) ->
       if table? and column?
         (_.indexOf Csv.columns(table), column) + 1
+
+    subjectTemplate = (mapping, table) ->
+      if _.isEmpty mapping.subjectTemplate
+        if _.isEmpty mapping.baseUri
+          return """?s = bNode(concat(fn:urlEncode('#{table}'), '_'))\n""" # TODO: independently refer to primary key column
+        else
+          return """?s = bNode(concat('#{mapping.baseUri}', '_'))\n""" # TODO: independently refer to primary key column
+      else
+        template = mapping.subjectTemplate
+        template = template.replace /{[^}]*}/g, (i) -> console.log i; ';$;' + '?' + (if mapping.source == 'csv' then (columnToNum table, (unwrapColumn i)) else (unwrapColumn i)) + ';$;'
+        template = template.split ';$;'
+        template = _.filter template, (i) -> !(_.isEmpty i)
+        template = _.map template, (i) ->
+          if i[0] == '?'
+            'fn:urlEncode(' + i + ')'
+          else
+            "'" + i + "'"
+        template = """concat('#{mapping.baseUri}', #{template})"""
+
+        if _.isEmpty mapping.baseUri
+          return """?s = bNode(#{template})""" # TODO!
+        else
+          return """?s = uri(#{template})""" # TODO!
 
     propertyLiterals = (mapping, table, lookup) ->
       literals = mapping.literals
@@ -79,16 +79,15 @@ angular.module 'r2rDesignerApp'
       properties = _.map columns, (i) ->
         property = mapping.properties[table][i].prefixedName[0]
         col = ''
-       
         if mapping.source == 'csv'
           col = columnToNum table, i
         else
           col = i
         
         switch literals[property]
-          when 'Blank Node' then lookup[property] = (getVar i, lookup) + ' = bNode(?' + (columnToNum table, i) + ')'
-          when 'Plain Literal' then lookup[property] = (getVar i, lookup) + ' = plainLiteral(?' + (columnToNum table, i) + ')'
-          when 'Typed Literal' then lookup[property] = (getVar i, lookup) + ' = typedLiteral(?' + (columnToNum table, i) + ', ' + types[property] + ')'
+          when 'Blank Node' then lookup[property] = (getVar i, lookup) + ' = bNode(?' + col + ')'
+          when 'Plain Literal' then lookup[property] = (getVar i, lookup) + ' = plainLiteral(?' + col + ')'
+          when 'Typed Literal' then lookup[property] = (getVar i, lookup) + ' = typedLiteral(?' + col + ', ' + types[property] + ')'
           else ''
       
       if _.isEmpty properties
@@ -101,6 +100,7 @@ angular.module 'r2rDesignerApp'
         'Prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>'
         'Prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>'
         'Prefix xsd: <http://www.w3.org/2001/XMLSchema#>'
+        'Prefix fn: <http://aksw.org/sparqlify/>'
       ]
 
       suggestions = (_.flatten (_.values mapping.classes).concat (_.map (_.values mapping.properties), _.values))

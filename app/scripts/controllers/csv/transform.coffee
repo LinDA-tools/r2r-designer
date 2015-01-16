@@ -10,6 +10,7 @@ angular.module 'r2rDesignerApp'
 
     $scope.table = ''
     $scope.tableTag = {}
+
     $scope.columns = []
     $scope.columnTags = {}
 
@@ -34,7 +35,7 @@ angular.module 'r2rDesignerApp'
 
     $scope.getColumnSuggestions = (table, column) ->
       if $scope.rdf.suggestions? and $scope.rdf.suggestions[table] and $scope.rdf.suggestions[table].columns?
-        column = (_.first (_.filter $scope.rdf.suggestions[table].columns, (i) -> i.name == column))
+        column = _.first (_.filter $scope.rdf.suggestions[table].columns, (i) -> i.name == column)
         if column?
           column.recommend
 

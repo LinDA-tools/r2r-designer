@@ -12,10 +12,10 @@ angular.module 'r2rDesignerApp'
     
     {
       datasource:
-        host: ''
+        host: 'localhost'
         driver: 'org.postgresql.ds.PGSimpleDataSource'
-        name: ''
-        username: ''
+        name: 'mydb'
+        username: 'postgres'
         password: ''
       
       tables: () -> tables
