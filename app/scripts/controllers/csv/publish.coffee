@@ -71,7 +71,7 @@ angular.module 'r2rDesignerApp'
         properties: $scope.rdf.selectedProperties
         literals: $scope.rdf.propertyLiteralSelection
         literalTypes: $scope.rdf.propertyLiteralTypeSelection
-
+      
       $scope.currentMapping = $scope.sml.toSml mapping
 
       $scope.transform.publish to, $scope.currentMapping
