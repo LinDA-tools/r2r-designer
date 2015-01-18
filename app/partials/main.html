@@ -1,4 +1,4 @@
-<div class="main container-fluid" ng-controller="MainCtrl">
+<div class="r2r-main container-fluid" ng-controller="MainCtrl">
 
   <div class="header">
     <ul class="nav nav-pills pull-right">
@@ -15,6 +15,7 @@
           description="{{steps[$index].description}}" 
           sidetip="sidetip">
       <div ng-bind-html="'{{steps[$index].content}}'"></div>
+      <div class="step-description" ng-bind-html="'{{steps[$index].description}}'"></div>
       <br /> 
       <ng-include src="template($index)"></ng-include>
     </step>

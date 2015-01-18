@@ -65,7 +65,7 @@ body {
 //   }
 // }
 
-.main {
+.r2r-main {
   min-height: 128em;
   font-family: "Lato", sans-serif;
 }
@@ -126,6 +126,11 @@ body {
   color: darkGrey;
 }
 
+.step-description {
+  font-style: italic;
+  color: darkGrey;
+}
+
 .navigation {
 }
 
@@ -135,6 +140,7 @@ body {
 
 .navigation > ul > .active > a {
   color: #005580;
+  background-color: transparent;
   -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);
      -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);
           box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);

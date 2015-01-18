@@ -51,8 +51,9 @@ app.directive 'wizard', () ->
 
     @scrollTo = (name, offs, duration) ->
       section = (document.getElementById name)
-      $document.scrollTo section, offs || 90, duration || 750
-
+      # $document.scrollTo section, offs || 90, duration || 750
+      $document.scrollTo 0
+    
     return
 
 app.directive 'step', () ->

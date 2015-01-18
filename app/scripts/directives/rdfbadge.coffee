@@ -2,9 +2,8 @@
 
 app = angular.module 'r2rDesignerApp'
 
-app.directive 'rdfBadge', ($timeout) ->
+app.directive 'rdfBadge', ($timeout, $popover) ->
   restrict: 'A'
-  replace: true
   scope:
     uri: '@'
     label: '@'
@@ -67,9 +66,15 @@ app.directive 'rdfBadge', ($timeout) ->
       #{vocabulary}
       <span class="score">score: #{$scope.score}</span>
     """
-  link: (scope, element, attrs) ->
-    element.bind 'mouseenter', () ->
+  link: (scope, elem, attrs) ->
+    elem.bind 'mouseenter', () ->
       scope.$emit 'changeSidetip', scope.tmpl
+    $popover elem,
+      content: scope.tmpl
+      container: 'body'
+      trigger: 'hover'
+      html: true
+      placement: 'bottom'
 
     # element.bind 'mouseleave', () ->
     #   scope.$emit 'changeSidetip', ''
