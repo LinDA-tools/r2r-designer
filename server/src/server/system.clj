@@ -39,7 +39,7 @@
                 :join true 
                 :auto-reload? true})
 
-(def oracle-sparql-endpoint "http://localhost:8080/openrdf-sesame/repositories/lov")
+(def oracle-sparql-endpoint "http://localhost:8080/openrdf-sesame")
 
 (def sparqlify-opts {:host "http://localhost"
                      :port 7531}) 
