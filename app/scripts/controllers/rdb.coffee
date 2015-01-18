@@ -18,13 +18,12 @@ angular.module 'r2rDesignerApp'
         heading: 'Welcome'
         description: """
           <p>The alternative to Direct Mapping would be semantic mappings, which re-express the information to be transformed in appropriate ontology frameworks.</p>
-          <p>The information you will need to proceed through this wizard is essentially: 
-            <ul> 
-              <li>your database address and credentials</li> 
-              <li>server address and access credentials where the SPARQL endpoint is to be launched</li> 
-              <li>patterns for the URIs you want to generate, and certain metadata you want to add</li> 
-            </ul>
-          </p>
+          <p>The information you will need to proceed through this wizard is essentially:</p> 
+          <sl> 
+            <li>your database address and credentials</li> 
+            <li>server address and access credentials where the SPARQL endpoint is to be launched</li> 
+            <li>patterns for the URIs you want to generate, and certain metadata you want to add</li> 
+          </sl>
         """
         content: """
           <p>This wizard will guide you through the transformation of your relational database to RDF, and then either through the dump of the result into an RDF triple store, 
@@ -77,12 +76,11 @@ angular.module 'r2rDesignerApp'
         name: '5. revising'
         heading: 'Revise Output RDF'
         description: """
-          <p>These URIs need to be globally unique, so
-            <ul>
-              <li>the web address the URIs point to should be a site that you control</li>
-              <li>the URIs should comprise (at least) the content of those column(s) that constitute the Primary Key of the table</li>
-            </ul>
-          </p>
+          <p>These URIs need to be globally unique, so</p>
+          <sl>
+            <li>the web address the URIs point to should be a site that you control</li>
+            <li>the URIs should comprise (at least) the content of those column(s) that constitute the Primary Key of the table</li>
+          </sl>
           <p>Beyond global uniqueness, you should strive for long term stability of the generated URIs, since they may be referred to by others.</p>
         """
         content: """

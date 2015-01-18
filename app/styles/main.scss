@@ -65,7 +65,7 @@ body {
 //   }
 // }
 
-.main {
+.r2r-main {
   min-height: 128em;
   font-family: "Lato", sans-serif;
 }
@@ -126,25 +126,28 @@ body {
   color: darkGrey;
 }
 
-.navigation {
+.step-description {
+  font-style: italic;
+  color: darkGrey;
 }
 
-.navigation > ul > li > a:hover {
+.nav-pills > li > a:hover,
+.nav-pills > li > a:focus,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+  color: #005580;
   background-color: transparent;
-}
-
-.navigation > ul > .active > a {
-  color: #005580;
-  -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);
-     -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);
-          box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);
-}
-
-.navigation > ul > li > a:hover {
-  color: #005580;
   -webkit-box-shadow: inset 1px 0 0 #005580, inset 0 0 0 #005580;
      -moz-box-shadow: inset 1px 0 0 #005580, inset 0 0 0 #005580;
           box-shadow: inset 1px 0 0 #005580, inset 0 0 0 #005580;
+}
+
+.nav-pills > li.active > a { 
+  color: #005580;
+  background-color: transparent;
+  -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);
+     -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);
+          box-shadow: inset 1px 0 0 rgba(0,0,0,.2), inset 0 0 0 rgba(0,0,0,.2);
 }
 
 .table-input {

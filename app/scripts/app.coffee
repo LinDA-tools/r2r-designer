@@ -8,7 +8,8 @@ app = angular.module 'r2rDesignerApp', [
   'ui.bootstrap',
   'duScroll',
   'underscore',
-  'angularFileUpload'
+  'angularFileUpload',
+  'mgcrea.ngStrap'
 ]
 
 app.config ($routeProvider) ->

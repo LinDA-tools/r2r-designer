@@ -1,5 +1,5 @@
 <section id="{{name}}">
-  <div class="" ng-class="{treated: !isSelected() && isTreated()}" ng-show="isSelected() || isTreated()">
+  <div ng-class="{treated: !isSelected() && isTreated()}" ng-show="isSelected()">
     <h3>{{heading}}</h3>
 
     <fieldset ng-disabled="!isSelected()">

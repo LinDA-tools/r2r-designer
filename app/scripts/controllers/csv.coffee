@@ -29,13 +29,11 @@ angular.module 'r2rDesignerApp'
         description: ''
         content: """
           <p>In this step, you select and upload your CSV file that is to be converted.</p>
-          <p>
-           <ul>
+          <sl>
             <li>Click the file selection button, and select the file in the pop up dialog,</li>
             <li>click “submit”; this will upload the file (may take a few moments),</li>
             <li>click “next” to move on to the next step.</li>
-           </ul>
-          </p>
+          </sl>
         """
         partial: 'partials/csv/config.html'
       }
@@ -55,11 +53,11 @@ angular.module 'r2rDesignerApp'
         heading: 'Translate CSV file content'
         description: '<p>These specifications constitute the central part of the transformation. Types and properties should be selected with care, so as to get best possible precision of the transformation.</p><p>The <em>oracle</em> is a web service that gets the column headers in question, matches them against its database of vocabularies, and returns ranked results.</p>'
         content: """
-          <p>In this step, you specify the RDF properties that will be used for the translation of the selected columns.
-            <ul>
-              <li>Click “ask the oracle”; this will submit the column headers to a remote server, and the response will consist in ranked proposals for the column properties.</li>
-              <li>For every (selected) column, choose one of the proposed properties, or enter another one into the textbox at the top of the column.</li>
-            </ul>
+          <p>In this step, you specify the RDF properties that will be used for the translation of the selected columns.</p>
+          <sl>
+            <li>Click “ask the oracle”; this will submit the column headers to a remote server, and the response will consist in ranked proposals for the column properties.</li>
+            <li>For every (selected) column, choose one of the proposed properties, or enter another one into the textbox at the top of the column.</li>
+          </sl>
           <p>You will have to go through all columns that were selected for transformation in the previous step (“Columns”).</p>
         """
         partial: 'partials/csv/transform.html'
@@ -68,12 +66,11 @@ angular.module 'r2rDesignerApp'
         name: '5. revising'
         heading: 'Revise Output RDF'
         description: """
-          <p>These URIs need to be globally unique, so
-            <ul>
-              <li>the web address the URIs point to should be a site that you control</li>
-              <li>the URIs should comprise (at least) the content of those column(s) that constitute the Primary Key of the table</li>
-            </ul>
-          </p>
+          <p>These URIs need to be globally unique, so</p>
+          <sl>
+            <li>the web address the URIs point to should be a site that you control</li>
+            <li>the URIs should comprise (at least) the content of those column(s) that constitute the Primary Key of the table</li>
+          </sl>
           <p>Beyond global uniqueness, you should strive for long term stability of the generated URIs, since they may be referred to by others.</p>
         """
         content: """
