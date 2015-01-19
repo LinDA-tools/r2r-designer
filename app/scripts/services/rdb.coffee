@@ -62,13 +62,17 @@ angular.module 'r2rDesignerApp'
 
       getTables: ->
         $http.get dbAdapter + '/tables'
-             .then (res) ->
-               tables = res.data
+             .success (data) ->
+               tables = data
+             .error () ->
+               console.log 'error: could not connect to server'
 
       getTableColumns: ->
         $http.get dbAdapter + '/table-columns'
-             .then (res) ->
-               tableColumns = res.data
+             .success (data) ->
+               tableColumns = data
+             .error () ->
+               console.log 'error: could not connect to server'
 
       getColumn: (table, column) ->
         $http.get dbAdapter + '/column',
