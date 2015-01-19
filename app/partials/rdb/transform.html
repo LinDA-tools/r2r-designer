@@ -9,11 +9,6 @@
     <button class="btn btn-primary" ng-class="{disabled: !table || table == ''}" ng-click="ask(table, columns)">Ask the Oracle!</button>
   </p>
 
-  {{table}}
-  <hr />
-  {{columns}}
-  <hr />
-  {{rdf.suggestions}}
   <div class="scrollable">
     <table class="table" ng-show="table && table != ''">
       <!-- table and columns -->
