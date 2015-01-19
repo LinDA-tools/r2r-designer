@@ -38,7 +38,19 @@ angular.module 'r2rDesignerApp'
 
     $scope.apply = () ->
       $scope.checked = false
-      $scope.rdb.registerDatabase $scope.rdb.datasource
-        .then () ->
-          $scope.rdb.getTables()
-          $scope.rdb.getTableColumns()
+      $scope.checking = true
+      $scope.rdb.checkDatabase $scope.rdb.datasource
+        .success (data) ->
+          $scope.checking = false
+          $scope.checked = true
+          $scope.success = (data == "true")
+          $scope.rdb.registerDatabase $scope.rdb.datasource
+            .success () ->
+              $scope.rdb.getTables()
+              $scope.rdb.getTableColumns()
+            .error () ->
+              console.log 'error: could not connect to server'
+        .error (data) ->
+          $scope.checking = false
+          $scope.checked = true
+          $scope.success = (data == "false")
