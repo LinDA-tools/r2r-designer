@@ -1,13 +1,19 @@
 <div ng-controller="RdbTransformCtrl">
-  <p align="left">
-    <select class="form-control" ng-model="table" ng-options="table for table in rdb.selectedTables()">
-    </select>
-  </p>
+  <div class="row">
+    <div class="col-md-4">
+      <p align="left">
+        <select class="form-control" ng-model="table" ng-options="table for table in rdb.selectedTables()">
+        </select>
+      </p>
+    </div>
+    <div class="col-md-4 col-md-offset-4">
+      <p align="right">
+        <i class="fa fa-spinner fa-spin" ng-show="loading"></i>&nbsp;
+        <button class="btn btn-primary" ng-class="{disabled: !table || table == ''}" ng-click="ask(table, columns)">Ask the Oracle!</button>
+      </p>
+    </div>
+  </div>
 
-  <p align="right">
-    <i class="fa fa-spinner fa-spin" ng-show="loading"></i>&nbsp;
-    <button class="btn btn-primary" ng-class="{disabled: !table || table == ''}" ng-click="ask(table, columns)">Ask the Oracle!</button>
-  </p>
 
   <div class="scrollable">
     <table class="table" ng-show="table && table != ''">
