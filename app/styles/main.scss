@@ -42,31 +42,10 @@ body {
     border-top: 1px solid #e5e5e5;
 }
 
-// @media screen and (max-width: 768px) {
-//   /* Space out the masthead */
-//   .header {
-//       margin-bottom: 30px;
-//   }
-//
-//   .myaffix {
-//     position: relative;
-//   }
-// }
-//
-// @media screen and (min-width: 768px) and (max-width: 1024px) {
-//   .myaffix {
-//     position: relative;
-//   }
-// }
-//
-// @media screen and (min-width: 1024px) {
-//   .myaffix {
-//     position: relative;
-//   }
-// }
-
 .r2r-main {
+  margin: auto;
   min-height: 128em;
+  max-width: 1280px;
   font-family: "Lato", sans-serif;
 }
 
@@ -154,6 +133,10 @@ body {
   width: 100%;
 }
 
+tbody {
+  overflow: auto;
+}
+
 .popover {
   max-width: 400px;
   width: auto;
@@ -175,4 +158,14 @@ a {
   -webkit-hyphens: auto;
      -moz-hyphens: auto;
           hyphens: auto;
+}
+
+.wizard {
+  margin-top: 1em;
+}
+
+.footnote {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 10em
 }
