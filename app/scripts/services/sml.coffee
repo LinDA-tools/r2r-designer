@@ -52,7 +52,7 @@ angular.module 'r2rDesignerApp'
           return """?s = bNode(concat('#{mapping.baseUri}', '_'))\n""" # TODO: independently refer to primary key column
       else
         template = mapping.subjectTemplate
-        template = template.replace /{[^}]*}/g, (i) -> console.log i; ';$;' + '?' + (if mapping.source == 'csv' then (columnToNum table, (unwrapColumn i)) else (unwrapColumn i)) + ';$;'
+        template = template.replace /{[^}]*}/g, (i) -> ';$;' + '?' + (if mapping.source == 'csv' then (columnToNum table, (unwrapColumn i)) else (unwrapColumn i)) + ';$;'
         template = template.split ';$;'
         template = _.filter template, (i) -> !(_.isEmpty i)
         template = _.map template, (i) ->
