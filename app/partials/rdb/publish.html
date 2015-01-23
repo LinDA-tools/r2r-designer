@@ -5,8 +5,12 @@
   <br />
 
   <div class="btn-group">
-    <button class="btn btn-primary dropdown-toggle" ng-click="publish('sparqlify')">as SPARQL Endpoint</a></li>
-      <li><a href="#" ng-click="publish('openrdf')">to OpenRDF</a></li>
+    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      Publish <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a ng-click="publish('sparql')">as SPARQL Endpoint</a></li>
+      <li><a ng-click="publish('linda')">to LinDA Workbench</a></li>
     </ul>
   </div>
 

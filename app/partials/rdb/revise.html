@@ -43,7 +43,7 @@
       <div class="col-md-3" align="right">
         <b><em>a</em></b>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <b>{{class.prefixedName[0]}}</b>
       </div>
     </div>
@@ -55,10 +55,10 @@
       <div class="col-md-3" align="right">
         <b><em>{{prop.prefixedName[0]}}</em></b>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <select class="form-control" ng-model="rdf.propertyLiteralSelection[prop.prefixedName[0]]" ng-options="selection for selection in propertyLiteralTypeOptions"></select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <select class="form-control" ng-model="rdf.propertyLiteralTypes[prop.prefixedName[0]]" ng-options="type for type in propertyLiteralTypes" ng-show="rdf.propertyLiteralSelection[prop.prefixedName[0]] == 'Typed Literal'"></select>
       </div>
     </div>

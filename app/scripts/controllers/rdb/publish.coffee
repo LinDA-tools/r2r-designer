@@ -30,6 +30,17 @@ angular.module 'r2rDesignerApp'
         .then (url) ->
           w.location = url
       
+    $scope.safe_tags_replace = (str) ->
+      tagsToReplace =
+        '&': '&amp;'
+        '<': '&lt;'
+        '>': '&gt;'
+
+      replaceTag = (tag) ->
+        tagsToReplace[tag] or tag
+
+      str.replace /[&<>]/g, replaceTag
+
     $scope.mapping = (table) ->
       mapping =
         source: 'rdb'
@@ -68,7 +79,7 @@ angular.module 'r2rDesignerApp'
           $scope.publishing = false
           $scope.published = true
           $scope.success = true
-        .error (data) ->
+        .error () ->
           console.log 'error: could not connect to server'
           $scope.publishing = false
           $scope.published = true

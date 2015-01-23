@@ -23,25 +23,21 @@
   <div ng-show="table && table != ''">
     <div ng-show="hasColumns()">
       <div class="row">
-        <div class="col-md-12">
-          <div class="col-md-2">
-            Columns:
-          </div>
-          <div class="col-md-10">
-            <button ng-repeat="column in columns" type="button" class="btn btn-default btn-sm" ng-class="{active: isSelected(column)}" ng-click="insert(column)">{{column}}</button>
-          </div>
+        <div class="col-md-2">
+          Columns:
+        </div>
+        <div class="col-md-10">
+          <button ng-repeat="column in columns" type="button" class="btn btn-default btn-sm" ng-class="{active: isSelected(column)}" ng-click="insert(column)">{{column}}</button>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-12">
-        <div class="col-md-2">
-          Subject URI:
-        </div>
-        <div class="col-md-10">
-          <textarea rows="1" cols="60" content="rdf.subjectTemplate" cursor cursorpos="cursorpos" ng-model="rdf.subjectTemplate"></textarea>
-        </div>
+      <div class="col-md-2">
+        Subject URI:
+      </div>
+      <div class="col-md-10">
+        <textarea rows="1" cols="60" content="rdf.subjectTemplate" cursor cursorpos="cursorpos" ng-model="rdf.subjectTemplate"></textarea>
       </div>
     </div>
 
