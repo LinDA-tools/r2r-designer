@@ -74,7 +74,7 @@ angular.module 'r2rDesignerApp'
       columns = _.keys mapping.properties[table]
       columns = _.filter columns, (i) ->
         property = mapping.properties[table][i].prefixedName[0]
-        return (literals[property] or ((litearls[property] == 'Typed Literal') and types[property]))
+        return (literals[property] or ((literals[property] == 'Typed Literal') and types[property]))
      
       properties = _.map columns, (i) ->
         property = mapping.properties[table][i].prefixedName[0]
