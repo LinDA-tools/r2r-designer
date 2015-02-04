@@ -409,6 +409,15 @@ module.exports = function (grunt) {
         src: 'partials/**/*.html',
         dest: 'dist/scripts/app.templates.js'
       }
+    },
+
+    docco: {
+      dist: {
+        src: ['app/**/*.litcoffee'],
+        options: {
+          output: 'docs/'
+        }        
+      }
     }
   });
 

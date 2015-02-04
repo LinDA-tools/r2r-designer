@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>The transformation service</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app.html">
+                app.litcoffee
+              </a>
+            
+              
+              <a class="source" href="csv.html">
+                csv.litcoffee
+              </a>
+            
+              
+              <a class="source" href="config.html">
+                config.litcoffee
+              </a>
+            
+              
+              <a class="source" href="contents.html">
+                contents.litcoffee
+              </a>
+            
+              
+              <a class="source" href="publish.html">
+                publish.litcoffee
+              </a>
+            
+              
+              <a class="source" href="revise.html">
+                revise.litcoffee
+              </a>
+            
+              
+              <a class="source" href="transform.html">
+                transform.litcoffee
+              </a>
+            
+              
+              <a class="source" href="main.html">
+                main.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdb.html">
+                rdb.litcoffee
+              </a>
+            
+              
+              <a class="source" href="config.html">
+                config.litcoffee
+              </a>
+            
+              
+              <a class="source" href="contents.html">
+                contents.litcoffee
+              </a>
+            
+              
+              <a class="source" href="publish.html">
+                publish.litcoffee
+              </a>
+            
+              
+              <a class="source" href="revise.html">
+                revise.litcoffee
+              </a>
+            
+              
+              <a class="source" href="transform.html">
+                transform.litcoffee
+              </a>
+            
+              
+              <a class="source" href="columntip.html">
+                columntip.litcoffee
+              </a>
+            
+              
+              <a class="source" href="cursor.html">
+                cursor.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdfbadge.html">
+                rdfbadge.litcoffee
+              </a>
+            
+              
+              <a class="source" href="wizard.html">
+                wizard.litcoffee
+              </a>
+            
+              
+              <a class="source" href="score.html">
+                score.litcoffee
+              </a>
+            
+              
+              <a class="source" href="config.html">
+                config.litcoffee
+              </a>
+            
+              
+              <a class="source" href="csv.html">
+                csv.litcoffee
+              </a>
+            
+              
+              <a class="source" href="oracle.html">
+                oracle.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdb.html">
+                rdb.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdf.html">
+                rdf.litcoffee
+              </a>
+            
+              
+              <a class="source" href="sml.html">
+                sml.litcoffee
+              </a>
+            
+              
+              <a class="source" href="transform.html">
+                transform.litcoffee
+              </a>
+            
+              
+              <a class="source" href="underscore.html">
+                underscore.litcoffee
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="the-transformation-service">The transformation service</h1>
+<p>Adapter for both the CSV and database transformation backend.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
+
+angular.<span class="hljs-built_in">module</span> <span class="hljs-string">'r2rDesignerApp'</span>
+  .factory <span class="hljs-string">'Transform'</span>, <span class="hljs-function"><span class="hljs-params">($http, _)</span> -&gt;</span>
+
+    host = <span class="hljs-string">'http://localhost:3000'</span>
+    transformApi = host + <span class="hljs-string">'/api/v1/transform'</span>
+
+    {
+      <span class="hljs-attribute">dumpdb</span>: <span class="hljs-function"><span class="hljs-params">(mapping)</span> -&gt;</span>
+        <span class="hljs-keyword">if</span> mapping?
+          $http.post transformApi + <span class="hljs-string">'/dump-db'</span>, {
+            <span class="hljs-attribute">mapping</span>: mapping
+          }
+            .<span class="hljs-keyword">then</span> (res) -&gt;
+              transformApi + res.data
+
+      <span class="hljs-attribute">dumpcsv</span>: <span class="hljs-function"><span class="hljs-params">(mapping)</span> -&gt;</span>
+        <span class="hljs-keyword">if</span> mapping?
+          $http.post transformApi + <span class="hljs-string">'/dump-csv'</span>, {
+            <span class="hljs-attribute">mapping</span>: mapping
+          }
+            .<span class="hljs-keyword">then</span> (res) -&gt;
+              transformApi + res.data
+
+      <span class="hljs-attribute">publish</span>: <span class="hljs-function"><span class="hljs-params">(to, mapping)</span> -&gt;</span>
+        <span class="hljs-keyword">if</span> to? <span class="hljs-keyword">and</span> mapping?
+          api = transformApi + <span class="hljs-string">'/publish/'</span> + to
+          $http.post api, { <span class="hljs-attribute">mapping</span>: mapping }
+    }</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

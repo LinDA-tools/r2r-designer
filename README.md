@@ -2,8 +2,7 @@ r2r-designer
 ============
 
 An Editor for mapping relational Databases to RDF.
-
-*** Experimental! ***
+This version is an early prototype. Do not use in production.
 
 ## Requirements
 
@@ -28,7 +27,7 @@ You will need:
 
 ## Documentation
 
-Coming soon.
+[Annotated source code](docs/app.html)
 
 ## Community
 
@@ -53,4 +52,3 @@ To start the web service for the R2R designer, run:
 Copyright &copy; 2014 Fraunhofer Gesellschaft e.&nbsp;V. 
 
 Distributed under the MIT License.
-

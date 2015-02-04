@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>The Oracle service</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app.html">
+                app.litcoffee
+              </a>
+            
+              
+              <a class="source" href="csv.html">
+                csv.litcoffee
+              </a>
+            
+              
+              <a class="source" href="config.html">
+                config.litcoffee
+              </a>
+            
+              
+              <a class="source" href="contents.html">
+                contents.litcoffee
+              </a>
+            
+              
+              <a class="source" href="publish.html">
+                publish.litcoffee
+              </a>
+            
+              
+              <a class="source" href="revise.html">
+                revise.litcoffee
+              </a>
+            
+              
+              <a class="source" href="transform.html">
+                transform.litcoffee
+              </a>
+            
+              
+              <a class="source" href="main.html">
+                main.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdb.html">
+                rdb.litcoffee
+              </a>
+            
+              
+              <a class="source" href="config.html">
+                config.litcoffee
+              </a>
+            
+              
+              <a class="source" href="contents.html">
+                contents.litcoffee
+              </a>
+            
+              
+              <a class="source" href="publish.html">
+                publish.litcoffee
+              </a>
+            
+              
+              <a class="source" href="revise.html">
+                revise.litcoffee
+              </a>
+            
+              
+              <a class="source" href="transform.html">
+                transform.litcoffee
+              </a>
+            
+              
+              <a class="source" href="columntip.html">
+                columntip.litcoffee
+              </a>
+            
+              
+              <a class="source" href="cursor.html">
+                cursor.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdfbadge.html">
+                rdfbadge.litcoffee
+              </a>
+            
+              
+              <a class="source" href="wizard.html">
+                wizard.litcoffee
+              </a>
+            
+              
+              <a class="source" href="score.html">
+                score.litcoffee
+              </a>
+            
+              
+              <a class="source" href="config.html">
+                config.litcoffee
+              </a>
+            
+              
+              <a class="source" href="csv.html">
+                csv.litcoffee
+              </a>
+            
+              
+              <a class="source" href="oracle.html">
+                oracle.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdb.html">
+                rdb.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdf.html">
+                rdf.litcoffee
+              </a>
+            
+              
+              <a class="source" href="sml.html">
+                sml.litcoffee
+              </a>
+            
+              
+              <a class="source" href="transform.html">
+                transform.litcoffee
+              </a>
+            
+              
+              <a class="source" href="underscore.html">
+                underscore.litcoffee
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="the-oracle-service">The Oracle service</h1>
+<p>Adapter for the r2r-designer oracle.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
+
+angular.<span class="hljs-built_in">module</span> <span class="hljs-string">'r2rDesignerApp'</span>
+  .factory <span class="hljs-string">'Oracle'</span>, <span class="hljs-function"><span class="hljs-params">($http, _, Config)</span> -&gt;</span>
+
+    oracleApi = Config.backend + <span class="hljs-string">'/api/v1/oracle'</span>
+<span class="hljs-function">
+    <span class="hljs-title">zipColumnTags</span> = <span class="hljs-params">(columns, tags)</span> -&gt;</span>
+      _.map columns, <span class="hljs-function"><span class="hljs-params">(i)</span> -&gt;</span> { <span class="hljs-attribute">name</span>: i, <span class="hljs-attribute">tag</span>: tags[i] <span class="hljs-keyword">or</span> i }
+
+    {
+      <span class="hljs-attribute">ask</span>: <span class="hljs-function"><span class="hljs-params">(table, tableTag, columns, columnTags)</span> -&gt;</span>
+        $http.post oracleApi, {
+          <span class="hljs-attribute">table</span>: {
+            <span class="hljs-attribute">name</span>: table,
+            <span class="hljs-attribute">tag</span>: tableTag <span class="hljs-keyword">or</span> table
+          },
+          <span class="hljs-attribute">columns</span>: zipColumnTags columns, columnTags
+        }
+    }</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

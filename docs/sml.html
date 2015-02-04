@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>The SML service</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app.html">
+                app.litcoffee
+              </a>
+            
+              
+              <a class="source" href="csv.html">
+                csv.litcoffee
+              </a>
+            
+              
+              <a class="source" href="config.html">
+                config.litcoffee
+              </a>
+            
+              
+              <a class="source" href="contents.html">
+                contents.litcoffee
+              </a>
+            
+              
+              <a class="source" href="publish.html">
+                publish.litcoffee
+              </a>
+            
+              
+              <a class="source" href="revise.html">
+                revise.litcoffee
+              </a>
+            
+              
+              <a class="source" href="transform.html">
+                transform.litcoffee
+              </a>
+            
+              
+              <a class="source" href="main.html">
+                main.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdb.html">
+                rdb.litcoffee
+              </a>
+            
+              
+              <a class="source" href="config.html">
+                config.litcoffee
+              </a>
+            
+              
+              <a class="source" href="contents.html">
+                contents.litcoffee
+              </a>
+            
+              
+              <a class="source" href="publish.html">
+                publish.litcoffee
+              </a>
+            
+              
+              <a class="source" href="revise.html">
+                revise.litcoffee
+              </a>
+            
+              
+              <a class="source" href="transform.html">
+                transform.litcoffee
+              </a>
+            
+              
+              <a class="source" href="columntip.html">
+                columntip.litcoffee
+              </a>
+            
+              
+              <a class="source" href="cursor.html">
+                cursor.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdfbadge.html">
+                rdfbadge.litcoffee
+              </a>
+            
+              
+              <a class="source" href="wizard.html">
+                wizard.litcoffee
+              </a>
+            
+              
+              <a class="source" href="score.html">
+                score.litcoffee
+              </a>
+            
+              
+              <a class="source" href="config.html">
+                config.litcoffee
+              </a>
+            
+              
+              <a class="source" href="csv.html">
+                csv.litcoffee
+              </a>
+            
+              
+              <a class="source" href="oracle.html">
+                oracle.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdb.html">
+                rdb.litcoffee
+              </a>
+            
+              
+              <a class="source" href="rdf.html">
+                rdf.litcoffee
+              </a>
+            
+              
+              <a class="source" href="sml.html">
+                sml.litcoffee
+              </a>
+            
+              
+              <a class="source" href="transform.html">
+                transform.litcoffee
+              </a>
+            
+              
+              <a class="source" href="underscore.html">
+                underscore.litcoffee
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="the-sml-service">The SML service</h1>
+<p>This generates the mapping in the Sparqlification Mapping Language (<a href="http://sparqlify.org/wiki/Sparqlification_mapping_language">http://sparqlify.org/wiki/Sparqlification_mapping_language</a>)
+from a js mapping object. Naïve implementation, needs some overhaul.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-string">'use strict'</span>
+
+angular.<span class="hljs-built_in">module</span> <span class="hljs-string">'r2rDesignerApp'</span>
+  .factory <span class="hljs-string">'Sml'</span>, <span class="hljs-function"><span class="hljs-params">(_, Csv)</span> -&gt;</span>
+<span class="hljs-function">
+    <span class="hljs-title">newLookup</span> = <span class="hljs-params">()</span> -&gt;</span>
+      <span class="hljs-attribute">index</span>: <span class="hljs-number">0</span>
+      <span class="hljs-attribute">table</span>: {}
+<span class="hljs-function">
+    <span class="hljs-title">getVar</span> = <span class="hljs-params">(key, lookup)</span> -&gt;</span>
+      found = lookup.table[key]
+      <span class="hljs-keyword">if</span> found
+        <span class="hljs-keyword">return</span> found
+      <span class="hljs-keyword">else</span>
+        new_entry = <span class="hljs-string">'?x'</span> + lookup.index++
+        lookup.table[key] = new_entry
+        new_entry
+<span class="hljs-function">
+    <span class="hljs-title">toClasses</span> = <span class="hljs-params">(mapping, table)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> !mapping.classes[table]?
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'\n'</span>
+      classes = (<span class="hljs-string">'a '</span> + c.prefixedName[<span class="hljs-number">0</span>] <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> mapping.classes[table])
+      <span class="hljs-keyword">if</span> _.isEmpty classes
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'\n'</span>
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">return</span> (_.foldl classes, <span class="hljs-function">(<span class="hljs-params">(x, y)</span> -&gt;</span> (x + <span class="hljs-string">';\n'</span>).concat(y))) + <span class="hljs-string">';'</span>
+<span class="hljs-function">
+    <span class="hljs-title">toProperties</span> = <span class="hljs-params">(mapping, table, lookup)</span> -&gt;</span>
+      columns = _.keys mapping.properties[table]
+      properties = (mapping.properties[table][c].prefixedName[<span class="hljs-number">0</span>] + <span class="hljs-string">' '</span> + getVar(c, lookup) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> columns)
+      <span class="hljs-keyword">if</span> _.isEmpty properties
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'\n'</span>
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">return</span> _.foldl properties, <span class="hljs-function">(<span class="hljs-params">(x, y)</span> -&gt;</span> (x + <span class="hljs-string">';\n'</span>).concat(y))
+<span class="hljs-function">
+    <span class="hljs-title">columnToVar</span> = <span class="hljs-params">(column)</span> -&gt;</span>
+      <span class="hljs-string">'?'</span> + column.substring(<span class="hljs-number">1</span>, column.length-<span class="hljs-number">1</span>)
+<span class="hljs-function">
+    <span class="hljs-title">subjectTemplate</span> = <span class="hljs-params">(mapping, table)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> _.isEmpty mapping.subjectTemplate
+        <span class="hljs-keyword">if</span> _.isEmpty mapping.baseUri
+          <span class="hljs-keyword">return</span> <span class="hljs-string">"""?s = bNode(concat('<span class="hljs-subst">#{table}</span>', '_'))\n"""</span> <span class="hljs-comment"># TODO: independently refer to primary key column</span>
+        <span class="hljs-keyword">else</span>
+          <span class="hljs-keyword">return</span> <span class="hljs-string">"""?s = bNode(concat('<span class="hljs-subst">#{mapping.baseUri}</span>', '_'))\n"""</span> <span class="hljs-comment"># TODO: independently refer to primary key column</span>
+      <span class="hljs-keyword">else</span>
+        template = mapping.subjectTemplate
+        template = template.replace <span class="hljs-regexp">/{[^}]*}/g</span>, <span class="hljs-function"><span class="hljs-params">(i)</span> -&gt;</span> <span class="hljs-string">';$;'</span> + (columnToVar i) + <span class="hljs-string">';$;'</span>
+        template = template.split <span class="hljs-string">';$;'</span>
+        template = _.filter template, <span class="hljs-function"><span class="hljs-params">(i)</span> -&gt;</span> !(_.isEmpty i)
+        template = _.map template, <span class="hljs-function"><span class="hljs-params">(i)</span> -&gt;</span>
+          <span class="hljs-keyword">if</span> i[<span class="hljs-number">0</span>] == <span class="hljs-string">'?'</span>
+            i
+          <span class="hljs-keyword">else</span>
+            <span class="hljs-string">"'"</span> + i + <span class="hljs-string">"'"</span>
+        template = <span class="hljs-string">"""concat('<span class="hljs-subst">#{mapping.baseUri}</span>', <span class="hljs-subst">#{template}</span>)"""</span>
+
+        <span class="hljs-keyword">if</span> _.isEmpty mapping.baseUri
+          <span class="hljs-keyword">return</span> <span class="hljs-string">'?s = bNode('</span> + template + <span class="hljs-string">')'</span> <span class="hljs-comment"># TODO!</span>
+        <span class="hljs-keyword">else</span>
+          <span class="hljs-keyword">return</span> <span class="hljs-string">'?s = uri('</span> + template + <span class="hljs-string">')'</span> <span class="hljs-comment"># TODO!</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>columnsToNum = (table, selected) -&gt;
+  if table? and selected?
+    <em>.map selected, (i) -&gt; </em>.indexOf _.first csvData[table], i</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function">
+    <span class="hljs-title">columnToNum</span> = <span class="hljs-params">(table, column)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> table? <span class="hljs-keyword">and</span> column?
+        (_.indexOf Csv.columns(table), column) + <span class="hljs-number">1</span>
+<span class="hljs-function">
+    <span class="hljs-title">propertyLiterals</span> = <span class="hljs-params">(mapping, table, lookup)</span> -&gt;</span>
+      literals = mapping.literals
+      types = mapping.literalTypes
+
+      columns = _.keys mapping.properties[table]
+      columns = _.filter columns, <span class="hljs-function"><span class="hljs-params">(i)</span> -&gt;</span>
+        property = mapping.properties[table][i].prefixedName[<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">return</span> (literals[property] <span class="hljs-keyword">or</span> ((litearls[property] == <span class="hljs-string">'Typed Literal'</span>) <span class="hljs-keyword">and</span> types[property]))
+     
+      properties = _.map columns, <span class="hljs-function"><span class="hljs-params">(i)</span> -&gt;</span>
+        property = mapping.properties[table][i].prefixedName[<span class="hljs-number">0</span>]
+        col = <span class="hljs-string">''</span>
+       
+        <span class="hljs-keyword">if</span> mapping.source == <span class="hljs-string">'csv'</span>
+          col = columnToNum table, i
+        <span class="hljs-keyword">else</span>
+          col = i
+        
+        <span class="hljs-keyword">switch</span> literals[property]
+          <span class="hljs-keyword">when</span> <span class="hljs-string">'Blank Node'</span> <span class="hljs-keyword">then</span> lookup[property] = (getVar i, lookup) + <span class="hljs-string">' = bNode(?'</span> + (columnToNum table, i) + <span class="hljs-string">')'</span>
+          <span class="hljs-keyword">when</span> <span class="hljs-string">'Plain Literal'</span> <span class="hljs-keyword">then</span> lookup[property] = (getVar i, lookup) + <span class="hljs-string">' = plainLiteral(?'</span> + (columnToNum table, i) + <span class="hljs-string">')'</span>
+          <span class="hljs-keyword">when</span> <span class="hljs-string">'Typed Literal'</span> <span class="hljs-keyword">then</span> lookup[property] = (getVar i, lookup) + <span class="hljs-string">' = typedLiteral(?'</span> + (columnToNum table, i) + <span class="hljs-string">', '</span> + types[property] + <span class="hljs-string">')'</span>
+          <span class="hljs-keyword">else</span> <span class="hljs-string">''</span>
+      
+      <span class="hljs-keyword">if</span> _.isEmpty properties
+        <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">return</span> _.foldl properties, <span class="hljs-function">(<span class="hljs-params">(x, y)</span> -&gt;</span> (x + <span class="hljs-string">'\n'</span>).concat(y))
+<span class="hljs-function">
+    <span class="hljs-title">namespacePrefixes</span> = <span class="hljs-params">(mapping)</span> -&gt;</span>
+      baseUris = [
+        <span class="hljs-string">'Prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;'</span>
+        <span class="hljs-string">'Prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;'</span>
+        <span class="hljs-string">'Prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;'</span>
+      ]
+
+      suggestions = (_.flatten (_.values mapping.classes).concat (_.map (_.values mapping.properties), _.values))
+<span class="hljs-function">
+      <span class="hljs-title">suggestedUris</span> = <span class="hljs-params">(_.without (_.map suggestions, (i) -&gt;
+        <span class="hljs-keyword">if</span> i[<span class="hljs-string">'vocabulary.prefix'</span>]? <span class="hljs-keyword">and</span> i[<span class="hljs-string">'vocabulary.uri'</span>]?
+          <span class="hljs-keyword">return</span> <span class="hljs-string">"""Prefix <span class="hljs-subst">#{_.first i[<span class="hljs-string">'vocabulary.prefix'</span>]}</span>: &lt;<span class="hljs-subst">#{_.first i[<span class="hljs-string">'vocabulary.uri'</span>]}</span>&gt;"""</span>
+        <span class="hljs-keyword">else</span>
+          <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+      ), <span class="hljs-literal">null</span>)</span>
+
+      <span class="hljs-title">baseUri</span> =
+        <span class="hljs-title">if</span> !<span class="hljs-title">_</span>.<span class="hljs-title">isEmpty</span><span class="hljs-params">(mapping.baseUri)</span>
+          ["""<span class="hljs-title">Prefix</span> <span class="hljs-title">tns</span>: &lt;#{<span class="hljs-title">mapping</span>.<span class="hljs-title">baseUri</span>}&gt;"""]
+        <span class="hljs-title">else</span>
+          []
+
+      <span class="hljs-title">return</span> <span class="hljs-params">(_.foldl (baseUris.concat suggestedUris, baseUri), ((x, y) -&gt; (x + <span class="hljs-string">'\n'</span>).concat y))</span>
+
+    <span class="hljs-title">createClause</span> = <span class="hljs-params">(mapping, table)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> mapping.source == <span class="hljs-string">'csv'</span>
+        <span class="hljs-string">"Create View Template "</span> + (table.replace <span class="hljs-regexp">/[^\w]/g</span>, <span class="hljs-string">''</span>) + <span class="hljs-string">" As"</span>
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-string">"Create View "</span> + (table.replace <span class="hljs-regexp">/[^\w]/g</span>, <span class="hljs-string">''</span>) + <span class="hljs-string">" As"</span>
+<span class="hljs-function">
+    <span class="hljs-title">fromClause</span> = <span class="hljs-params">(mapping, table)</span> -&gt;</span>
+      <span class="hljs-keyword">if</span> mapping.source == <span class="hljs-string">'rdb'</span>
+        <span class="hljs-string">"From "</span> + table
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-string">""</span>
+      
+    {
+      <span class="hljs-attribute">toSml</span>: <span class="hljs-function"><span class="hljs-params">(mapping)</span> -&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>TODO: will only process the first table!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        table = mapping.tables[<span class="hljs-number">0</span>]
+
+        lookup = newLookup()
+
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"""
+<span class="hljs-subst">#{namespacePrefixes mapping}</span>
+
+<span class="hljs-subst">#{createClause mapping, table}</span>
+    Construct {
+        ?s 
+<span class="hljs-subst">#{toClasses mapping, table}</span>
+<span class="hljs-subst">#{toProperties mapping, table, lookup}</span>.
+    }
+    With
+<span class="hljs-subst">#{subjectTemplate mapping, table}</span>
+<span class="hljs-subst">#{propertyLiterals mapping, table, lookup}</span>
+<span class="hljs-subst">#{fromClause mapping, table}</span>
+        """</span>
+    }</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
