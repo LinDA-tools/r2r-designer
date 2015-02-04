@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .factory 'Oracle', ($http, _, Config) ->
 
     oracleApi = Config.backend + '/api/v1/oracle'
@@ -10,14 +10,11 @@ angular.module 'app'
 
     {
       ask: (table, tableTag, columns, columnTags) ->
-        if table? and columns?
-          $http.post oracleApi, {
-            table: {
-              name: table,
-              tag: tableTag or table
-            },
-            columns: zipColumnTags columns, columnTags
-          }
-            .then (res) ->
-              res.data
+        $http.post oracleApi, {
+          table: {
+            name: table,
+            tag: tableTag or table
+          },
+          columns: zipColumnTags columns, columnTags
+        }
     }

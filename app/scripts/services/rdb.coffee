@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app'
+angular.module 'r2rDesignerApp'
   .factory 'Rdb', ($http, _, Config) ->
 
     dbAdapter = Config.backend + '/api/v1/db'
@@ -11,7 +11,12 @@ angular.module 'app'
     selectedColumns = {}
     
     {
-      datasource: {}
+      datasource:
+        host: 'localhost'
+        driver: 'org.postgresql.ds.PGSimpleDataSource'
+        name: 'mydb'
+        username: 'postgres'
+        password: ''
       
       tables: () -> tables
       tableColumns: () -> tableColumns
@@ -57,13 +62,17 @@ angular.module 'app'
 
       getTables: ->
         $http.get dbAdapter + '/tables'
-             .then (res) ->
-               tables = res.data
+             .success (data) ->
+               tables = data
+             .error () ->
+               console.log 'error: could not connect to server'
 
       getTableColumns: ->
         $http.get dbAdapter + '/table-columns'
-             .then (res) ->
-               tableColumns = res.data
+             .success (data) ->
+               tableColumns = data
+             .error () ->
+               console.log 'error: could not connect to server'
 
       getColumn: (table, column) ->
         $http.get dbAdapter + '/column',

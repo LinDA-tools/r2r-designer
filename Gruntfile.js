@@ -32,11 +32,11 @@ module.exports = function (grunt) {
         tasks: ['bowerInstall']
       },
       coffee: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
+        files: ['<%= yeoman.app %>/scripts/**/*.{coffee,litcoffee,coffee.md}'],
         tasks: ['newer:coffee:dist']
       },
       coffeeTest: {
-        files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
+        files: ['test/spec/**/*.{coffee,litcoffee,coffee.md}'],
         tasks: ['newer:coffee:test', 'karma']
       },
       compass: {
@@ -156,7 +156,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/scripts',
-          src: '{,*/}*.{coffee,litcoffee,coffee.md}',
+          src: '**/*.{coffee,litcoffee,coffee.md}',
           dest: '.tmp/scripts',
           ext: '.js'
         }]
@@ -165,7 +165,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: 'test/spec',
-          src: '{,*/}*.{coffee,litcoffee,coffee.md}',
+          src: '**/*.{coffee,litcoffee,coffee.md}',
           dest: '.tmp/spec',
           ext: '.js'
         }]
@@ -315,10 +315,22 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            'partials/{,*/}*.html',
+            'partials/**/*.html',
             'images/{,*/}*.{webp}',
-            'fonts/*'
+            'styles/fonts/*'
           ]
+        }, {
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
+          src: 'bower_components/bootstrap-css-only/fonts/*'
+        }, {
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
+          src: 'bower_components/font-awesome/fonts/*'
         }, {
           expand: true,
           cwd: '.tmp/images',
@@ -389,12 +401,12 @@ module.exports = function (grunt) {
     ngtemplates: {
       app: {
         cwd: 'app',
-        src: 'partials/**.html',
+        src: 'partials/**/*.html',
         dest: '.tmp/scripts/app.templates.js'
       },
       dist: {
         cwd: 'app',
-        src: 'partials/**.html',
+        src: 'partials/**/*.html',
         dest: 'dist/scripts/app.templates.js'
       }
     }

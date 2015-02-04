@@ -21,13 +21,4 @@
               data (:body request)
               suggestions (recommend oracle (:table data) (:columns data))]
           (response suggestions)))
-
-      (GET (str api "/properties") [q :as r] 
-        (let [oracle (:oracle c)
-              response (search-properties oracle q)]
-          (json/write-str response)))
-
-      (GET (str api "/classes") [q :as r] 
-        (let [oracle (:oracle c)
-              response (search-classes oracle q)]
-          (json/write-str response))))))
+      )))
